@@ -53,7 +53,7 @@
             </li>
         </ul>
     </nav>
-    <h3>Chào mừng trở lại <strong style="color: red;"><?= $row["name"]?></strong>:333333</h3>
+    <h3>Chào mừng trở lại <strong style="color: red;"><?= $row["name"]?></strong>:333333 nhé hú hú</h3>
     
     
 </body>
