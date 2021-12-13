@@ -55,12 +55,12 @@
         $error = "";
         $resultGetInfo = get_all_info_nhanvien($nameNV);
         if($resultGetInfo['code'] == 0){
-            $data = $resultGetInfo['data'];
+            $data1 = $resultGetInfo['data'];
         }else{
-            $error = $data['message'];
+            $error = $resultGetInfo['message'];
         }
     ?>
-    <a style="text-decoreation: none;" href="dsNVPB.php?maPB=<?=$data['maPB']?>"><i class="fas fa-arrow-circle-left"></i></a>
+    <a style="text-decoreation: none;" href="dsNVPB.php?maPB=<?=$data1['maPB']?>"><i class="fas fa-arrow-circle-left"></i></a>
     <div class="container">
         <div class="d-flex justify-content-center">
             <div class="card">
@@ -69,17 +69,17 @@
                         <h3>Thông tin nhân viên</h3>
                         <div class="form-group">
                             <label>Tên nhân viên:</label>
-                            <div class="form-control"><?=$data['name']?></div>
+                            <div class="form-control"><?=$data1['name']?></div>
                         </div>
                         
                         <div class="form-group">
                             <label>Tên account:</label>
-                            <div class="form-control"><?=$data['username']?></div>
+                            <div class="form-control"><?=$data1['username']?></div>
                         </div>
                         
                         <div class="form-group">
                             <label>Mã của phòng ban:</label>
-                            <div class="form-control"><?=$data['maPB']?></div>
+                            <div class="form-control"><?=$data1['maPB']?></div>
                         </div>
                         <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
                             <?php

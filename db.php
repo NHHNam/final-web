@@ -250,4 +250,87 @@
         }
         return array('code'=>0, 'message'=>'Xoá nhân viên thành công');
     }
+
+    function check_truong_phong($name, $maPB){
+        $conn = open_database();
+        $sql = "select * from nhanvien n, phongban p where n.name = p.truongphong and n.maPB = p.maPB and n.name = ? and n.maPb = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $name, $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return false;
+        }
+        return true;
+    }
+
+    function get_task_by_nhan_vien($name, $maPB){
+        $conn = open_database();
+        $sql = "select * from task where nhanvien = ? and maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $name, $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute message');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code'=>2, 'message'=>'Không có công việc nào được giao');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>2, 'message'=>'', 'data'=>$data);
+    }
+
+    function get_task_by_name($nameTask){
+        $conn = open_database();
+        $sql = "select * from task where tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $nameTask);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute message');
+        }
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        if($result->num_rows == 0){
+            return array('code' => 2, 'message' => 'Tìm không thấy');
+        }
+        return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
+
+    function get_all_task_by_phong_ban($maPB){
+        $conn = open_database();
+        $sql = "select * from task where maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute message');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code' => 2, 'message' => 'Tìm không thấy');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+
+        return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
+
+    function add_new_task($nameTask, $descTask, $nhanvien, $maPB, $dead, $status){
+        $conn = open_database();
+        $sql = "insert into task(tenTask, descTask, nhanvien, maPB, deadline, status) values (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssssss', $nameTask, $descTask, $nhanvien, $maPB, $dead, $status);
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Giao task thành công');
+    }
 ?>
