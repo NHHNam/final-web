@@ -59,6 +59,7 @@
         if(isset($_POST['del'])){
             $maPB = $_POST['maPB'];
             $resultDeletePB = delete_phongban($maPB);
+            $delAll = delete_nhan_vien_by_phongban($maPB);
             if($resultDeletePB['code'] == 0){
                 $success = $resultDeletePB['message'];
             }else{
@@ -72,6 +73,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Tên phòng ban </th>
+                        <th>Tên trưởng phòng</th>
                         <th>Trạng thái</th>                    
                     </tr>
                 </thead>
@@ -85,6 +87,7 @@
                     <tr>
                         <td><?=$stt?></td>
                         <td><a style="text-decoration: none; color: black; font-weight: bold;" href="dsNVPB.php?maPB=<?=$row1['maPB']?>"><?=$row1["namePB"]?></a></td>
+                        <td><?=$row1['truongphong']?></td>
                         <form method="post">
                             <input type="hidden" value="<?=$row1["maPB"]?>" name="maPB">
                             <td><button type="submit" name="del" class="btn btn-danger">DELETE</button></td>
@@ -109,6 +112,7 @@
                     }
                 ?>
             </p>
+            <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addNV.php">Thêm nhân viên</a></button>
             <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
     </div>
 </body>

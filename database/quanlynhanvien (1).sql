@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2021 at 05:29 PM
+-- Generation Time: Dec 13, 2021 at 03:30 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -50,7 +50,7 @@ INSERT INTO `giamdoc` (`id`, `name`, `username`, `password`, `image`) VALUES
 
 CREATE TABLE `nhanvien` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `maPB` varchar(50) NOT NULL,
@@ -62,13 +62,9 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`id`, `name`, `username`, `password`, `maPB`, `image`) VALUES
-(1, 'hoainam', 'nv01', '123', 'PT', 'images/57e7b27431a064135e11f2ecdcdfa54c.JPG'),
-(2, 'thi nanh', 'nv02', '123456', 'KT', 'images/3.jpg'),
-(4, 'Nguyễn Hưng Hoài Nam', 'nvhoainam', '123', 'PT', 'images/830ee79eae81efe027418e3ee6b0112b.JPG'),
-(5, 'Trần Thị Kiều', 'nvkieu', '123', 'KT', 'images/815e1c9330e5a37e631e5b31bffbd33a.JPG'),
-(6, 'Mai Nguyễn Thái Học', 'nvhoc', '123', 'PT', 'images/914aadad65fefae6bec5b9db46569430.JPG'),
-(8, 'Lê Ngọc Trân', 'nvtran', '123', 'KT', 'images/7f0ce65af54f3e2deae3cd5df8c587ab.JPG'),
-(9, 'Vương Ái Bình', 'nvbinh', '123', 'KT', 'images/914aadad65fefae6bec5b9db46569430.JPG');
+(11, 'Nguyễn Hưng Hoài Nam', 'nvhoainam', '123', 'PT', 'images/5bc93c9e6d6865c911a009c4c6e80e9c.JPG'),
+(12, 'Trần Thị Kiều', 'nvkieu', '123', 'KT', 'images/16fdb8df309a6fd37aa58f2cdf381750.JPG'),
+(13, 'Trần Thái Bảo', 'nvbao', '123', 'PT', 'images/6ddbb2348a82fa5de173a8c524ad5689.JPG');
 
 -- --------------------------------------------------------
 
@@ -79,16 +75,17 @@ INSERT INTO `nhanvien` (`id`, `name`, `username`, `password`, `maPB`, `image`) V
 CREATE TABLE `phongban` (
   `id` int(11) NOT NULL,
   `maPB` varchar(50) NOT NULL,
-  `namePB` varchar(50) NOT NULL
+  `namePB` varchar(50) NOT NULL,
+  `truongphong` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `phongban`
 --
 
-INSERT INTO `phongban` (`id`, `maPB`, `namePB`) VALUES
-(1, 'KT', 'Kế Toán'),
-(3, 'PT', 'Phòng phát triển');
+INSERT INTO `phongban` (`id`, `maPB`, `namePB`, `truongphong`) VALUES
+(4, 'PT', 'Phòng phát triển', 'Trần Thái Bảo'),
+(5, 'KT', 'Phòng kế toán', 'Trần Thị Kiều');
 
 --
 -- Indexes for dumped tables
@@ -126,13 +123,13 @@ ALTER TABLE `giamdoc`
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `phongban`
 --
 ALTER TABLE `phongban`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -62,7 +62,8 @@
         if(isset($_POST['add'])){
             $maPB = $_POST['maPB'];
             $namePB = $_POST['namePB'];
-            $resultAddPB = add_new_phongban($maPB, $namePB);
+            $truongphong = "";
+            $resultAddPB = add_new_phongban($maPB, $namePB, $truongphong);
             if($resultAddPB['code'] == 0){
                 $success = $resultAddPB['message'];
             }else{

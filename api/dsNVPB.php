@@ -57,6 +57,45 @@
         $success = "";
         $error = "";
         $maPB = $_GET['maPB'];
+
+        if(isset($_POST['boNhiem'])){
+            $nameBoNhiem = $_POST['nameNVToBoNhiem'];
+            $maPBBoNhiem = $_POST['phongBanBoNhiem'];
+
+            $resultBoNhiem = choose_truong_phong($nameBoNhiem, $maPBBoNhiem);
+
+            if($resultBoNhiem['code'] == 0){
+                $success = $resultBoNhiem['message'];
+            }else{
+                $error = $resultBoNhiem['message'];
+            }
+        }else if(isset($_POST['huyBoNhiem'])){
+            $nameBoNhiem = "";
+            $maPBBoNhiem = $_POST['phongBanBoNhiem'];
+            $resultHuyBoNhiem = reject_truong_phong($nameBoNhiem, $maPBBoNhiem);
+
+            if($resultHuyBoNhiem['code'] == 0){
+                $success = $resultHuyBoNhiem['message'];
+            }else{
+                $error = $resultHuyBoNhiem['message'];
+            }
+        }else if(isset($_POST['del'])){
+            $id = $_POST['idToDel'];
+            $result4 = delete_nhan_vien($id);
+
+            if($result4['code'] == 0){
+                $success = $result4['message'];
+            }else{
+                $error = $result4['message'];
+            }
+        }
+
+        $result3 = get_button_truongphong($maPB);
+        if($result3['code'] == 0){
+            $data3 = $result3['data'];
+        }else{
+            $error = $result3['message'];
+        }
     ?>
     <div class="table-responsive">
             <table border="1" class="table table-lg table-striped text-center">
@@ -64,7 +103,8 @@
                     <tr>
                         <th>STT</th>
                         <th>Tên nhân viên</th>
-                        <th>Trạng thái</th>                    
+                        <th>Trạng thái</th>
+                        <th>Bổ nhiệm</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,8 +118,29 @@
                         <td><?=$stt?></td>
                         <td><a style="text-decoration: none; color: black; font-weight: bold;" href="chiTietNV.php?name=<?=$row1['name']?>"><?=$row1["name"]?></a></td>
                         <form method="post">
+                            <input type="hidden" name="idToDel" value="<?=$row1['id']?>">
                             <td><button type="submit" name="del" class="btn btn-danger">DELETE</button></td>
                         </form>
+                        <?php
+                            if($data3['truongphong'] == $row1['name']){
+                                ?>
+                                <form method="post">
+                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
+                                </form>
+                                <?php
+                            }else{
+                                ?>
+                                <form method="post">
+                                    <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
+                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Choose</button></td>
+                                </form>
+                                <?php
+                            }
+                        ?>
+
+
                     </tr>
 
                     <?php 
@@ -100,7 +161,6 @@
                     }
                 ?>
             </p>
-            <!-- <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button> -->
     </div>
 </body>
 </html>

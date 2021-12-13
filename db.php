@@ -144,11 +144,22 @@
         return array('code' => 0, 'message' =>'Xoá phòng ban thành công');
     }
 
-    function add_new_phongban($maPB, $namePB){
+    function delete_nhan_vien_by_phongban($maPB){
         $conn = open_database();
-        $sql = "INSERT INTO phongban (maPB, namePB) VALUES(?,?)";
+        $sql = "delete from nhanvien where maPB = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss",$maPB, $namePB);
+        $stmt->bind_param('s', $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+    }
+
+    function add_new_phongban($maPB, $namePB, $truongphong){
+        $conn = open_database();
+        $sql = "INSERT INTO phongban (maPB, namePB, truongphong) VALUES(?,?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss",$maPB, $namePB, $truongphong);
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
         }
@@ -185,5 +196,58 @@
             return array('code' => 2, 'message' => 'Tìm không thấy thông tin nhân viên');
         }
         return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
+
+    function choose_truong_phong($name, $maPB){
+        $conn = open_database();
+        $sql = "update phongban set truongphong = ? where maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $name, $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Bổ nhiệm tổ trưởng thành công');
+    }
+
+    function reject_truong_phong($name, $maPB){
+        $conn = open_database();
+        $sql = "update phongban set truongphong = ? where maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $name, $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Huỷ bổ nhiệm tổ trưởng thành công');
+    }
+
+    function get_button_truongphong($maPB){
+        $conn = open_database();
+        $sql = "select * from phongban where maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=> 'cannot execute command');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code'=>2, 'message'=> 'không có dữ liệu');
+        }
+        $data = $result->fetch_assoc();
+        return array('code'=>0, 'message'=> 'cannot execute command','data'=>$data);
+    }
+
+    function delete_nhan_vien($id){
+        $conn = open_database();
+        $sql = "delete from nhanvien where id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Xoá nhân viên thành công');
     }
 ?>
