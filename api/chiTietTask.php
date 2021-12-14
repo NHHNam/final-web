@@ -25,12 +25,19 @@ require_once('../db.php');
         a i{
             font-size: 30px;
         }
+
+        .wrap{
+            display: flex;
+            justify-content: center;
+        }
+
         .tinhchinh{
             margin-top: 20px;
             text-align: center;
         }
         .tinhchinh .btn{
-            width: 500px;
+            margin-right: 30px;
+            width: 300px;
             padding: 10px;
         }
     </style>
@@ -60,6 +67,7 @@ if($result['code'] == 0){
 </nav>
 <?php
 $error = "";
+$success = "";
 $tenTask = $_GET['tenTask'];
 $result1 = get_task_by_name($tenTask);
 if($result1['code'] == 0){
@@ -80,7 +88,37 @@ if(check_truong_phong($data['name'], $data['maPB']) == true){
     <?php
 }
 ?>
+<?php
+if(isset($_POST['nopTask'])){
+    $nameTask = $_POST['tenTask'];
+    $status = "đã nộp chờ xét duyệt";
+    $result2 = nop_task($nameTask, $status);
 
+    if($result2['code'] == 0){
+        $success = $result2['message'];
+    }else{
+        $error = $result2['message'];
+    }
+}else if(isset($_POST['duyet'])){
+    $nameTask = $_POST['tenTask'];
+    $status = "đã hoàn thành";
+    $result3 = duyet_task($nameTask, $status);
+    if($result3['code'] == 0){
+        $success = $result3['message'];
+    }else{
+        $error = $result3['message'];
+    }
+}else if(isset($_POST['reject'])){
+    $nameTask = $_POST['tenTask'];
+    $status = "yêu cầu làm lại";
+    $result4 = reject_task($nameTask, $status);
+    if($result4['code'] == 0){
+        $success = $result4['message'];
+    }else{
+        $error = $result4['message'];
+    }
+}
+?>
 <div class="container">
     <div class="d-flex justify-content-center">
         <div class="card">
@@ -121,6 +159,8 @@ if(check_truong_phong($data['name'], $data['maPB']) == true){
                         <?php
                         if(!empty($error)){
                             echo "<div class='alert alert-danger'>$error</div>";
+                        }else if(!empty($success)){
+                            echo "<div class='alert alert-success'>$success</div>";
                         }
                         ?>
                     </p>
@@ -131,19 +171,34 @@ if(check_truong_phong($data['name'], $data['maPB']) == true){
     <?php
         if(check_truong_phong($data['name'], $data['maPB']) == true){
             ?>
-            <div class="tinhchinh">
-                <button class="btn btn-success">Duyệt</button>
-                <button class="btn btn-danger">Từ chối</button>
+            <div class="wrap">
+                <div class="tinhchinh">
+                    <form method="post">
+                        <input type="hidden" name="tenTask" value="<?=$data1['tenTask']?>">
+                        <button type="submit" name="duyet" class="btn btn-success">Duyệt</button>
+                    </form>
+                </div>
+                <div class="tinhchinh">
+                    <form method="post">
+                        <input type="hidden" name="tenTask" value="<?=$data1['tenTask']?>">
+                        <button type="submit" name="reject" class="btn btn-danger">Từ chối</button>
+                    </form>
+                </div>
             </div>
+
             <?php
         }else{
             ?>
             <div class="tinhchinh">
-                <button class="btn btn-success">Nộp</button>
+                <form method="post">
+                    <input type="hidden" name="tenTask" value="<?=$data1['tenTask']?>">
+                    <button type="submit" class="btn btn-success" name="nopTask">Nộp</button>
+                </form>
             </div>
             <?php
         }
     ?>
+
 
 </div>
 </body>

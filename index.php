@@ -64,6 +64,8 @@
         $nameOfNv = $data['name'];
         ?>
         <h3 style='color: red;'>Xin chào nhân viên <?=$nameOfNv?> quay trở lại</h3>
+        <h2>Các Task hiện có: </h2>
+        <br>
         <div class="table-responsive">
             <table class="table table-lg table-striped text-center">
                 <thead>

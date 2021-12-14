@@ -134,7 +134,7 @@
                                 <form method="post">
                                     <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
                                     <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
-                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Choose</button></td>
+                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
                                 </form>
                                 <?php
                             }

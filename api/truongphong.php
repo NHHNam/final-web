@@ -61,6 +61,8 @@ if($result['code'] == 0){
 </nav>
 
 <div class="table-responsive">
+    <h2>Các Task hiện có: </h2>
+    <br>
     <table class="table table-lg table-striped text-center">
         <thead>
         <tr>
@@ -93,6 +95,45 @@ if($result['code'] == 0){
         }else{
             ?>
                 <h4>Không có dữ liệu nào hết</h4>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+    <br>
+    <h2>Các Task đã hoàn thành: </h2>
+    <br>
+    <table class="table table-lg table-striped text-center">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên task </th>
+            <th>Trạng thái</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $st = 1;
+        $resultList1 = get_task_success($data['maPB']);
+        if($resultList1['code'] == 0){
+            foreach ($resultList1['data'] as $row) {
+                ?>
+                <tr>
+                    <td><?=$st?></td>
+                    <td><a style="text-decoration: none; color: black;" href="chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
+                    <td><?=$row['status']?></td>
+                    <td>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+
+                <?php
+                $stt += 1;
+            }
+        }else{
+            ?>
+            <h4>Không có dữ liệu nào hết</h4>
             <?php
         }
         ?>

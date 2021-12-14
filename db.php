@@ -269,7 +269,7 @@
 
     function get_task_by_nhan_vien($name, $maPB){
         $conn = open_database();
-        $sql = "select * from task where nhanvien = ? and maPB = ?";
+        $sql = "select * from task where nhanvien = ? and maPB = ? and status !='đã hoàn thành'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ss', $name, $maPB);
 
@@ -305,7 +305,27 @@
 
     function get_all_task_by_phong_ban($maPB){
         $conn = open_database();
-        $sql = "select * from task where maPB = ?";
+        $sql = "select * from task where maPB = ? and status !='đã hoàn thành'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute message');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code' => 2, 'message' => 'Tìm không thấy');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+
+        return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
+
+    function get_task_success($maPB){
+        $conn = open_database();
+        $sql = "select * from task where maPB = ? and status ='đã hoàn thành'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $maPB);
 
@@ -332,5 +352,41 @@
             return array('code'=>1, 'message'=>'cannot execute command');
         }
         return array('code'=>0, 'message'=>'Giao task thành công');
+    }
+
+    function nop_task($tenTask, $status){
+        $conn = open_database();
+        $sql = "update task set status = ? where tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss',$status, $tenTask);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Nộp thành công');
+    }
+
+    function duyet_task($tenTask, $status){
+        $conn = open_database();
+        $sql = "update task set status = ? where tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss',$status, $tenTask);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Task đã được hoàn thành');
+    }
+
+    function reject_task($tenTask, $status){
+        $conn = open_database();
+        $sql = "update task set status = ? where tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss',$status, $tenTask);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Từ chối bài làm yêu cầu làm lại');
     }
 ?>

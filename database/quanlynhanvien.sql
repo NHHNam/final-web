@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 13, 2021 at 12:36 PM
+-- Generation Time: Dec 14, 2021 at 04:46 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -111,9 +111,9 @@ CREATE TABLE `task` (
 --
 
 INSERT INTO `task` (`id`, `tenTask`, `descTask`, `nhanvien`, `maPB`, `deadline`, `status`) VALUES
-(1, 'làm việc 1', 'làm những gì các bạn được giao', 'Nguyễn Hưng Hoài Nam', 'PT', '2021-12-14', 'được giao'),
-(2, 'Làm website bán hàng', 'Ở đây các bạn cần làm giao diện của trang web bán hàng', 'Nguyễn Hưng Hoài Nam', 'PT', '2021-12-16', 'được giao'),
-(3, 'Làm thống kê tháng 11', 'Cần thống kê tổng kết tháng 11', 'Lê Ngọc Trân', 'KT', '2021-12-14', 'được giao'),
+(1, 'làm việc 1', 'làm những gì các bạn được giao', 'Nguyễn Hưng Hoài Nam', 'PT', '2021-12-14', 'đã hoàn thành'),
+(2, 'Làm website bán hàng', 'Ở đây các bạn cần làm giao diện của trang web bán hàng', 'Nguyễn Hưng Hoài Nam', 'PT', '2021-12-16', 'đã nộp chờ xét duyệt'),
+(3, 'Làm thống kê tháng 11', 'Cần thống kê tổng kết tháng 11', 'Lê Ngọc Trân', 'KT', '2021-12-14', 'đã nộp chờ xét duyệt'),
 (4, 'Đi kiểm thử website', 'Kiểm tra chức năng website', 'Đăng Trường', 'PT', '2021-12-17', 'được giao');
 
 --
