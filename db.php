@@ -567,6 +567,19 @@
         return array('code'=>0, 'message'=>'Duyệt nghỉ phép thành công');
     }
 
+    function reject_xin_nghi_by_truong_phong($nameNV, $status, $id){
+        $conn = open_database();
+
+        $sql = "update nghiphep set status = ? where name = ? and id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssi', $status, $nameNV, $id);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Từ chối nghỉ phép thành công');
+    }
+
     function get_all_nghiphep_admin(){
         $conn = open_database();
         $sql = "SELECT * FROM phongban p, nghiphep n WHERE p.truongphong = n.name";

@@ -60,7 +60,7 @@
     ?>
 
 
-    <?php 
+<?php 
         if(isset($_POST['duyet'])){
             $nameNV = $_POST['nameNvToDuyet'];
             $status = "approved";
@@ -73,14 +73,14 @@
             }
             // print_r($_POST);
         }else if(isset($_POST['reject'])){
-            $nameNV = $_POST['nameNvToDuyet'];
+            $nameNV = $_POST['nameNvToReject'];
             $status = "rejected";
-            $id = $_POST['id'];
-            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id);
-            if($resultDuyet['code'] == 0){
-                $success = $resultDuyet['message'];
+            $id = $_POST['idreject'];
+            $resultRejected = reject_xin_nghi_by_truong_phong($nameNV, $status, $id);
+            if($resultRejected['code'] == 0){
+                $success = $resultRejected['message'];
             }else{
-                $error = $resultDuyet['message'];
+                $error = $resultRejected['message'];
             }
         }
     ?>
@@ -115,7 +115,7 @@
                                         <td><?=$row1['status']?></td>
                                         <td>
                                             <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
-                                            <button onclick="update_name_duyet_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
+                                            <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
                                         </td>
                                     </tr>
                                     <?php
@@ -183,7 +183,6 @@
                   <div class="modal-footer">
                       <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
                       <input type="hidden" name="id" id="id">
-                      <input type="hidden" name="maPBOfNV" id="maPBOfNV">
                      <button type="submit" name="duyet" class="btn btn-danger">Duyệt</button>
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>
@@ -203,16 +202,15 @@
 
                   <div class="modal-body">
                     <div>
-                        bạn có chắc muốn duyệt đơn xin nghỉ phép cho nhân viên <strong id="nhanVienCanDuyet">Hoài Nam</strong>
+                    bạn có chắc muốn duyệt đơn xin nghỉ phép cho nhân viên <strong id="nhanVienCanReject">Hoài Nam</strong>
                     </div>
                   </div>
             
                   <div class="modal-footer">
-                      <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
-                      <input type="hidden" name="id" id="id">
-                      <input type="hidden" name="maPBOfNV" id="maPBOfNV">
-                     <button type="submit" name="reject" class="btn btn-danger">reject</button>
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                    <input type="hidden" name="nameNvToReject" id="nameNvToReject">
+                    <input type="hidden" name="idreject" id="idreject">
+                    <button type="submit" name="reject" class="btn btn-danger">reject</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>
                </form>            
             </div>

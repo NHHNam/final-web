@@ -45,12 +45,22 @@ function update_name_for_duyet_task(nameTask){
     nameToDuyet.val(nameTask);
 }
 
-function update_name_duyet_nghi(name, id, maPB){
-    let nameNV = $('#nameNvToDuyet');
+function update_name_duyet_nghi(name, id){
+    let nameNV = $('#nhanVienCanDuyet');
     let idDon = $('#id')
-    let PB = $('#maPBOfNV');
+    let name1 = $('#nameNvToDuyet');
 
-    nameNV.val(name);
+    nameNV.html(name);
     idDon.val(id);
-    PB.val(maPB);
+    name1.val(name);
+}
+
+function update_name_reject_nghi(name, id){
+    let nameNV = $('#nhanVienCanReject');
+    let idDon = $('#idreject')
+    let name1 = $('#nameNvToReject');
+
+    name1.val(name)
+    nameNV.html(name);
+    idDon.val(id);
 }

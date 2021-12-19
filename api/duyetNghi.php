@@ -87,7 +87,6 @@
             $nameNV = $_POST['nameNvToDuyet'];
             $status = "approved";
             $id = $_POST['id'];
-            $maPB  = $_POST['maPBOfNV'];
             $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id);
             if($resultDuyet['code'] == 0){
                 $success = $resultDuyet['message'];
@@ -96,14 +95,14 @@
             }
             // print_r($_POST);
         }else if(isset($_POST['reject'])){
-            $nameNV = $_POST['nameNvToDuyet'];
+            $nameNV = $_POST['nameNvToReject'];
             $status = "rejected";
-            $id = $_POST['id'];
-            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id);
-            if($resultDuyet['code'] == 0){
-                $success = $resultDuyet['message'];
+            $id = $_POST['idreject'];
+            $resultRejected = reject_xin_nghi_by_truong_phong($nameNV, $status, $id);
+            if($resultRejected['code'] == 0){
+                $success = $resultRejected['message'];
             }else{
-                $error = $resultDuyet['message'];
+                $error = $resultRejected['message'];
             }
         }
     ?>
@@ -132,7 +131,7 @@
                                     
                                     foreach ($data1 as $row1) {
                                         if($row1['status'] == "waiting"){
-                                            if(check_truong_phong($data['name'], $data['maPB']) == false){
+                                            if(check_truong_phong($row1['name'], $row1['maPB']) == false){
                                                 ?>
                                                 <tr>
                                                     <td><?=$stt?></td>
@@ -140,14 +139,59 @@
                                                     <td><?=$row1['reason']?></td>
                                                     <td><?=$row1['status']?></td>
                                                     <td>
-                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>, '<?=$data['maPB']?>')" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
-                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>',<?=$row1['id']?>, '<?=$data['maPB']?>')" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
+                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
+                                                        <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
                                                     </td>
                                                 </tr>
                                                 <?php
                                                 $stt += 1;
                                             }
                                         }
+                                    }
+                                }
+                            }else{
+                                ?>
+                                    <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
+                                <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                </br>
+                <p>Đơn xin nghỉ của bản thân: </p>
+                <div class="table-responsive">
+                    <table class="table table-lg table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Nhân viên</th>
+                            <th>Reason</th>
+                            <th>Tình trạng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $stt = 1;
+                            $resultList = get_all_nghiphep_admin();
+                            if($resultList['code'] == 0){
+                                $data1 = $resultList['data'];
+                                if(count($data1) > 0 && is_array($data1)){
+                                    
+                                    foreach ($data1 as $row1) {
+                                       
+                                            if(check_truong_phong($row1['name'], $row1['maPB']) == true){
+                                                ?>
+                                                <tr>
+                                                    <td><?=$stt?></td>
+                                                    <td><?=$row1['name']?></td>
+                                                    <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['status']?></td>
+                                                </tr>
+                                                <?php
+                                                $stt += 1;
+                                            }
+                                        
                                     }
                                 }
                             }else{
@@ -239,7 +283,7 @@
     <div class="modal fade" id="confirm-duyet">
          <div class="modal-dialog">
             <div class="modal-content">
-               <form method="post" enctype="multipart/form-data">
+               <form method="post">
                   <div class="modal-header">
                      <h4 class="modal-title">Duyệt nghỉ phép</h4>
                      <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -254,7 +298,6 @@
                   <div class="modal-footer">
                       <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
                       <input type="hidden" name="id" id="id">
-                      <input type="hidden" name="maPBOfNV" id="maPBOfNV">
                      <button type="submit" name="duyet" class="btn btn-danger">Duyệt</button>
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>
@@ -266,7 +309,7 @@
       <div class="modal fade" id="confirm-reject">
          <div class="modal-dialog">
             <div class="modal-content">
-               <form method="post" enctype="multipart/form-data">
+               <form method="post">
                   <div class="modal-header">
                      <h4 class="modal-title">Reject nghỉ phép</h4>
                      <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -274,14 +317,13 @@
 
                   <div class="modal-body">
                     <div>
-                        bạn có chắc muốn duyệt đơn xin nghỉ phép cho nhân viên <strong id="nhanVienCanDuyet">Hoài Nam</strong>
+                        bạn có chắc muốn duyệt đơn xin nghỉ phép cho nhân viên <strong id="nhanVienCanReject">Hoài Nam</strong>
                     </div>
                   </div>
             
                   <div class="modal-footer">
-                      <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
-                      <input type="hidden" name="id" id="id">
-                      <input type="hidden" name="maPBOfNV" id="maPBOfNV">
+                      <input type="hidden" name="nameNvToReject" id="nameNvToReject">
+                      <input type="hidden" name="idreject" id="idreject">
                      <button type="submit" name="reject" class="btn btn-danger">reject</button>
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>
