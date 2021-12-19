@@ -63,8 +63,10 @@ if(isset($_POST['add'])){
     $PB = $_POST['maPB'];
     $nhanvien = $_POST['nhanvien'];
     $dead = $_POST['deadTask'];
-    $status = "được giao";
-    $resultAddTask = add_new_task($tenTask, $descTask, $nhanvien, $PB, $dead, $status);
+    $status = "New";
+    $fileNop = "";
+    $quality = "";
+    $resultAddTask = add_new_task($tenTask, $descTask, $nhanvien, $PB, $dead, $fileNop,$status, $quality);
     if($resultAddTask['code'] == 0){
         $success = $resultAddTask['message'];
     }else{

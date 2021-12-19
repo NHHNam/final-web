@@ -113,11 +113,29 @@
         return array('code' => 0, 'message' =>'Thay hình đại diện thành công');
     }
 
-    function add_new_nhanvien($name, $username, $pwd, $maPB, $image){
+    function check_username_exists($username){
         $conn = open_database();
-        $sql = "INSERT INTO nhanvien (name, username, password,maPB,image) VALUES (?,?,?,?,?)";
+        $sql = "SELECT * from nhanvien where username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss",$name, $username, $pwd, $maPB, $image);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return false;
+        }
+        return true;
+    }
+
+    function add_new_nhanvien($name, $username, $pwd, $maPB, $image, $tongngaynghi, $duocnghi){
+        if(check_username_exists($username)){
+            return array('code' => 2, 'message' => 'Tên tài khoản này đã tồn tại vui lòng nhập tên khác');
+        }
+
+        $conn = open_database();
+        $sql = "INSERT INTO nhanvien (name, username, password,maPB,image, tongngaynghi, duocnghi) VALUES (?,?,?,?,?,?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssii",$name, $username, $pwd, $maPB, $image, $tongngaynghi, $duocnghi);
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
         }
@@ -198,25 +216,31 @@
         return array('code' => 0, 'message' =>'', 'data' => $data);
     }
 
-    function choose_truong_phong($name, $maPB){
+    function choose_truong_phong($name, $maPB, $duocnghi){
         $conn = open_database();
         $sql = "update phongban set truongphong = ? where maPB = ?";
+        $sql1 = "update nhanvien set duocnghi = ? where name = ?";
         $stmt = $conn->prepare($sql);
+        $stmt1 = $conn->prepare($sql1);
         $stmt->bind_param('ss', $name, $maPB);
+        $stmt1->bind_param('is', $duocnghi, $name);
 
-        if(!$stmt->execute()){
+        if(!$stmt->execute() || !$stmt1->execute()){
             return array('code'=>1, 'message'=>'cannot execute command');
         }
         return array('code'=>0, 'message'=>'Bổ nhiệm tổ trưởng thành công');
     }
 
-    function reject_truong_phong($name, $maPB){
+    function reject_truong_phong($name, $maPB, $duocnghi, $nameOld){
         $conn = open_database();
         $sql = "update phongban set truongphong = ? where maPB = ?";
+        $sql1 = "update nhanvien set duocnghi = ? where name = ?";
         $stmt = $conn->prepare($sql);
+        $stmt1 = $conn->prepare($sql1);
         $stmt->bind_param('ss', $name, $maPB);
+        $stmt1->bind_param('is', $duocnghi, $nameOld);
 
-        if(!$stmt->execute()){
+        if(!$stmt->execute() || !$stmt1->execute()){
             return array('code'=>1, 'message'=>'cannot execute command');
         }
         return array('code'=>0, 'message'=>'Huỷ bổ nhiệm tổ trưởng thành công');
@@ -269,7 +293,26 @@
 
     function get_task_by_nhan_vien($name, $maPB){
         $conn = open_database();
-        $sql = "select * from task where nhanvien = ? and maPB = ? and status !='đã hoàn thành'";
+        $sql = "select * from task where nhanvien = ? and maPB = ? and status !='Completed'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $name, $maPB);
+
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute message');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code'=>2, 'message'=>'Không có công việc nào được giao');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>0, 'message'=>'', 'data'=>$data);
+    }
+
+    function get_task_completed_by_nhanvien($name, $maPB){
+        $conn = open_database();
+        $sql = "select * from task where nhanvien = ? and maPB = ? and status ='Completed'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('ss', $name, $maPB);
 
@@ -305,7 +348,7 @@
 
     function get_all_task_by_phong_ban($maPB){
         $conn = open_database();
-        $sql = "select * from task where maPB = ? and status !='đã hoàn thành'";
+        $sql = "select * from task where maPB = ? and status !='Completed'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $maPB);
 
@@ -325,7 +368,7 @@
 
     function get_task_success($maPB){
         $conn = open_database();
-        $sql = "select * from task where maPB = ? and status ='đã hoàn thành'";
+        $sql = "select * from task where maPB = ? and status ='Completed'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('s', $maPB);
 
@@ -343,22 +386,22 @@
         return array('code' => 0, 'message' =>'', 'data' => $data);
     }
 
-    function add_new_task($nameTask, $descTask, $nhanvien, $maPB, $dead, $status){
+    function add_new_task($nameTask, $descTask, $nhanvien, $maPB, $dead, $fileNop, $status, $quality){
         $conn = open_database();
-        $sql = "insert into task(tenTask, descTask, nhanvien, maPB, deadline, status) values (?, ?, ?, ?, ?, ?)";
+        $sql = "insert into task(tenTask, descTask, nhanvien, maPB, deadline, fileTask, status, quality) values (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssssss', $nameTask, $descTask, $nhanvien, $maPB, $dead, $status);
+        $stmt->bind_param('ssssssss', $nameTask, $descTask, $nhanvien, $maPB, $dead, $fileNop, $status, $quality);
         if(!$stmt->execute()){
             return array('code'=>1, 'message'=>'cannot execute command');
         }
         return array('code'=>0, 'message'=>'Giao task thành công');
     }
 
-    function nop_task($tenTask, $status){
+    function nop_task($tenTask, $fileNop,$status){
         $conn = open_database();
-        $sql = "update task set status = ? where tenTask = ?";
+        $sql = "update task set fileTask = ?, status = ? where tenTask = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss',$status, $tenTask);
+        $stmt->bind_param('sss', $fileNop, $status, $tenTask);
 
         if(!$stmt->execute()){
             return array('code'=>1, 'message'=>'cannot execute command');
@@ -366,11 +409,11 @@
         return array('code'=>0, 'message'=>'Nộp thành công');
     }
 
-    function duyet_task($tenTask, $status){
+    function duyet_task($tenTask, $status, $quality){
         $conn = open_database();
-        $sql = "update task set status = ? where tenTask = ?";
+        $sql = "update task set status = ?, quality = ? where tenTask = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss',$status, $tenTask);
+        $stmt->bind_param('sss',$status, $quality, $tenTask);
 
         if(!$stmt->execute()){
             return array('code'=>1, 'message'=>'cannot execute command');
@@ -388,5 +431,154 @@
             return array('code'=>1, 'message'=>'cannot execute command');
         }
         return array('code'=>0, 'message'=>'Từ chối bài làm yêu cầu làm lại');
+    }
+
+    function check_admin($username){
+        $conn = open_database();
+        $sql = "select * from giamdoc where username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $username);
+        
+        if(!$stmt->execute()){
+            return array('code'=> 1, 'message' =>'Cannot execute query');
+        }
+
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code' => 2, 'message' => 'No exists admin');
+        }
+        return array('code'=>0, 'message'=>'Là admin');
+    }
+
+    function reset_password($username, $pwd){
+        $conn = open_database();
+        $sql = "update nhanvien set password = ? where username = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $pwd, $username);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+
+        return array('code' => 0, 'message' =>'Reset password thành công');
+    }
+
+    function delete_task($nameTask){
+        $conn = open_database();
+        $sql = "DELETE FROM task WHERE tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $nameTask);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+
+        return array('code' => 0, 'message'=>'Xoá task thành công');
+    }
+
+    function edit_task($nameTask, $descTask, $nhanvien, $dead, $id){
+        $conn = open_database();
+        $sql = "update task set tenTask = ?, descTask = ?, nhanvien = ?, deadline = ? where id =  ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssssi', $nameTask, $descTask, $nhanvien, $dead, $id);
+        if(!$stmt->execute()){
+            return array('code'=>1, 'message'=>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Sửa task thành công');
+    }
+
+    function start_task($nameTask, $status){
+        $conn = open_database();
+        $sql = "update task set status = ? where tenTask = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ss', $status, $nameTask);
+
+        if(!$stmt->execute()){
+            return array('code'=> 1, 'message' =>'cannot execute command');
+        }
+        return array('code' => 0, 'message'=>'Bắt đầu làm task '. $nameTask);
+    }
+
+    function xin_nghi($nameNv, $reason, $maPB, $status){
+        $conn = open_database();
+        $sql = "insert into nghiphep(name, reason, maPB, status) values(?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssss', $nameNv, $reason, $maPB, $status);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+
+        return array('code' => 0, 'message' =>'Xin nghỉ phép thành công');
+    }
+
+    function get_don_nghiphep($nameNv){
+        $conn = open_database();
+        $sql = "SELECT * from nghiphep where name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $nameNv);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code'=>2, 'message'=>'Không có đơn xin nghỉ nào');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>0, 'message'=>'', 'data'=>$data);
+    }
+
+    function get_don_nghiphep_truongphong($maPB){
+        $conn = open_database();
+
+        $sql = "SELECT * FROM nhanvien n, nghiphep p WHERE n.name = p.name and n.maPB = p.maPB and p.maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $maPB);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code'=>2, 'message'=>'Không có đơn xin nghỉ nào');
+        }
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>0, 'message'=>'', 'data'=>$data);
+    }
+
+    function approve_xin_nghi_by_truong_phong($nameNV, $status, $id){
+        $conn = open_database();
+
+        $sql = "update nghiphep set status = ? where name = ? and id = ?";
+        $sql1 = "update nhanvien set tongngaynghi = (tongngaynghi + 1) where name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt1 = $conn->prepare($sql1);
+        $stmt->bind_param('ssi', $status, $nameNV, $id);
+        $stmt1->bind_param('s', $nameNV);
+
+        if(!$stmt->execute() || !$stmt1->execute()){
+            return array('code' => 1, 'message' =>'cannot execute command');
+        }
+        return array('code'=>0, 'message'=>'Duyệt nghỉ phép thành công');
+    }
+
+    function get_all_nghiphep_admin(){
+        $conn = open_database();
+        $sql = "SELECT * FROM phongban p, nghiphep n WHERE p.truongphong = n.name";
+        $stmt = $conn->query($sql);
+        
+        if($stmt->num_rows == 0){
+            return array('code' => 1, 'message' =>'Không có đơn xin nghỉ phép');
+        }
+        $data = array();
+        while($row1 = $stmt->fetch_assoc()){
+            $data[] = $row1;
+        }
+        return array('code' => 0, 'message' =>'', 'data' => $data);
     }
 ?>

@@ -44,6 +44,7 @@
                 <img src="<?= $data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
                 </button>
                 <div class="dropdown-menu">
+                    <a class="dropdown-item" href="api/duyetNghiAdmin.php">Duyet</a>
                     <a class="dropdown-item" href="logout.php">Đăng xuất</a>
                 </div>
             </div>

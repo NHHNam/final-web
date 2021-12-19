@@ -16,7 +16,8 @@ if(!$_SESSION['username']){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <!--Fontawesome CDN-->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
         .nav-item .dropdown{
             margin-right: 80px;
@@ -81,11 +82,38 @@ if($result['code'] == 0){
             ?>
             <tr>
                 <td><?=$stt?></td>
-                <td><a style="text-decoration: none; color: black;" href="chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
+                <td><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
                 <td><?=$row1['status']?></td>
                 <td>
-                    <button type="submit" class="btn btn-success">Edit</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <?php 
+                        if($row1['status'] == "New"){
+                            ?>
+                                <span>
+                                    <i 
+                                        style="cursor: pointer" 
+                                        onclick="add_value_id_edit(<?=$row1['id']?>, '<?=$row1['tenTask']?>','<?=$row1['descTask']?>','<?=$row1['nhanvien']?>', '<?=$row1['deadline']?>')" 
+                                        class="fas fa-edit" 
+                                        data-toggle="modal" data-target="#confirm-edit"
+                                    ></i>
+                                </span>
+                                <span>
+                                    <i 
+                                        style="cursor: pointer" 
+                                        onclick="update_name_delete_task('<?=$row1['tenTask']?>')" 
+                                        class="fa fa-trash action" 
+                                        data-toggle="modal" data-target="#confirm-delete">
+                                    </i>
+                                </span>
+                            <?php
+                        }else{
+                            ?>
+                                <p>No Thing To Do</p>
+                            <?php
+                        }
+
+                    ?>
+                    
+                    
                 </td>
             </tr>
 
@@ -109,7 +137,7 @@ if($result['code'] == 0){
             <th>STT</th>
             <th>Tên task </th>
             <th>Trạng thái</th>
-            <th>Action</th>
+            <th>Quality</th>
         </tr>
         </thead>
         <tbody>
@@ -121,15 +149,13 @@ if($result['code'] == 0){
                 ?>
                 <tr>
                     <td><?=$st?></td>
-                    <td><a style="text-decoration: none; color: black;" href="chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
+                    <td><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
                     <td><?=$row['status']?></td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </td>
+                    <td><?=$row['quality']?></td>
                 </tr>
 
                 <?php
-                $stt += 1;
+                $st += 1;
             }
         }else{
             ?>
@@ -141,6 +167,116 @@ if($result['code'] == 0){
     </table>
     <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
 </div>
+
+    <?php 
+        if(isset($_POST['del'])){
+            $tenTask = $_POST['tenToDel'];
+            $resultDel = delete_task($tenTask);
+            if($resultDel['code'] == 0){
+                $success = $resultDel['message'];
+            }else{
+                $error = $resultDel['message'];
+            }
+        }else if(isset($_POST['edit'])){
+            $name = $_POST['nameTask'];
+            $cTTask = $_POST['cTTask'];
+            $nhanvien = $_POST['nhanvien'];
+            $deadTask = $_POST['deadTask'];
+            $idToEdit = $_POST['idToEdit'];
+
+            $resultEdit = edit_task($name, $cTTask, $nhanvien, $deadTask, $idToEdit);
+            if($resultEdit['code'] == 0){
+                $success = $resultEdit['message'];
+            }else{
+                $error = $resultEdit['message'];
+            }
+        }
+    ?>
+
+    <div class="modal fade" id="confirm-delete">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Xóa task</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                    Bạn có chắc rằng muốn xóa task <strong id="task-to-delete">image.jpg</strong>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <input type="hidden" name="tenToDel" id="tenToDel">
+                        <button type="submit" name="del" class="btn btn-danger">Xóa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                    </div>
+                </form>            
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirm-edit">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Sửa task</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-newspaper"></i></span>
+                            </div>
+                            <input class="input-group-text" type="text" id="name" name="nameTask" placeholder="Nhập tên task">
+                        </div>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-newspaper"></i></span>
+                            </div>
+                            <textarea rows="5" cols="19" class="input-group-text" name="cTTask" id="desc" placeholder="Nhập chi tiết task"></textarea>
+
+                        </div>
+
+                        <div class="input-group form-group">
+                            <select name="nhanvien" id="user">
+                                <?php
+                                    $result3 = get_nhanvien_pb($data['maPB']);
+                                if ($result3['data']->num_rows > 0) {
+                                    while($a = $result3['data']->fetch_assoc()) {
+                                        if(check_truong_phong( $a['name'],$data['maPB']) == false){
+                                ?>
+                                <option value="<?=$a['name']?>"><?=$a['name']?></option>
+                                <?php
+                                        }
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-calendar-times"></i></span>
+                            </div>
+                            <input id="dead" class="input-group-text" type="date" name="deadTask">
+
+                        </div>
+                    </div>
+                
+                    <div class="modal-footer">
+                        <input type="hidden" name="idToEdit" id="idToEdit">
+                        <button type="submit" name="edit" class="btn btn-danger">Sửa</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                    </div>
+                </form>            
+            </div>
+        </div>
+    </div>
+    
     <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
         <?php
         if(!empty($error)){
@@ -150,6 +286,6 @@ if($result['code'] == 0){
         }
         ?>
     </p>
-
+    <script src="../js/script.js"></script>
 </body>
 </html>

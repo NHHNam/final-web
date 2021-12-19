@@ -65,8 +65,10 @@
             $pwd = $_POST['pwd'];
             $phongBan = $_POST['phongBan'];
             $imageNV = "images/".$_FILES['hinhDaiDien']['name'];
+            $tongngaynghi = 0;
+            $duocnghi = 12;
             if(move_uploaded_file($_FILES['hinhDaiDien']['tmp_name'], $imageNV)){
-                $resultAdd = add_new_nhanvien($nameNV, $accountname, $pwd, $phongBan, $imageNV);
+                $resultAdd = add_new_nhanvien($nameNV, $accountname, $pwd, $phongBan, $imageNV, $tongngaynghi, $duocnghi);
                 if($resultAdd['code'] == 0){
                     $success = $resultAdd['message'];
                 }else{

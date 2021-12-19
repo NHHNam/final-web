@@ -57,7 +57,7 @@
         $success = "";
         $error = "";
         if(isset($_POST['del'])){
-            $maPB = $_POST['maPB'];
+            $maPB = $_POST['maToDel'];
             $resultDeletePB = delete_phongban($maPB);
             $delAll = delete_nhan_vien_by_phongban($maPB);
             if($resultDeletePB['code'] == 0){
@@ -88,10 +88,7 @@
                         <td><?=$stt?></td>
                         <td><a style="text-decoration: none; color: black; font-weight: bold;" href="dsNVPB.php?maPB=<?=$row1['maPB']?>"><?=$row1["namePB"]?></a></td>
                         <td><?=$row1['truongphong']?></td>
-                        <form method="post">
-                            <input type="hidden" value="<?=$row1["maPB"]?>" name="maPB">
-                            <td><button type="submit" name="del" class="btn btn-danger">DELETE</button></td>
-                        </form>
+                        <td><i onclick="updateDeleteFileDialogPB('<?=$row1['namePB']?>', '<?=$row1['maPB']?>')" style="cursor: pointer" class="fa fa-trash action" data-toggle="modal" data-target="#confirm-delete"></i></td>
                     </tr>
 
                     <?php 
@@ -115,5 +112,28 @@
             <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addNV.php">Thêm nhân viên</a></button>
             <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
     </div>
+    <div class="modal fade" id="confirm-delete">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form method="post">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Xóa phòng ban</h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                  Bạn có chắc rằng muốn xóa phòng ban <strong id="phong-ban-to-delete">image.jpg</strong>
+                  </div>
+            
+                  <div class="modal-footer">
+                      <input type="hidden" name="maToDel" id="maPB">
+                     <button type="submit" name="del" class="btn btn-danger">Xóa</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                  </div>
+               </form>            
+            </div>
+         </div>
+      </div>
+    <script src="../js/script.js"></script>
 </body>
 </html>

@@ -61,8 +61,8 @@
         if(isset($_POST['boNhiem'])){
             $nameBoNhiem = $_POST['nameNVToBoNhiem'];
             $maPBBoNhiem = $_POST['phongBanBoNhiem'];
-
-            $resultBoNhiem = choose_truong_phong($nameBoNhiem, $maPBBoNhiem);
+            $duocnghiTP = 15;
+            $resultBoNhiem = choose_truong_phong($nameBoNhiem, $maPBBoNhiem, $duocnghiTP);
 
             if($resultBoNhiem['code'] == 0){
                 $success = $resultBoNhiem['message'];
@@ -70,9 +70,11 @@
                 $error = $resultBoNhiem['message'];
             }
         }else if(isset($_POST['huyBoNhiem'])){
-            $nameBoNhiem = "";
+            $nameNewBoNhiem = "";
             $maPBBoNhiem = $_POST['phongBanBoNhiem'];
-            $resultHuyBoNhiem = reject_truong_phong($nameBoNhiem, $maPBBoNhiem);
+            $duocnghiNV = 12;
+            $nameOldBoNhiem = $_POST['nameNVToHuyBoNhiem'];
+            $resultHuyBoNhiem = reject_truong_phong($nameNewBoNhiem, $maPBBoNhiem, $duocnghiNV, $nameOldBoNhiem);
 
             if($resultHuyBoNhiem['code'] == 0){
                 $success = $resultHuyBoNhiem['message'];
@@ -98,69 +100,87 @@
         }
     ?>
     <div class="table-responsive">
-            <table border="1" class="table table-lg table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên nhân viên</th>
-                        <th>Trạng thái</th>
-                        <th>Bổ nhiệm</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        $stt = 1;
-                        $resultList = get_nhanvien_pb($maPB);
-                        if ($resultList['data']->num_rows > 0) {
-                            while($row1 = $resultList['data']->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?=$stt?></td>
-                        <td><a style="text-decoration: none; color: black; font-weight: bold;" href="chiTietNV.php?name=<?=$row1['name']?>"><?=$row1["name"]?></a></td>
-                        <form method="post">
-                            <input type="hidden" name="idToDel" value="<?=$row1['id']?>">
-                            <td><button type="submit" name="del" class="btn btn-danger">DELETE</button></td>
-                        </form>
-                        <?php
-                            if($data3['truongphong'] == $row1['name']){
-                                ?>
-                                <form method="post">
-                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
-                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
-                                </form>
-                                <?php
-                            }else{
-                                ?>
-                                <form method="post">
-                                    <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
-                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
-                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
-                                </form>
-                                <?php
-                            }
-                        ?>
-
-
-                    </tr>
-
-                    <?php 
-                        $stt += 1;    
-                        }
+        <table border="1" class="table table-lg table-striped text-center">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên nhân viên</th>
+                    <th>Trạng thái</th>
+                    <th>Bổ nhiệm</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    $stt = 1;
+                    $resultList = get_nhanvien_pb($maPB);
+                    if ($resultList['data']->num_rows > 0) {
+                        while($row1 = $resultList['data']->fetch_assoc()) {
+                ?>
+                <tr>
+                    <td><?=$stt?></td>
+                    <td><a style="text-decoration: none; color: black; font-weight: bold;" href="chiTietNV.php?name=<?=$row1['name']?>"><?=$row1["name"]?></a></td>
+                    <td><i onclick="updateDeleteFileDialog('<?=$row1['name']?>', <?=$row1['id']?>)" style="cursor: pointer" class="fa fa-trash action" data-toggle="modal" data-target="#confirm-delete"></i></td>
+                    <?php
+                        if($data3['truongphong'] == $row1['name']){
+                            ?>
+                            <form method="post">
+                                <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
+                                <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
+                            </form>
+                            <?php
                         }else{
-                            echo "No result found";
+                            ?>
+                            <form method="post">
+                                <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
+                                <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
+                            </form>
+                            <?php
                         }
                     ?>
-                </tbody>
-            </table>
-            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                <?php
-                    if(!empty($error)){
-                        echo "<div class='alert alert-danger'>$error</div>";
-                    }else if(!empty($success)){
-                        echo "<div class='alert alert-success'>$success</div>";
+                </tr>
+                <?php 
+                    $stt += 1;    
+                    }
+                    }else{
+                        echo "No result found";
                     }
                 ?>
-            </p>
+            </tbody>
+        </table>
+        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+            <?php
+                if(!empty($error)){
+                    echo "<div class='alert alert-danger'>$error</div>";
+                }else if(!empty($success)){
+                    echo "<div class='alert alert-success'>$success</div>";
+                }
+            ?>
+        </p>
     </div>
+    <div class="modal fade" id="confirm-delete">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form method="post">
+                  <div class="modal-header">
+                     <h4 class="modal-title">Xóa nhân viên</h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <div class="modal-body">
+                  Bạn có chắc rằng muốn xóa nhân viên <strong id="file-to-delete">image.jpg</strong>
+                  </div>
+            
+                  <div class="modal-footer">
+                      <input type="hidden" name="idToDel" id="idNV">
+                     <button type="submit" name="del" class="btn btn-danger">Xóa</button>
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                  </div>
+               </form>            
+            </div>
+         </div>
+      </div>
+      <script src="../js/script.js"></script>
 </body>
 </html>

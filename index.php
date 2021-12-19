@@ -1,5 +1,8 @@
-<?php 
-    session_start();
+<?php
+
+use function PHPSTORM_META\type;
+
+session_start();
     require_once('db.php');
     if(!$_SESSION['username']){
         header("Location: login.php");
@@ -49,19 +52,37 @@
                     if(check_truong_phong($data['name'], $data['maPB']) == true){
                         ?>
                             <a class="dropdown-item" href="api/truongphong.php">Trưởng phòng</a>
+                            <a class="dropdown-item" href="api/duyetNghi.php">Duyệt nghỉ</a>
                         <?php
                     }
                     ?>
+                    <a class="dropdown-item" href="api/chiTietNV.php">Thông tin cá nhân</a>
                     <a class="dropdown-item" href="updatePassword.php">Đổi mật khẩu</a>
+                    <a class="dropdown-item" href="api/nghiphep.php">Xin nghỉ</a>
                     <a class="dropdown-item" href="updateImage.php">Đổi hình đại diện</a>
                     <a class="dropdown-item" href="logout.php">Đăng xuất</a>
                 </div>
             </div>
         </div>
     </nav>
+
+    <?php 
+        if(isset($_POST['startDo'])){
+            $status = "In progress";
+            $nameTask = $_POST['nameTask'];
+            $resultStart = start_task($nameTask, $status);
+            if($resultStart['code'] == 0){
+                $success = $resultStart['message'];
+            }else{
+                $error = $resultStart['message'];
+            }
+        }    
+    ?>
+
     <?php
     if(!check_truong_phong($data['name'], $data['maPB']) == true){
         $nameOfNv = $data['name'];
+        $maPBOfNv = $data['maPB'];
         ?>
         <h3 style='color: red;'>Xin chào nhân viên <?=$nameOfNv?> quay trở lại</h3>
         <h2>Các Task hiện có: </h2>
@@ -72,24 +93,90 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên task </th>
+                    <th>Tình trạng</th>
                     <th>Trạng thái</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                $stt = 1;
-                $resultList = get_task_by_nhan_vien($data['name'], $data['maPB']);
-                foreach ($resultList['data'] as $row1) {
-                    ?>
-                    <tr>
-                        <td><?=$stt?></td>
-                        <td><a style="text-decoration: none; color: black;" href="api/chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
-                        <td><?=$row1['status']?></td>
-                    </tr>
+                    $stt = 1;
+                    $resultList = get_task_by_nhan_vien($nameOfNv, $maPBOfNv);
+                    if($resultList['code'] == 0){
+                        $dataOfTask = $resultList['data'];
+                        if(count($dataOfTask) > 0 && is_array($dataOfTask)){
+                            foreach ($dataOfTask as $row1) {
+                                ?>
+                                <tr>
+                                    <td><?=$stt?></td>
+                                    <td><a style="text-decoration: none; color: black;" href="chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
+                                    <td><?=$row1['status']?></td>
+                                    <td>
+                                        <?php 
+                                            if($row1['status'] == "New"){
+                                                ?>
+                                                    <form method="post">
+                                                        <input type="hidden" name="nameTask" value="<?=$row1['tenTask']?>">
+                                                        <input class="btn btn-primary" name="startDo" type="submit" value="Start">
+                                                    </form>
+                                                <?php
+                                            }else{
+                                                ?>
+                                                    <p>No Thing To Do</p>
+                                                <?php
+                                            }
+                                        ?>
+                                        
+                                    </td>
+                                </tr>
+                                <?php
+                                $stt += 1;
+                            }
+                        }
+                    }else{
+                        ?>
+                            <div class="alert alert-danger">Không có task được giao</div>
+                        <?php
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
 
-                    <?php
-                    $stt += 1;
-                }
+        <h2>Các Task đã hoàn thành: </h2>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-lg table-striped text-center">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên task </th>
+                    <th>Tình trạng</th>
+                    <th>Quality</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $stt = 1;
+                    $resultList = get_task_completed_by_nhanvien($data['name'], $data['maPB']);
+                    $dataOfTask = $resultList['data'];
+                    if(sizeof($dataOfTask) > 0){
+                        foreach ($dataOfTask as $row1) {
+                            ?>
+                            <tr>
+                                <td><?=$stt?></td>
+                                <td><a style="text-decoration: none; color: black;" href="chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
+                                <td><?=$row1['status']?></td>
+                                <td><?=$row1['quality']?></td>
+                                
+                            </tr>
+                            <?php
+                            $stt += 1;
+                        }
+                    }else{
+                        ?>
+                            <div class="alert alert-danger">Không có task được giao</div>
+                        <?php
+                    }
                 ?>
                 </tbody>
             </table>
