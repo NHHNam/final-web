@@ -62,13 +62,14 @@
         if(isset($_POST['addUser'])){
             $nameNV = $_POST['nameNV'];
             $accountname = "nv".$_POST['accountname'];
-            $pwd = $_POST['pwd'];
+            $pwd = "nv".$_POST['accountname'];
             $phongBan = $_POST['phongBan'];
             $imageNV = "images/".$_FILES['hinhDaiDien']['name'];
             $tongngaynghi = 0;
             $duocnghi = 12;
+            $status = 0;
             if(move_uploaded_file($_FILES['hinhDaiDien']['tmp_name'], $imageNV)){
-                $resultAdd = add_new_nhanvien($nameNV, $accountname, $pwd, $phongBan, $imageNV, $tongngaynghi, $duocnghi);
+                $resultAdd = add_new_nhanvien($nameNV, $accountname, $pwd, $phongBan, $imageNV, $tongngaynghi, $duocnghi, $status);
                 if($resultAdd['code'] == 0){
                     $success = $resultAdd['message'];
                 }else{
@@ -96,13 +97,6 @@
                                 <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
                             </div>
                             <input class="input-group-text" type="text" name="accountname" placeholder="enter username of NV">
-                        </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input class="input-group-text" type="password" name="pwd" placeholder="Enter password of NV">
                         </div>
 
                         <div class="input-group form-group">

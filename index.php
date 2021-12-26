@@ -1,11 +1,17 @@
 <?php
 
-use function PHPSTORM_META\type;
-
-session_start();
+    session_start();
     require_once('db.php');
     if(!$_SESSION['username']){
         header("Location: login.php");
+    }
+    $username = $_SESSION["username"];
+    $result = get_info_nhanvien($username);
+    if($result['code'] == 0){
+        $data = $result['data'];
+    }
+    if($data['status'] == 0){
+        header("Location: updatePassword.php");
     }
 ?>
 <!DOCTYPE html>
@@ -30,13 +36,6 @@ session_start();
     </style>
 </head>
 <body>
-    <?php 
-        $username = $_SESSION["username"];
-        $result = get_info_nhanvien($username);
-        if($result['code'] == 0){
-            $data = $result['data'];
-        }
-    ?>
     <nav class="navbar navbar-expand-sm bg-info justify-content-between">
         <div class="nav-item">
             <h1 class="nav-link">Trang nhân viên</h1>
@@ -134,7 +133,7 @@ session_start();
                         }
                     }else{
                         ?>
-                            <div class="alert alert-danger">Không có task được giao</div>
+                            <div class="alert alert-primary"><?php echo $resultList['message']?></div>
                         <?php
                     }
                 ?>
@@ -157,9 +156,9 @@ session_start();
                 <tbody>
                 <?php
                     $stt = 1;
-                    $resultList = get_task_completed_by_nhanvien($data['name'], $data['maPB']);
-                    $dataOfTask = $resultList['data'];
-                    if(sizeof($dataOfTask) > 0){
+                    $resultList = get_task_completed_by_nhanvien($data['name'], $data['maPB'], "Completed");
+                    if($resultList['code'] == 0){
+                        $dataOfTask = $resultList['data'];
                         foreach ($dataOfTask as $row1) {
                             ?>
                             <tr>
@@ -174,7 +173,7 @@ session_start();
                         }
                     }else{
                         ?>
-                            <div class="alert alert-danger">Không có task được giao</div>
+                            <div class="alert alert-primary"><?php echo $resultList['message']?></div>
                         <?php
                     }
                 ?>

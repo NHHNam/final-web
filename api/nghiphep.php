@@ -1,6 +1,9 @@
 <?php 
     session_start();
     require_once('../db.php');
+    if(!$_SESSION["username"]){
+        header("Location: login.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,6 +126,47 @@
                     </table>
                 </div>
             <?php
+        }else if(check_truong_phong($data['name'], $data['maPB']) == true){
+            ?>
+                <div class="table-responsive">
+                    <table class="table table-lg table-striped text-center">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Name</th>
+                            <th>Reason</th>
+                            <th>Tình trạng</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $stt = 1;
+                            $resultList = get_don_nghiphep($data['name']);
+                            if($resultList['code'] == 0){
+                                $data1 = $resultList['data'];
+                                if(count($data1) > 0 && is_array($data1)){
+                                    foreach ($data1 as $row1) {
+                                        ?>
+                                        <tr>
+                                            <td><?=$stt?></td>
+                                            <td><?=$row1['name']?></td>
+                                            <td><?=$row1['reason']?></td>
+                                            <td><?=$row1['status']?></td>
+                                        </tr>
+                                        <?php
+                                        $stt += 1;
+                                    }
+                                }
+                            }else{
+                                ?>
+                                    <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
+                                <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php 
         }
     ?>
     

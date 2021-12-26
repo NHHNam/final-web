@@ -5,6 +5,10 @@
     $error = "";
     $success = "";
 
+    if(!$_SESSION["username"]){
+        header("Location: login.php");
+    }
+
     $username = $_SESSION["username"];
     $result = get_info_nhanvien($username);
     if($result['code'] == 0){
@@ -74,6 +78,14 @@
                 $success = $resultChangePWD['message'];
                 $newpwd = "";
                 $cpwd = "";
+                if($data['status'] == 0){
+                    $resultChangeStatus = update_status_staff($data['name']);
+                    if($resultChangeStatus['code'] != 0){
+                        $error = $resultChangeStatus['message'];
+                        header("Location: index.php");
+                    }
+                }
+
             }else{
                 $error = $resultChangePWD['message'];
             }
@@ -90,13 +102,13 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="newpwd" class="form-control" value="<?php if($newpwd) echo $newpwd; ?>"  placeholder="new password" required> 
+                                <input type="password" name="newpwd" class="form-control" value="<?php if(!empty($newpwd)) echo $newpwd; ?>"  placeholder="new password" required> 
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <input type="password" name="cpwd" class="form-control" value="<?php if($cpwd) echo $cpwd; ?>" placeholder="re-password" required>
+                                <input type="password" name="cpwd" class="form-control" value="<?php if(!empty($cpwd)) echo $cpwd; ?>" placeholder="re-password" required>
                             </div>
                             <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
                                 <?php

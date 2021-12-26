@@ -14,9 +14,9 @@
 
     function login($username, $password){
         $conn = open_database();
-        $sql = "SELECT * FROM nhanvien WHERE username = ? AND password = ?";
+        $sql = "SELECT * FROM nhanvien WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $username, $password);
+        $stmt->bind_param("s", $username);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
@@ -26,15 +26,19 @@
         $data = $result->fetch_assoc();
         if($result->num_rows == 0){
             return array('code' => 2, 'message' => 'User are not exist');
+        }
+        $hash_password = $data['password'];
+        if(!password_verify($password, $hash_password)){
+            return array('code' => 2, 'message' => 'Password is not exits'); // password không khớp
         }
         return array('code' => 0, 'message'=>'','data' => $data);
     }
     
     function login_admin($username, $password){
         $conn = open_database();
-        $sql = "SELECT * FROM giamdoc WHERE username = ? AND password = ?";
+        $sql = "SELECT * FROM giamdoc WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $username, $password);
+        $stmt->bind_param("s", $username);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
@@ -44,6 +48,10 @@
         $data = $result->fetch_assoc();
         if($result->num_rows == 0){
             return array('code' => 2, 'message' => 'User are not exist');
+        }
+        $hash_password = $data['password'];
+        if(!password_verify($password, $hash_password)){
+            return array('code' => 2, 'message' => 'Password is not exits'); // password không khớp
         }
         return array('code' => 0, 'message'=>'','data' => $data);
     }
@@ -89,10 +97,12 @@
             return array('code' => 3, 'message' =>'Mật khẩu không được để trống');
         }
 
+        $hash = password_hash($newpwd, PASSWORD_DEFAULT);
+
         $conn = open_database();
         $sql = "UPDATE nhanvien SET password = ? WHERE username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss",$newpwd, $username);
+        $stmt->bind_param("ss",$hash, $username);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Thay mật khẩu không thành công');
@@ -127,19 +137,20 @@
         return true;
     }
 
-    function add_new_nhanvien($name, $username, $pwd, $maPB, $image, $tongngaynghi, $duocnghi){
+    function add_new_nhanvien($name, $username, $pwd, $maPB, $image, $tongngaynghi, $duocnghi, $status){
         if(check_username_exists($username)){
             return array('code' => 2, 'message' => 'Tên tài khoản này đã tồn tại vui lòng nhập tên khác');
         }
 
+        $hash = password_hash($pwd, PASSWORD_DEFAULT);
+
         $conn = open_database();
-        $sql = "INSERT INTO nhanvien (name, username, password,maPB,image, tongngaynghi, duocnghi) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO nhanvien (name, username, password, maPB, image, tongngaynghi, duocnghi, status) VALUES (?,?,?,?,?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssii",$name, $username, $pwd, $maPB, $image, $tongngaynghi, $duocnghi);
+        $stmt->bind_param("sssssiii",$name, $username, $hash, $maPB, $image, $tongngaynghi, $duocnghi, $status);
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
         }
-        $stmt->close();
         return array('code' => 0, 'message' =>'Thêm nhân viên mới thành công');
     }
 
@@ -310,23 +321,23 @@
         return array('code'=>0, 'message'=>'', 'data'=>$data);
     }
 
-    function get_task_completed_by_nhanvien($name, $maPB){
+    function get_task_completed_by_nhanvien($name, $maPB, $status){
         $conn = open_database();
-        $sql = "select * from task where nhanvien = ? and maPB = ? and status ='Completed'";
+        $sql = "select * from task where nhanvien = ? and maPB = ? and status = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss', $name, $maPB);
+        $stmt->bind_param('sss', $name, $maPB, $status);
 
         if(!$stmt->execute()){
             return array('code'=>1, 'message'=>'cannot execute message');
         }
         $result = $stmt->get_result();
         if($result->num_rows == 0){
-            return array('code'=>2, 'message'=>'Không có công việc nào được giao');
+            return array('code'=>2, 'message'=>'Không có công việc nào đã hoàn thành');
         }
         while ($row = $result->fetch_assoc()){
             $data[] = $row;
         }
-        return array('code'=>2, 'message'=>'', 'data'=>$data);
+        return array('code'=>0, 'message'=>'', 'data'=>$data);
     }
 
     function get_task_by_name($nameTask){
@@ -451,10 +462,13 @@
     }
 
     function reset_password($username, $pwd){
+
+        $hash = password_hash($pwd, PASSWORD_DEFAULT);
+
         $conn = open_database();
         $sql = "update nhanvien set password = ? where username = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ss', $pwd, $username);
+        $stmt->bind_param('ss', $hash, $username);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'cannot execute command');
@@ -593,5 +607,17 @@
             $data[] = $row1;
         }
         return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
+
+    function update_status_staff($name){
+        $conn = open_database();
+        $sql = "UPDATE nhanvien SET status = status + 1 WHERE name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $name);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'Cannot execute change status of staff');
+        }
+        return array('code'=>0, 'message'=>'Change success');
     }
 ?>

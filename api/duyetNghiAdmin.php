@@ -3,6 +3,9 @@
     require_once('../db.php');
     $error = "";
     $success = "";
+    if(!$_SESSION["username"]){
+        header("Location: login.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

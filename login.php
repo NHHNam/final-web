@@ -17,6 +17,7 @@
             }
         }else{
             $result = login($username, $pwd);
+            // print_r($result);
             if($result['code']==0){
                 $data = $result['data'];
                 $_SESSION['username'] = $data['username'];

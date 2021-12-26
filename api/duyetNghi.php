@@ -3,6 +3,9 @@
     require_once('../db.php');
     $error = "";
     $success = "";
+    if(!$_SESSION["username"]){
+        header("Location: login.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,54 +162,6 @@
                     </table>
                 </div>
                 </br>
-                <p>Đơn xin nghỉ của bản thân: </p>
-                <div class="table-responsive">
-                    <table class="table table-lg table-striped text-center">
-                        <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Nhân viên</th>
-                            <th>Reason</th>
-                            <th>Tình trạng</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                            $stt = 1;
-                            $resultList = get_all_nghiphep_admin();
-                            if($resultList['code'] == 0){
-                                $data1 = $resultList['data'];
-                                if(count($data1) > 0 && is_array($data1)){
-                                    
-                                    foreach ($data1 as $row1) {
-                                       
-                                            if(check_truong_phong($row1['name'], $row1['maPB']) == true){
-                                                ?>
-                                                <tr>
-                                                    <td><?=$stt?></td>
-                                                    <td><?=$row1['name']?></td>
-                                                    <td><?=$row1['reason']?></td>
-                                                    <td><?=$row1['status']?></td>
-                                                </tr>
-                                                <?php
-                                                $stt += 1;
-                                            }
-                                        
-                                    }
-                                }
-                            }else{
-                                ?>
-                                    <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
-                                <?php
-                            }
-                        ?>
-                        </tbody>
-                    </table>
-                </div>
-                <span>Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
-                <span style="background: lightblue; padding: 10px; margin-left: 30px; cursor: pointer;"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
-
-                
             <?php
         }
     ?>
