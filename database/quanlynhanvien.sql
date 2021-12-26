@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 19, 2021 at 04:44 PM
+-- Generation Time: Dec 26, 2021 at 02:17 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -31,7 +31,7 @@ CREATE TABLE `giamdoc` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `image` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -40,7 +40,7 @@ CREATE TABLE `giamdoc` (
 --
 
 INSERT INTO `giamdoc` (`id`, `name`, `username`, `password`, `image`) VALUES
-(1, 'Giam doc', 'admin', 'admin', 'images/admin.jpg');
+(1, 'Giam doc', 'admin', '$2y$10$qziuZ1g9j4utqEOm2Q3M.OaUO5lywnw1EoYmM7ZkdzMhKJ68gqRtm', 'images/admin.jpg');
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,14 @@ CREATE TABLE `nghiphep` (
 
 INSERT INTO `nghiphep` (`id`, `name`, `reason`, `maPB`, `status`) VALUES
 (5, 'Nguyễn Hưng Hoài Nam', 'hôm nay em hơi mệt ', 'software', 'approved'),
-(6, 'Trần Thị Kiều', 'today i don\'t feel good , i want to stay home to feel wealth', 'software', 'approved');
+(6, 'Trần Thị Kiều', 'today i don\'t feel good , i want to stay home to feel wealth', 'software', 'approved'),
+(7, 'Nguyễn Hưng Hoài Nam', 'I feel bad, today', 'software', 'rejected'),
+(8, 'Nguyễn Hưng Hoài Nam', 'I feel so bad please i want to stay at home', 'software', 'approved'),
+(9, 'Trần Thị Kiều', 'Chào xếp nay em muốn xin nghỉ phép em đau bụng kinh qúa :VV', 'software', 'approved'),
+(10, 'Trần Thị Kiều', 'em chào xếp em xin được nghỉ', 'software', 'rejected'),
+(11, 'Trần Thị Kiều', 'i feel so good :VV', 'software', 'rejected'),
+(12, 'Trần Thị Kiều', 'nay em bị tiêu chảy nên em muốn xin nghỉ ạ', 'software', 'approved'),
+(13, 'Nguyễn Hưng Hoài Nam', 'boss, today, i feel bad so i can stay home ?', 'software', 'approved');
 
 -- --------------------------------------------------------
 
@@ -74,22 +81,26 @@ CREATE TABLE `nhanvien` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `maPB` varchar(50) NOT NULL,
   `image` varchar(50) NOT NULL,
   `tongngaynghi` int(11) NOT NULL,
-  `duocnghi` int(11) NOT NULL
+  `duocnghi` int(11) NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`id`, `name`, `username`, `password`, `maPB`, `image`, `tongngaynghi`, `duocnghi`) VALUES
-(17, 'Nguyễn Hưng Hoài Nam', 'nvhoainam', '123', 'software', 'images/8c7e9fa06948d3b136dabfba06b33bac.JPG', 1, 12),
-(18, 'Mai Nguyễn Thái Học', 'nvhoc', '123', 'software', 'images/352d89f4f9a4c98aeb6c51823f1ad7c1.JPG', 0, 12),
-(19, 'Lê Ngọc Trân', 'nvngoctran', '123', 'LeTan', 'images/830ee79eae81efe027418e3ee6b0112b.JPG', 0, 15),
-(20, 'Trần Thị Kiều', 'nvkieu', '123', 'software', 'images/2.png', 1, 15);
+INSERT INTO `nhanvien` (`id`, `name`, `username`, `password`, `maPB`, `image`, `tongngaynghi`, `duocnghi`, `status`) VALUES
+(17, 'Nguyễn Hưng Hoài Nam', 'nvhoainam', '$2y$10$KcOe5S0KPn5wDPvUJjLcV.l6FAMwtdvIAgtYF55qS1kHWzd0Hr8O2', 'software', 'images/8c7e9fa06948d3b136dabfba06b33bac.JPG', 3, 12, 1),
+(18, 'Mai Nguyễn Thái Học', 'nvhoc', '$2y$10$KcOe5S0KPn5wDPvUJjLcV.l6FAMwtdvIAgtYF55qS1kHWzd0Hr8O2', 'software', 'images/352d89f4f9a4c98aeb6c51823f1ad7c1.JPG', 0, 12, 1),
+(19, 'Lê Ngọc Trân', 'nvngoctran', '$2y$10$eNXjZGTq7ghN387xfREAeufxOcylM7Ohn8QChiV4658yEAbVfn9xa', 'LeTan', 'images/830ee79eae81efe027418e3ee6b0112b.JPG', 0, 15, 1),
+(20, 'Trần Thị Kiều', 'nvkieu', '$2y$10$KcOe5S0KPn5wDPvUJjLcV.l6FAMwtdvIAgtYF55qS1kHWzd0Hr8O2', 'software', 'images/2.png', 3, 15, 1),
+(21, 'Trần Thái Bảo', 'nvbao', '$2y$10$nwvFU0vGZANS0rz30KZLDOuoHT7mZaVc93ywIGHhlwMQ9UwUNmYW.', 'software', 'images/bb091898092f7d5451e38a3f5f2104c3.JPG', 0, 12, 1),
+(22, 'Lê Thị Tí', 'nvti', '$2y$10$M3LQzO99diqs/JuL2EbEQeAOTHjyRIF1BYuEOqppqV.DehFbSKSYC', 'KeToan', 'images/9ca1b65808cdffb8d9a04c83bea4125c.JPG', 0, 15, 0),
+(24, 'Nguyễn Huỳnh Như', 'nvnhu', '$2y$10$O2L558iimsras1OgyTZezO1E5lmjId6cpf00n653EJTQ77Osawlni', 'LeTan', 'images/352d89f4f9a4c98aeb6c51823f1ad7c1.JPG', 0, 12, 1);
 
 -- --------------------------------------------------------
 
@@ -109,7 +120,7 @@ CREATE TABLE `phongban` (
 --
 
 INSERT INTO `phongban` (`id`, `maPB`, `namePB`, `truongphong`) VALUES
-(7, 'KeToan', 'Phòng kế toán', ''),
+(7, 'KeToan', 'Phòng kế toán', 'Lê Thị Tí'),
 (8, 'software', 'Phòng phát triển', 'Trần Thị Kiều'),
 (9, 'LeTan', 'Phòng lễ tân', 'Lê Ngọc Trân');
 
@@ -139,7 +150,8 @@ INSERT INTO `task` (`id`, `tenTask`, `descTask`, `nhanvien`, `maPB`, `deadline`,
 (8, 'thiết kế giao diện web bán hàng', 'nhớ làm', 'Nguyễn Hưng Hoài Nam', 'software', '2021-12-23', 'uploadTask/Copyright protection scheme for color images using extended visual cryptography.pdf', 'Completed', 'Good'),
 (10, 'làm web', 'design background', 'Mai Nguyễn Thái Học', 'software', '2021-12-23', 'uploadTask/Clustering - Kmean.ipynb', 'Completed', 'Bad'),
 (11, 'làm web 1', 'dsasad', 'Nguyễn Hưng Hoài Nam', 'software', '2021-12-21', 'uploadTask/predict Weight-model evaluation .ipynb', 'Completed', 'OK'),
-(12, 'lab2', 'lab2', 'Nguyễn Hưng Hoài Nam', 'software', '2021-12-23', 'uploadTask/51900763_lab4_3.docx', 'Completed', 'Bad');
+(12, 'lab2', 'lab2', 'Nguyễn Hưng Hoài Nam', 'software', '2021-12-23', 'uploadTask/51900763_lab4_3.docx', 'Completed', 'Bad'),
+(14, 'Kiểm tra các cuộc gọi KH', 'yêu cầu kiểm tra các cuộc gọi và báo cáo lại', 'Nguyễn Huỳnh Như', 'LeTan', '2021-12-27', 'uploadTask/Copyright protection scheme for color images using extended visual cryptography.pdf', 'Completed', 'OK');
 
 --
 -- Indexes for dumped tables
@@ -189,13 +201,13 @@ ALTER TABLE `giamdoc`
 -- AUTO_INCREMENT for table `nghiphep`
 --
 ALTER TABLE `nghiphep`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `phongban`
@@ -207,7 +219,7 @@ ALTER TABLE `phongban`
 -- AUTO_INCREMENT for table `task`
 --
 ALTER TABLE `task`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
