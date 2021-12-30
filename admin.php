@@ -24,6 +24,32 @@
         .nav-item .dropdown{
             margin-right: 80px;
         }
+        .content{
+            display: flex;
+            justify-content: center
+        }
+        .functional-area{
+            margin: 20px;
+            width: 230px;
+            height: 345px;
+            float: left;
+            box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.2); 
+        }
+        .functional-area:hover {
+            box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);   
+            transition: 0.2s;  
+        }
+        .functional-area .name{
+            margin-bottom: 8px;
+            padding-left: 20px;
+            font-weight: bold;
+            font-size: 16px;
+            display: block;
+            text-align: center;
+        }
+        .functional-area img{
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -34,7 +60,7 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
+    <nav class="navbar navbar-expand-sm bg-primary justify-content-between">
         <div class="nav-item">
             <h1 class="nav-link">Trang giám đốc</h1>
         </div>
@@ -44,12 +70,26 @@
                 <img src="<?= $data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="api/duyetNghiAdmin.php">Duyet</a>
                     <a class="dropdown-item" href="logout.php">Đăng xuất</a>
                 </div>
             </div>
         </div>
     </nav>
-    <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="api/phongban.php">Quản lý phòng ban</a></button>
+    <div class="content">
+        
+        <div class="functional-area" onclick="location.href='api/phongban.php'">
+            <img src="./images/dsphongban.jpg">
+            <div class="name">Danh sách phòng ban</div>
+        </div>
+        <div class="functional-area" onclick="location.href=''">
+            <img src="./images/dsnhanvien.jpg">
+            <div class="name">Danh sách nhân viên</div>
+        </div>
+        <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
+            <img src="./images/dsdonnghiphep.jpg">
+            <div class="name">Danh sách đơn nghỉ phép</div>
+        </div>
+    </div>
+        
 </body>
 </html>
