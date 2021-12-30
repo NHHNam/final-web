@@ -75,6 +75,7 @@
             </div>
         </div>
     </nav>
+<<<<<<< HEAD
     <div class="content">
         
         <div class="functional-area" onclick="location.href='api/phongban.php'">
@@ -91,5 +92,9 @@
         </div>
     </div>
         
+=======
+    <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="api/phongban.php">Quản lý phòng ban</a></button>
+    <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="api/dsAllNV.php">Danh sách nhân viên</a></button>
+>>>>>>> 8ea59f32b4e9699542dc65c3449d9b74cc2b96a8
 </body>
 </html>
