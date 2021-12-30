@@ -87,85 +87,90 @@
             }
         }
     ?>
-    <p>Danh sách xin nghỉ của trưởng phòng: </p>
-    <div class="table-responsive">
-        <table class="table table-lg table-striped text-center">
-            <thead>
-            <tr>
-                <th>STT</th>
-                <th>Nhân viên</th>
-                <th>Reason</th>
-                <th>Tình trạng</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-                $stt = 1;
-                $resultList = get_all_nghiphep_admin();
-                if($resultList['code'] == 0){
-                    $data1 = $resultList['data'];
-                    if(count($data1) > 0 && is_array($data1)){
-                        
-                        foreach ($data1 as $row1) {
-                            if($row1['status'] == "waiting"){
-                                if(check_truong_phong($row1['name'], $row1['maPB']) == true){
-                                    ?>
-                                    <tr>
-                                        <td><?=$stt?></td>
-                                        <td><?=$row1['name']?></td>
-                                        <td><?=$row1['reason']?></td>
-                                        <td><?=$row1['status']?></td>
-                                        <td>
-                                            <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
-                                            <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    $stt += 1;
+    <div class="container">
+        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+
+        <p>Danh sách xin nghỉ của trưởng phòng: </p>
+        <div class="table-responsive">
+            <table class="table table-lg table-striped text-center">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Nhân viên</th>
+                    <th>Reason</th>
+                    <th>Tình trạng</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $stt = 1;
+                    $resultList = get_all_nghiphep_admin();
+                    if($resultList['code'] == 0){
+                        $data1 = $resultList['data'];
+                        if(count($data1) > 0 && is_array($data1)){
+                            
+                            foreach ($data1 as $row1) {
+                                if($row1['status'] == "waiting"){
+                                    if(check_truong_phong($row1['name'], $row1['maPB']) == true){
+                                        ?>
+                                        <tr>
+                                            <td><?=$stt?></td>
+                                            <td><?=$row1['name']?></td>
+                                            <td><?=$row1['reason']?></td>
+                                            <td><?=$row1['status']?></td>
+                                            <td>
+                                                <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
+                                                <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        $stt += 1;
+                                    }
                                 }
                             }
                         }
+                    }else{
+                        ?>
+                            <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
+                        <?php
                     }
-                }else{
-                    ?>
-                        <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
-                    <?php
-                }
-            ?>
-            </tbody>
-        </table>
-    </div>
-                
-    
-   
-
-    <?php 
+                ?>
+                </tbody>
+            </table>
+        </div>
+                    
         
-        if(isset($_POST['nopNghiPhep'])){
-            $nameNV = $_POST['nameNV'];
-            $reason = $_POST['reason'];
-            $maPB = $_POST['maPB'];
-            $status = "waiting";
+    
 
-            $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
-            if($resultXinNghi['code'] == 0){
-                $success = $resultXinNghi['message'];
-            }else{
-                $error = $resultXinNghi['message'];
+        <?php 
+            
+            if(isset($_POST['nopNghiPhep'])){
+                $nameNV = $_POST['nameNV'];
+                $reason = $_POST['reason'];
+                $maPB = $_POST['maPB'];
+                $status = "waiting";
+
+                $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
+                if($resultXinNghi['code'] == 0){
+                    $success = $resultXinNghi['message'];
+                }else{
+                    $error = $resultXinNghi['message'];
+                }
             }
-        }
-    ?>
-
-    <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-        <?php
-        if(!empty($error)){
-            echo "<div class='alert alert-danger'>$error</div>";
-        }else if(!empty($success)){
-            echo "<div class='alert alert-success'>$success</div>";
-        }
         ?>
-    </p>
+
+        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+            <?php
+            if(!empty($error)){
+                echo "<div class='alert alert-danger'>$error</div>";
+            }else if(!empty($success)){
+                echo "<div class='alert alert-success'>$success</div>";
+            }
+            ?>
+        </p>
+    </div>
+    
 
       <!-- confirm duyệt nghỉ phép -->
     <div class="modal fade" id="confirm-duyet">

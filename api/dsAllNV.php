@@ -54,10 +54,14 @@
         </div>
     </nav>
     <div class="container">
+<<<<<<< HEAD
         <div style="margin: 10px;">
             <a style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
         </div>
         
+=======
+        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+>>>>>>> c8a8a682d9a0fd5923e36cab03560eb94f382517
         <?php 
             $success = "";
             $error = "";
