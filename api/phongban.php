@@ -26,6 +26,7 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
     </style>
 </head>
@@ -52,7 +53,61 @@
             </div>
         </div>
     </nav>
-    <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+    <div style="margin: 10px;">
+        <div style="margin: 10px;">
+            <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+        <div style="margin: 10px;">
+            <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
+        </div>   
+        <div class="table-responsive">
+                <table border="1" class="table table-lg table-striped text-center">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên phòng ban </th>
+                            <th>Tên trưởng phòng</th>
+                            <th>Trạng thái</th>                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            $stt = 1;
+                            $resultList = get_info_phongban();
+                            if ($resultList['data']->num_rows > 0) {
+                                while($row1 = $resultList['data']->fetch_assoc()) {
+                        ?>
+                        <tr>
+                            <td><?=$stt?></td>
+                            <td><a style="text-decoration: none; color: black; font-weight: bold;" ><?=$row1["namePB"]?></a></td>
+                            <td><?=$row1['truongphong']?></td>
+                            <td>
+                                <a href="dsNVPB.php?maPB=<?=$row1['maPB']?>">View employee list</a>
+                                <i style="margin-left: 20%;" onclick="updateDeleteFileDialogPB('<?=$row1['namePB']?>', '<?=$row1['maPB']?>')" style="cursor: pointer" class="fa fa-trash action" data-toggle="modal" data-target="#confirm-delete"></i>
+                            </td>
+                        </tr>
+
+                        <?php 
+                            $stt += 1;    
+                            }
+                            }else{
+                                echo "No result found";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                    <?php
+                        if(!empty($error)){
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }else if(!empty($success)){
+                            echo "<div class='alert alert-success'>$success</div>";
+                        }
+                    ?>
+                </p>
+        </div>
+    </div>
+    
     <?php 
         $success = "";
         $error = "";
@@ -67,51 +122,7 @@
             }
         }
     ?>
-    <div class="table-responsive">
-            <table border="1" class="table table-lg table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên phòng ban </th>
-                        <th>Tên trưởng phòng</th>
-                        <th>Trạng thái</th>                    
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        $stt = 1;
-                        $resultList = get_info_phongban();
-                        if ($resultList['data']->num_rows > 0) {
-                            while($row1 = $resultList['data']->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?=$stt?></td>
-                        <td><a style="text-decoration: none; color: black; font-weight: bold;" href="dsNVPB.php?maPB=<?=$row1['maPB']?>"><?=$row1["namePB"]?></a></td>
-                        <td><?=$row1['truongphong']?></td>
-                        <td><i onclick="updateDeleteFileDialogPB('<?=$row1['namePB']?>', '<?=$row1['maPB']?>')" style="cursor: pointer" class="fa fa-trash action" data-toggle="modal" data-target="#confirm-delete"></i></td>
-                    </tr>
-
-                    <?php 
-                        $stt += 1;    
-                        }
-                        }else{
-                            echo "No result found";
-                        }
-                    ?>
-                </tbody>
-            </table>
-            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                <?php
-                    if(!empty($error)){
-                        echo "<div class='alert alert-danger'>$error</div>";
-                    }else if(!empty($success)){
-                        echo "<div class='alert alert-success'>$success</div>";
-                    }
-                ?>
-            </p>
-            <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addNV.php">Thêm nhân viên</a></button>
-            <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
-    </div>
+    
     <div class="modal fade" id="confirm-delete">
          <div class="modal-dialog">
             <div class="modal-content">
