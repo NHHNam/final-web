@@ -105,7 +105,6 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên nhân viên</th>
-                    <th>Trạng thái</th>
                     <th>Bổ nhiệm</th>
                 </tr>
             </thead>
@@ -118,8 +117,7 @@
                 ?>
                 <tr>
                     <td><?=$stt?></td>
-                    <td><a style="text-decoration: none; color: black; font-weight: bold;" href="chiTietNV.php?name=<?=$row1['name']?>"><?=$row1["name"]?></a></td>
-                    <td><i onclick="updateDeleteFileDialog('<?=$row1['name']?>', <?=$row1['id']?>)" style="cursor: pointer" class="fa fa-trash action" data-toggle="modal" data-target="#confirm-delete"></i></td>
+                    <td><?=$row1["name"]?></td>
                     <?php
                         if($data3['truongphong'] == $row1['name']){
                             ?>

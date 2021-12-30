@@ -27,6 +27,7 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
     </style>
 </head>
@@ -93,7 +94,7 @@
                 $error = $resultGetInfo['message'];
             }
             ?>
-                <a style="text-decoreation: none;" href="dsNVPB.php?maPB=<?=$data1['maPB']?>"><i class="fas fa-arrow-circle-left"></i></a>
+                <a style="text-decoreation: none;" href="./dsAllNV.php"><i class="fas fa-arrow-circle-left"></i></a>
                 <div class="container">
                     <div class="d-flex justify-content-center">
                         <div class="card">

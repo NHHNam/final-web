@@ -26,6 +26,7 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
     </style>
 </head>
@@ -53,11 +54,17 @@
         </div>
     </nav>
     <div class="container">
-        <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
+        <div style="margin: 10px;">
+            <a style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+        
         <?php 
             $success = "";
             $error = "";
         ?>
+        <div style="margin: 10px;">
+            <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addNV.php">Thêm nhân viên</a></button>
+        </div> 
         <div class="table-responsive">
             <table border="1" class="table table-lg table-striped text-center">
                 <thead>
@@ -65,6 +72,8 @@
                         <th>STT</th>
                         <th>Tên nhân viên</th>
                         <th>Phòng ban</th>
+                        <th>Chức vụ</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,7 +87,11 @@
                                     <tr>
                                         <td><?=$stt?></td>
                                         <td><?=$a['name']?></td>            
-                                        <td><?=$a['maPB']?></td>                        
+                                        <td><?=$a['maPB']?></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="chiTietNV.php?name=<?=$a['name']?>">View</a>
+                                        </td>                        
                                 <?php
                                 $stt+=1;
                             }

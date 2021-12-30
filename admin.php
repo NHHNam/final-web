@@ -81,7 +81,7 @@
             <img src="./images/dsphongban.jpg">
             <div class="name">Danh sách phòng ban</div>
         </div>
-        <div class="functional-area" onclick="location.href=''">
+        <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
             <img src="./images/dsnhanvien.jpg">
             <div class="name">Danh sách nhân viên</div>
         </div>
