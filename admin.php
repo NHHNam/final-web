@@ -51,5 +51,6 @@
         </div>
     </nav>
     <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="api/phongban.php">Quản lý phòng ban</a></button>
+    <button class="btn btn-danger"><a style="text-decoration: none; color: #fff;" href="api/dsAllNV.php">Danh sách nhân viên</a></button>
 </body>
 </html>

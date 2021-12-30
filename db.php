@@ -620,4 +620,23 @@
         }
         return array('code'=>0, 'message'=>'Change success');
     }
+
+    function get_all_staff(){
+        $conn = open_database();
+        $sql = "SELECT * FROM nhanvien GROUP BY maPB, name";
+        $stmt = $conn->prepare($sql);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'Cannot execute query');
+        }
+        $result = $stmt->get_result();
+        if($result->num_rows == 0){
+            return array('code' =>2,'message' =>'không có nhân viên nào');
+        }
+        $data = array();
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>0, 'message'=>'','data' =>$data);
+    }
 ?>
