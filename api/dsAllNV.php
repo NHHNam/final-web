@@ -53,7 +53,7 @@
         </div>
     </nav>
     <div class="container">
-        <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
+        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
         <?php 
             $success = "";
             $error = "";
