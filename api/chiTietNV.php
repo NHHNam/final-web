@@ -29,6 +29,13 @@
             font-size: 30px;
             color: red;
         }
+	.card{
+            background: #DDDDDD;
+            width: 50%;
+        }
+        h3{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -100,7 +107,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form novalidate method="post" enctype="multipart/form-data">
-                                    <h3>Thông tin nhân viên</h3>
+                                    <h3>THÔNG TIN NHÂN VIÊN</h3>
                                     <div class="form-group">
                                         <label>Tên nhân viên:</label>
                                         <div class="form-control"><?=$data1['name']?></div>
@@ -162,7 +169,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form novalidate method="post" enctype="multipart/form-data">
-                                    <h3>Thông tin nhân viên</h3>
+                                    <h3>THÔNG TIN NHÂN VIÊN</h3>
                                     <div class="form-group">
                                         <label>Tên nhân viên:</label>
                                         <div class="form-control"><?=$data1['name']?></div>
