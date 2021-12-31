@@ -43,6 +43,17 @@
         a i{
             font-size: 30px;
         }
+	 .card{
+            width: 50%;
+            height: 100%;
+            background:#CCCCCC;
+        }
+        h3{
+            text-align: center;
+        }
+        .input-group{
+            margin-top: 35px;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +107,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form novalidate method="post">
-                            <h1>Sửa mật khẩu</h1>
+                            <h3>THAY ĐỔI MẬT KHẨU</h3>
 
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
@@ -120,7 +131,7 @@
                                 ?>
                             </p>
                             <div class="form-group">
-                                <input type="submit" name="update" value="Update">
+                                <input type="submit" style="width: 90px; margin-top: 35px; float: right;" name="update" value="Update">
                             </div>
                         </form>
                     </div>
