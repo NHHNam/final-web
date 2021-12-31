@@ -63,10 +63,6 @@
         .card:hover{
             box-shadow: 4px 12px 14px 4px rgba(0,0,0,0.3);
         }
-        h5{
-            color: black;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -97,21 +93,20 @@
                 if(check_truong_phong($data['name'], $data['maPB']) == false){
             ?>
                 <div class="col-12 col-sm-6">
-                    <div class="card" style=" background: white ">
+                    <div class="card" style=" background: white"  onclick="location.href='api/taskNV.php'" >
                         <div class="card-body text-center">
                             <img src="images/anh4.jpg" >
-                                <a href="api/taskNV.php"><p></p><h5>NHIỆM VỤ</h5></a>
+                            <p></p><h4>NHIỆM VỤ</h4>
                             <p class="card-text"></p>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-12 col-sm-6">
-                    <div class="card" style=" background: white">
+                    <div class="card" style=" background: white" onclick="location.href='api/nghiphep.php'">
                         <div class="card-body text-center">
                             <img src="images/anh3.jpg" >
-                            <p> </p>
-                            <a href="api/nghiphep.php"><h5>ĐƠN XIN NGHĨ PHÉP</h5></a>
+                            <p></p><h4>ĐƠN XIN NGHĨ PHÉP</h4>
                         </div>
                     </div>     
                 </div>
@@ -123,29 +118,28 @@
                     if(check_truong_phong($data['name'], $data['maPB']) == true){
                 ?>
                     <div class="col-12 col-sm-4 p-2">
-                        <div class="card" style="background: white ;">
+                        <div class="card" style="background: white ;" onclick="location.href='api/truongphong.php'">
                             <div class="card-body text-center">
                                 <img src="images/anh1.jpg" >  
-                                    <a href="api/truongphong.php"><p></p><h5>QUẢN LÝ NHIỆM VỤ</h5></a>
+                                <p></p><h4>QUẢN LÝ NHIỆM VỤ</h5>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-4 p-2">
-                        <div class="card" style="background: white ; ">
+                        <div class="card" style="background: white ; onclick="location.href='api/nghiphep.php'"">
                             <div class="card-body text-center">
                                 <img src="images/anh3.jpg" >
-                                <p> </p>
-                                <a href="api/nghiphep.php"><h5>ĐƠN XIN NGHĨ PHÉP</h5></a>
+                                <p> </p><h4>ĐƠN XIN NGHĨ PHÉP</h4>
                             </div>
                         </div>     
                     </div>
 
                     <div class="col-12 col-sm-4 p-2">
-                        <div class="card" style="background: white ; ">
+                        <div class="card" style="background: white ; " onclick="location.href='api/duyetNghi.php'">
                             <div class="card-body text-center">
                                 <img src="images/anh2.jpg" >
-                                        <a href="api/duyetNghi.php"><p></p><h5>DUYỆT ĐƠN XIN NGHỈ PHÉP</h5></a>
+                                <p></p><h4>DUYỆT ĐƠN XIN NGHỈ PHÉP</h4>
                                 <p class="card-text"></p>
                             </div>
                         </div>
