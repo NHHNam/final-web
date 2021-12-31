@@ -127,7 +127,7 @@
                     </div>
 
                     <div class="col-12 col-sm-4 p-2">
-                        <div class="card" style="background: white ; onclick="location.href='api/nghiphep.php'"">
+                        <div class="card" style="background: white ;" onclick="location.href='api/nghiphep.php'">
                             <div class="card-body text-center">
                                 <img src="images/anh3.jpg" >
                                 <p> </p><h4>ĐƠN XIN NGHĨ PHÉP</h4>
