@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 02, 2022 at 12:49 PM
+-- Generation Time: Jan 02, 2022 at 02:17 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.3.33
 
@@ -121,18 +121,19 @@ CREATE TABLE `phongban` (
   `id` int(11) NOT NULL,
   `maPB` varchar(50) NOT NULL,
   `namePB` varchar(50) NOT NULL,
-  `mota` varchar(100) NOT NULL
+  `mota` varchar(100) NOT NULL,
+  `sophong` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `phongban`
 --
 
-INSERT INTO `phongban` (`id`, `maPB`, `namePB`, `mota`) VALUES
-(7, 'KeToan', 'Phòng kế toán', 'phòng tính toán thống kê thu chi'),
-(8, 'software', 'Phòng phát triển', 'phòng phát triển các hạng mục của công ty'),
-(9, 'LeTan', 'Phòng lễ tân', 'phòng của các lễ tân hướng dẫn khách'),
-(10, 'KEHOACH', 'Phòng kế hoạch', 'Phòng đưa ra các kế hoạch cho các phòng');
+INSERT INTO `phongban` (`id`, `maPB`, `namePB`, `mota`, `sophong`) VALUES
+(7, 'KeToan', 'Phòng kế toán', 'phòng tính toán thống kê thu chi', 'D101'),
+(8, 'software', 'Phòng phát triển', 'phòng phát triển các hạng mục của công ty', 'A101'),
+(9, 'LeTan', 'Phòng lễ tân', 'phòng của các lễ tân hướng dẫn khách', 'B201'),
+(10, 'KEHOACH', 'Phòng kế hoạch', 'Phòng đưa ra các kế hoạch cho các phòng', 'C301');
 
 -- --------------------------------------------------------
 
@@ -224,7 +225,7 @@ ALTER TABLE `nhanvien`
 -- AUTO_INCREMENT for table `phongban`
 --
 ALTER TABLE `phongban`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `task`

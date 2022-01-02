@@ -93,7 +93,7 @@
 
                         <div class="form-group">
                             <label>Số phòng:</label>
-                            <div class="form-control"></div>
+                            <div class="form-control"><?=$data['sophong']?></div>
                         </div>
                     </form>
                     

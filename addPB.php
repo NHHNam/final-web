@@ -63,7 +63,8 @@
             $maPB = $_POST['maPB'];
             $namePB = $_POST['namePB'];
             $moTa = $_POST['moTa'];
-            $resultAddPB = add_new_phongban($maPB, $namePB, $moTa);
+            $soPB = $_POST['soPB'];
+            $resultAddPB = add_new_phongban($maPB, $namePB, $moTa, $soPB);
             if($resultAddPB['code'] == 0){
                 $success = $resultAddPB['message'];
             }else{
@@ -88,7 +89,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
                             </div>
-                            <input class="input-group-text" type="text" name="maPB" placeholder="Nhập số phòng PB">
+                            <input class="input-group-text" type="text" name="maPB" placeholder="Nhập mã PB">
+                        </div>
+
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
+                            </div>
+                            <input class="input-group-text" type="text" name="soPB" placeholder="Nhập số phòng PB">
                         </div>
 
                         <div class="input-group form-group">

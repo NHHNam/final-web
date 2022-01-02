@@ -225,11 +225,11 @@
         }
     }
 
-    function add_new_phongban($maPB, $namePB, $moTa){
+    function add_new_phongban($maPB, $namePB, $moTa, $soPB){
         $conn = open_database();
-        $sql = "INSERT INTO phongban (maPB, namePB, mota) VALUES(?,?,?)";
+        $sql = "INSERT INTO phongban (maPB, namePB, mota, sophong) VALUES(?,?,?,?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss",$maPB, $namePB, $moTa);
+        $stmt->bind_param("ssss",$maPB, $namePB, $moTa, $soPB);
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'Cannot execute query');
         }
