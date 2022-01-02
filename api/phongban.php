@@ -82,7 +82,7 @@
                             <th>STT</th>
                             <th>Tên phòng ban </th>
                             <th>Tên trưởng phòng</th>
-                            <th colspan="2">Trạng thái</th>                    
+                            <th colspan="3">Trạng thái</th>                    
                         </tr>
                     </thead>
                     <tbody>
@@ -107,6 +107,9 @@
                                 ?>
                             </td>
                             <td><a href="dsNVPB.php?maPB=<?=$row1['maPB']?>">View employee list</a></td>
+                            <td>
+                                <a href="chitietPB.php?maPB=<?=$row1['maPB']?>"><i class="fas fa-eye"></i></a>
+                            </td>
                             <td>
                                 <i 
                                     class="fas fa-edit"

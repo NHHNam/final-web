@@ -111,6 +111,15 @@
                 $error = $result3['message'];
             }
         ?>
+        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+            <?php
+                if(!empty($error)){
+                    echo "<div class='alert alert-danger'>$error</div>";
+                }else if(!empty($success)){
+                    echo "<div class='alert alert-success'>$success</div>";
+                }
+            ?>
+        </p>
         <div class="table-responsive">
             <table border="1" class="table table-lg table-striped text-center">
                 <thead>
@@ -135,7 +144,7 @@
                                 ?>
                                 <form method="post">
                                     <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
-                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
+                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Hủy bổ nhiệm</button></td>
                                 </form>
                                 <?php
                             }else if(check_has_truong_phong($row1['maPB']) == true){
@@ -146,7 +155,7 @@
                                 ?>
                                 <form method="post">
                                     <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
-                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
+                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Bổ nhiệm</button></td>
                                 </form>
                                 <?php
                             }
@@ -162,15 +171,7 @@
                 </tbody>
             </table>
     </div>
-        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-            <?php
-                if(!empty($error)){
-                    echo "<div class='alert alert-danger'>$error</div>";
-                }else if(!empty($success)){
-                    echo "<div class='alert alert-success'>$success</div>";
-                }
-            ?>
-        </p>
+        
     </div>
     <div class="modal fade" id="confirm-delete">
          <div class="modal-dialog">
