@@ -44,6 +44,7 @@
         .container{
             width: 500px;
             box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(blue, pink);
         }
         .container h2{
             text-align: center;
@@ -51,21 +52,37 @@
             font-weight: bold;
         }
         body{
-            background: #ccc;
+            background-color: rgb(23,209,230);
+        }
+        .login-button{
+            display: flex;
+            justify-content: center;
+        }
+        .logo-img {
+
+            display: flex;
+            justify-content: center;
+        }
+        img {
+            width: 150px;
         }
     </style>
 </head>
 <body>
     <div class="container p-5 mt-5">
+        <div class="logo-img">
+            <img src=images/logoTDT.jpg></img>
+        </div>
+        
         <h2>Đăng nhập</h2>
         <form method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" value="<?php if(!empty($username)) echo $username?>" placeholder="Enter username" name="username">
+                <label for="username">Tài khoản:</label>
+                <input type="text" class="form-control" id="username" placeholder="Nhập tài khoản" name="username">
             </div>
             <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input type="password" class="form-control" value="<?php if(!empty($pwd)) echo $pwd?>" id="pwd" placeholder="Enter password" name="pwd">
+                <label for="pwd">Mật khẩu:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Nhập mật khẩu" name="pwd">
             </div>
             <div class="form-group">
                     <?php 
@@ -74,7 +91,10 @@
                         }
                     ?>
             </div>
-            <button type="submit" name="enter" class="btn btn-primary">Submit</button>
+            <div class="login-button">
+                <button type="submit" name="enter" class="btn btn-primary">Đăng nhập</button>
+            </div>
+            
         </form>
     </div>
     

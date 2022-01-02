@@ -24,7 +24,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang sửa mật khẩu</title>
+    <title>Thay đổi mật khẩu</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -40,19 +40,32 @@
         .nav-item .dropdown-toggle .dropdown-menu{
             max-width: 50px;
         }
+        .back {
+            font-size: 30px;
+            color: red;
+        }
         a i{
             font-size: 30px;
+            color: red;
         }
-	 .card{
+	    .card{
             width: 50%;
             height: 100%;
-            background:#CCCCCC;
+            background:rgb(200,100,0);
+            border-radius: 16px
         }
         h3{
             text-align: center;
         }
         .input-group{
             margin-top: 35px;
+        }
+        .button-submit{
+            display: flex;
+            justify-content: center;
+        }
+        body{
+            background: rgb(229,229,229);
         }
     </style>
 </head>
@@ -63,7 +76,7 @@
             $data = $resultNav['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
+    <nav class="navbar navbar-expand-sm bg-primary justify-content-between">
         <div class="nav-item">
             <h1 class="nav-link">Trang nhân viên</h1>
         </div>
@@ -78,14 +91,13 @@
             </div>
         </div>
     </nav>
-    <a style="text-decoreation: none;" href="index.php"><i class="fas fa-arrow-circle-left"></i></a>
+    
     <?php 
         if(isset($_POST['update'])){
             $newpwd = $_POST['newpwd'];
             $cpwd = $_POST['cpwd'];
-            $oldpwd = $_POST['oldpwd'];
 
-            $resultChangePWD = change_password($oldpwd ,$newpwd, $cpwd, $username);
+            $resultChangePWD = change_password($newpwd, $cpwd, $username);
             if($resultChangePWD['code'] == 0){
                 $success = $resultChangePWD['message'];
                 $newpwd = "";
@@ -103,48 +115,42 @@
             }
         }
     ?>
-    <div class="container">
-            <div class="d-flex justify-content-center">
-                <div class="card">
-                    <div class="card-body">
-                        <form novalidate method="post">
-                            <h3>THAY ĐỔI MẬT KHẨU</h3>
+    <a class="back" style="text-decoreation: none; margin: 10px;" href="index.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+    <div class="container">    
+        <div class="d-flex justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <form novalidate method="post">
+                        <h3>THAY ĐỔI MẬT KHẨU</h3>
 
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>" placeholder="old password" required> 
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input type="password" name="newpwd" class="form-control" value="<?php if(!empty($newpwd)) echo $newpwd; ?>"  placeholder="new password" required> 
+                            <input type="password" name="newpwd" class="form-control" value="<?php if(!empty($newpwd)) echo $newpwd; ?>"  placeholder="Mật khẩu mới" required> 
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <div class="input-group form-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                <input type="password" name="cpwd" class="form-control" value="<?php if(!empty($cpwd)) echo $cpwd; ?>" placeholder="re-password" required>
-                            </div>
-                            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                                <?php
-                                    if(!empty($error)){
-                                        echo "<div class='alert alert-danger'>$error</div>";
-                                    }else if(!empty($success)){
-                                        echo "<div class='alert alert-success'>$success</div>";
-                                    }
-                                ?>
-                            </p>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary w-100"style="width: 90px; margin-top: 35px; float: right;" name="update" value="Update">
-                            </div>
-                        </form>
-                    </div>
+                            <input type="password" name="cpwd" class="form-control" value="<?php if(!empty($cpwd)) echo $cpwd; ?>" placeholder="Nhập lại nhật khẩu mới" required>
+                        </div>
+                        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                            <?php
+                                if(!empty($error)){
+                                    echo "<div class='alert alert-danger'>$error</div>";
+                                }else if(!empty($success)){
+                                    echo "<div class='alert alert-success'>$success</div>";
+                                }
+                            ?>
+                        </p>
+                        <div class="form-group button-submit">
+                            <input class="btn btn-success" type="submit" style="width: 90px; margin-top: 35px; float: right;" name="update" value="Thay đổi">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
