@@ -66,7 +66,7 @@
         <div style="margin: 10px;">
             <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addNV.php">Thêm nhân viên</a></button>
         </div> 
-        <div class="table-responsive">
+        <div class="table-responsive" >
             <table border="1" class="table table-lg table-striped text-center">
                 <thead>
                     <tr>

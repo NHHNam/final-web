@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang giám đốc</title>
+    <title>Danh sách nhân viên phòng ban</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -26,6 +26,7 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
     </style>
 </head>
@@ -38,7 +39,7 @@
         }
     ?>
     <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-        <div class="nav-item">
+        <div class="nav-item" onclick="location.href='../admin.php'">
             <h1 class="nav-link">Trang giám đốc</h1>
         </div>
         <div class="nav-item">
@@ -52,101 +53,116 @@
             </div>
         </div>
     </nav>
-    <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
-    <?php 
-        $success = "";
-        $error = "";
-        $maPB = $_GET['maPB'];
 
-        if(isset($_POST['boNhiem'])){
-            $nameBoNhiem = $_POST['nameNVToBoNhiem'];
-            $maPBBoNhiem = $_POST['phongBanBoNhiem'];
-            $duocnghiTP = 15;
-            $resultBoNhiem = choose_truong_phong($nameBoNhiem, $maPBBoNhiem, $duocnghiTP);
+    <div style="margin: 10px;">
+        <div style="margin: 10px;">
+            <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+        <div>
+            <?php
+                $maPB = $_GET['maPB'];
+                $result = get_info_1phongban($maPB);
+                if($result['code'] == 0){
+                    $data = $result['data'];
+                }
+            ?>
+            <h2>Danh sách nhân viên <?=$data['namePB']?></h2>
+        </div>
+        <?php 
+            $success = "";
+            $error = "";
+            $maPB = $_GET['maPB'];
 
-            if($resultBoNhiem['code'] == 0){
-                $success = $resultBoNhiem['message'];
-            }else{
-                $error = $resultBoNhiem['message'];
+            if(isset($_POST['boNhiem'])){
+                $nameBoNhiem = $_POST['nameNVToBoNhiem'];
+                $maPBBoNhiem = $_POST['phongBanBoNhiem'];
+                $duocnghiTP = 15;
+                $resultBoNhiem = choose_truong_phong($nameBoNhiem, $maPBBoNhiem, $duocnghiTP);
+
+                if($resultBoNhiem['code'] == 0){
+                    $success = $resultBoNhiem['message'];
+                }else{
+                    $error = $resultBoNhiem['message'];
+                }
+            }else if(isset($_POST['huyBoNhiem'])){
+                $nameNewBoNhiem = "";
+                $maPBBoNhiem = $_POST['phongBanBoNhiem'];
+                $duocnghiNV = 12;
+                $nameOldBoNhiem = $_POST['nameNVToHuyBoNhiem'];
+                $resultHuyBoNhiem = reject_truong_phong($nameNewBoNhiem, $maPBBoNhiem, $duocnghiNV, $nameOldBoNhiem);
+
+                if($resultHuyBoNhiem['code'] == 0){
+                    $success = $resultHuyBoNhiem['message'];
+                }else{
+                    $error = $resultHuyBoNhiem['message'];
+                }
+            }else if(isset($_POST['del'])){
+                $id = $_POST['idToDel'];
+                $result4 = delete_nhan_vien($id);
+
+                if($result4['code'] == 0){
+                    $success = $result4['message'];
+                }else{
+                    $error = $result4['message'];
+                }
             }
-        }else if(isset($_POST['huyBoNhiem'])){
-            $nameNewBoNhiem = "";
-            $maPBBoNhiem = $_POST['phongBanBoNhiem'];
-            $duocnghiNV = 12;
-            $nameOldBoNhiem = $_POST['nameNVToHuyBoNhiem'];
-            $resultHuyBoNhiem = reject_truong_phong($nameNewBoNhiem, $maPBBoNhiem, $duocnghiNV, $nameOldBoNhiem);
 
-            if($resultHuyBoNhiem['code'] == 0){
-                $success = $resultHuyBoNhiem['message'];
+            $result3 = get_button_truongphong($maPB);
+            if($result3['code'] == 0){
+                $data3 = $result3['data'];
             }else{
-                $error = $resultHuyBoNhiem['message'];
+                $error = $result3['message'];
             }
-        }else if(isset($_POST['del'])){
-            $id = $_POST['idToDel'];
-            $result4 = delete_nhan_vien($id);
-
-            if($result4['code'] == 0){
-                $success = $result4['message'];
-            }else{
-                $error = $result4['message'];
-            }
-        }
-
-        $result3 = get_button_truongphong($maPB);
-        if($result3['code'] == 0){
-            $data3 = $result3['data'];
-        }else{
-            $error = $result3['message'];
-        }
-    ?>
-    <div class="table-responsive">
-        <table border="1" class="table table-lg table-striped text-center">
-            <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Tên nhân viên</th>
-                    <th>Bổ nhiệm</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php 
-                    $stt = 1;
-                    $resultList = get_nhanvien_pb($maPB);
-                    if ($resultList['data']->num_rows > 0) {
-                        while($row1 = $resultList['data']->fetch_assoc()) {
-                ?>
-                <tr>
-                    <td><?=$stt?></td>
-                    <td><?=$row1["name"]?></td>
-                    <?php
-                        if($data3['truongphong'] == $row1['name']){
-                            ?>
-                            <form method="post">
-                                <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
-                                <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
-                                <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
-                            </form>
-                            <?php
+        ?>
+        <div class="table-responsive">
+            <table border="1" class="table table-lg table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên nhân viên</th>
+                        <th>Bổ nhiệm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                        $stt = 1;
+                        $resultList = get_nhanvien_pb($maPB);
+                        if ($resultList['data']->num_rows > 0) {
+                            while($row1 = $resultList['data']->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td><?=$stt?></td>
+                        <td><?=$row1["name"]?></td>
+                        <?php
+                            if($data3['truongphong'] == $row1['name']){
+                                ?>
+                                <form method="post">
+                                    <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
+                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Bỏ Chọn</button></td>
+                                </form>
+                                <?php
+                            }else{
+                                ?>
+                                <form method="post">
+                                    <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
+                                    <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
+                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
+                                </form>
+                                <?php
+                            }
+                        ?>
+                    </tr>
+                    <?php 
+                        $stt += 1;    
+                        }
                         }else{
-                            ?>
-                            <form method="post">
-                                <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
-                                <input type="hidden" name="phongBanBoNhiem" value="<?=$maPB?>">
-                                <td><button type="submit" name="boNhiem" class="btn btn-success">Chọn</button></td>
-                            </form>
-                            <?php
+                            echo "No result found";
                         }
                     ?>
-                </tr>
-                <?php 
-                    $stt += 1;    
-                    }
-                    }else{
-                        echo "No result found";
-                    }
-                ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+    </div>
         <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
             <?php
                 if(!empty($error)){

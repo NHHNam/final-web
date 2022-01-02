@@ -160,6 +160,22 @@
         $stmt = $conn->query($sql);
         return array('code' => 0, 'message' =>'', 'data' => $stmt);
     }
+    function get_info_1phongban($maPB){
+        $conn = open_database();
+        $sql = "SELECT * FROM phongban WHERE maPB = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s",$maPB);
+
+        if(!$stmt->execute()){
+            return array('code' => 1, 'message' =>'Cannot execute query');
+        }
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        if($result->num_rows == 0){
+            return array('code' => 2, 'message' => 'Tìm không thấy thông tin phòng ban');
+        }
+        return array('code' => 0, 'message' =>'', 'data' => $data);
+    }
 
     function delete_phongban($maPB){
         $conn = open_database();
