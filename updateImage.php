@@ -23,7 +23,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang đổi ảnh đại diện</title>
+    <title>Thay đổi ảnh đại diện</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -38,8 +38,35 @@
         .nav-item .dropdown-toggle .dropdown-menu{
             max-width: 50px;
         }
+        .back {
+            font-size: 30px;
+            color: red;
+        }
         a i{
             font-size: 30px;
+            color: red;
+        }
+	    .card{
+            width: 50%;
+            height: 100%;
+            background:rgb(156,211,150);
+            border-radius: 16px
+        }
+        h1{
+            text-align: center;
+        }
+        .input-group{
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+        }
+        .button-submit{
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+        }
+        body{
+            background: rgb(229,229,229);
         }
     </style>
 </head>
@@ -50,7 +77,7 @@
             $data = $resultNav['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
+    <nav class="navbar navbar-expand-sm bg-primary justify-content-between">
         <div class="nav-item">
             <h1 class="nav-link">Trang nhân viên</h1>
         </div>
@@ -65,7 +92,7 @@
             </div>
         </div>
     </nav>
-    <a style="text-decoreation: none;" href="index.php"><i class="fas fa-arrow-circle-left"></i></a>
+    <a class="back" style="text-decoreation: none; margin: 10px;" href="index.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
     <?php 
         if(isset($_POST['updateImage'])){
             $image = "images/" . $_FILES['hinhDaiDien']['name'];
@@ -84,12 +111,12 @@
                 <div class="card">
                     <div class="card-body">
                         <form novalidate method="post" enctype="multipart/form-data">
-                            <h1>Sửa hình ảnh đại diên</h1>
+                            <h1>Sửa hình ảnh đại diện</h1>                         
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                    <span class="input-group-text"><i class="fas fa-image" style="font-size: 20px;"></i></span>
                                 </div>
-                                <input type="file" name="hinhDaiDien">
+                                <input style="font-size: 20px;" type="file" name="hinhDaiDien">
                             </div>
                             <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
                                 <?php
@@ -100,8 +127,8 @@
                                     }
                                 ?>
                             </p>
-                            <div class="form-group">
-                                <input type="submit" name="updateImage" value="Thay đổi ảnh">
+                            <div class="form-group button-submit">
+                                <input style="background: rgb(80,160,180);" type="submit" name="updateImage" value="Thay đổi ảnh">
                             </div>
                         </form>
                     </div>
