@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang giám đốc</title>
+    <title>Danh sách nhân viên</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -39,14 +39,15 @@
         }
     ?>
     <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-        <div class="nav-item">
-            <h1 class="nav-link">Trang giám đốc</h1>
+        <div class="nav-item" onclick="location.href='../admin.php'">
+            <h1 class="nav-link" >Trang giám đốc</h1>
         </div>
         <div class="nav-item">
             <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
                 <?= $data['name'] ?>
                 </button>
+                
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
                 </div>
@@ -88,9 +89,17 @@
                                         <td><?=$stt?></td>
                                         <td><?=$a['name']?></td>            
                                         <td><?=$a['maPB']?></td>
-                                        <td></td>
+                                        <?php
+                                            if(check_truong_phong($a['name'], $a['maPB']) == true){
+                                                $chucvu = 'Trưởng phòng';
+                                            }
+                                            else{
+                                                $chucvu = 'Nhân viên';
+                                            }
+                                        ?>
+                                        <td><?=$chucvu?></td>
                                         <td>
-                                            <a href="chiTietNV.php?name=<?=$a['name']?>">View</a>
+                                            <a href="chiTietNV.php?name=<?=$a['name']?>">View information</a>
                                         </td>                        
                                 <?php
                                 $stt+=1;

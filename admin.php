@@ -28,12 +28,18 @@
             display: flex;
             justify-content: center
         }
+        .content > div {
+            background-color: #f1f1f1;
+            margin: 0px;
+            padding: 50px;
+            font-size: 30px;
+        }
         .functional-area{
-            margin: 20px;
-            width: 230px;
-            height: 345px;
-            float: left;
-            box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.2); 
+            text-align: center;
+            margin-top: 10px;
+            padding-bottom: auto;
+            border-radius: 10px;
+            box-shadow:4px 4px 10px 2px rgba(0,0,0,0.2) ; 
         }
         .functional-area:hover {
             box-shadow: 4px 4px 10px 2px rgba(0, 0, 0, 0.5);   
@@ -48,7 +54,8 @@
             text-align: center;
         }
         .functional-area img{
-            width: 100%;
+            width : 60%;
+            height: 50%;
         }
     </style>
 </head>
@@ -62,7 +69,7 @@
     ?>
     <nav class="navbar navbar-expand-sm bg-primary justify-content-between">
         <div class="nav-item">
-            <h1 class="nav-link">Trang giám đốc</h1>
+            <h1 class="nav-link" >Trang giám đốc</h1>
         </div>
         <div class="nav-item">
             <div class="dropdown">
@@ -76,19 +83,25 @@
         </div>
     </nav>
     <div class="content">
-        
-        <div class="functional-area" onclick="location.href='api/phongban.php'">
-            <img src="./images/dsphongban.jpg">
-            <div class="name">Danh sách phòng ban</div>
+        <div class="col-12 col-md-4">
+            <div class="functional-area" onclick="location.href='api/phongban.php'">
+                <img src="./images/dsphongban.jpg">
+                <div class="name">Danh sách phòng ban</div>
+            </div>
         </div>
-        <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
-            <img src="./images/dsnhanvien.jpg">
-            <div class="name">Danh sách nhân viên</div>
+        <div class="col-12 col-md-4">
+            <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
+                <img src="./images/dsnhanvien.jpg">
+                <div class="name">Danh sách nhân viên</div>
+            </div>
         </div>
-        <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
-            <img src="./images/dsdonnghiphep.jpg">
-            <div class="name">Danh sách đơn nghỉ phép</div>
+        <div class="col-12 col-md-4">
+            <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
+                <img src="./images/dsdonnghiphep.jpg">
+                <div class="name">Danh sách đơn nghỉ phép</div>
+            </div>
         </div>
+            
     </div>
         
 </body>
