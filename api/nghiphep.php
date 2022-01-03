@@ -77,7 +77,7 @@
                     <div class="nav-item">
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <?= $data['name'] ?>
+                            <img src="<?="../". $data['image']?>" style="max-width: 50px; max-height: 50px">
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
@@ -92,10 +92,29 @@
     <div class="container mt-2">
         <h2 style="color: #C71585; text-align: center;">QUẢN LÝ NGÀY NGHỈ </h2>
         <div class="row mb-5">
-            <span  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
-        </div>
-	<div class="row mb-5">
-            <span style="background: #FF7F50; padding: 10px; border-radius:20px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+
+            <span>Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
+            <?php 
+                $resultCheckDon = check_don_nghi_phep($data['name']);
+                if($resultCheckDon['code'] == 0){
+                    $dataDon = $resultCheckDon['data'];
+                }
+                
+                if($dataDon['status'] === "waiting"){
+                    ?>
+                        <span></span>
+                    <?php
+                }else if($data['tongngaynghi'] - $data['duocnghi'] === 0){
+                    ?>
+                        <span></span>
+                    <?php
+                }
+                else{
+                    ?>
+                        <span style="background: lightblue; padding: 10px; margin-left: 30px; cursor: pointer;"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+                    <?php
+                }
+            ?>
         </div>
         <div class="row">
             </br>
@@ -109,7 +128,9 @@
                                 <thead>
                                 <tr>
                                     <th>STT</th>
+                                    <th>Name</th>
                                     <th>Reason</th>
+                                    <th>Số ngày nghỉ</th>
                                     <th>Tình trạng</th>
                                 </tr>
                                 </thead>
@@ -124,7 +145,9 @@
                                                 ?>
                                                 <tr>
                                                     <td><?=$stt?></td>
+                                                    <td><?=$row1['name']?></td>
                                                     <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['songay']?></td>
                                                     <td><?=$row1['status']?></td>
                                                 </tr>
                                                 <?php
@@ -150,8 +173,8 @@
                                 <thead>
                                 <tr>
                                     <th>STT</th>
-                                    <th>Name</th>
                                     <th>Reason</th>
+                                    <th>Số ngày nghỉ</th>
                                     <th>Tình trạng</th>
                                 </tr>
                                 </thead>
@@ -166,8 +189,8 @@
                                                 ?>
                                                 <tr>
                                                     <td><?=$stt?></td>
-                                                    <td><?=$row1['name']?></td>
                                                     <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['songay']?></td>
                                                     <td><?=$row1['status']?></td>
                                                 </tr>
                                                 <?php
@@ -196,13 +219,14 @@
                     $reason = $_POST['reason'];
                     $maPB = $_POST['maPB'];
                     $status = "waiting";
-            
-                    $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
+                    $soNgay = $_POST['soNgay'];
+                    $resultXinNghi = xin_nghi($nameNV, $reason, $soNgay, $maPB, $status);
                     if($resultXinNghi['code'] == 0){
                         $success = $resultXinNghi['message'];
                     }else{
                         $error = $resultXinNghi['message'];
                     }
+                    print_r($_POST);
                 }
             ?>
             
@@ -246,6 +270,22 @@
                         <span><i class="fa fa-book"></i></span>
                         <span><label>Số ngày muốn nghỉ: </label></span>
                         <input type="number" name="day" min="1" max="15" style="width: 100%">
+                    </div>
+
+                    <div>
+                        <span><i class="fa fa-user"></i></span>
+                        <span><label>Số ngày muốn nghỉ: </label></span>
+                            <select name="soNgay" id="soNgay">
+                                <option value="">--- Chọn số ngày nghỉ ---</option>
+                                <?php 
+                                    $conTheNghi = $data['duocnghi'] - $data['tongngaynghi'];
+                                    for($i = 1; $i <= $conTheNghi; $i++){
+                                        ?>
+                                            <option value="<?=$i?>"><?=$i?></option>
+                                        <?php 
+                                    }
+                                ?>
+                            </select>
                     </div>
 
                     <div>
