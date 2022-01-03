@@ -113,6 +113,27 @@
                 <div class="d-flex justify-content-center">
                     <div class="card">
                         <div class="card-body">
+                            <?php 
+                                if(isset($_POST['reset'])){
+                                    $nameToReset = $_POST['nameNVToReset'];
+                                    $pwdReset = $_POST['pwd'];
+                                    $resultReset = reset_password($nameToReset, $pwdReset);
+                                    if($resultReset['code'] == 0){
+                                        $success = $resultReset['message'];
+                                    }else{
+                                        $error = $resultReset['message'];
+                                    }
+                                }
+                            ?>
+                            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                                <?php
+                                    if(!empty($error)){
+                                        echo "<div class='alert alert-danger'>$error</div>";
+                                    }else if(!empty($success)){
+                                        echo "<div class='alert alert-success'>$success</div>";
+                                    }
+                                ?>
+                            </p>
                             <form novalidate method="post" enctype="multipart/form-data">
                                 <h3>THÔNG TIN NHÂN VIÊN</h3>
                                 <div class="form-group">
@@ -151,32 +172,13 @@
                                 </div>
                                 
                             </form>
-                            <?php 
-                                if(isset($_POST['reset'])){
-                                    $nameToReset = $_POST['nameNVToReset'];
-                                    $pwdReset = $_POST['pwd'];
-                                    $resultReset = reset_password($nameToReset, $pwdReset);
-                                    if($resultReset['code'] == 0){
-                                        $success = $resultReset['message'];
-                                    }else{
-                                        $error = $resultReset['message'];
-                                    }
-                                }
-                            ?>
+                            
                             <form method="post">
                                 <input type="hidden" name="nameNVToReset" value="<?=$data1['username']?>">
                                 <input type="hidden" name="pwd" value="<?=$data1['username']?>">
                                 <button name="reset" type="submit" class="btn btn-success">Reset Password</button>
                             </form>
-                            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                                <?php
-                                    if(!empty($error)){
-                                        echo "<div class='alert alert-danger'>$error</div>";
-                                    }else if(!empty($success)){
-                                        echo "<div class='alert alert-success'>$success</div>";
-                                    }
-                                ?>
-                            </p>
+                            
                         </div>
                     </div>
                 </div>
