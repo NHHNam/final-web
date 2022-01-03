@@ -37,11 +37,6 @@
         a i{
             font-size: 30px;
         }
-      
-        .table{
-            border: 1px solid black;
-        }
-
     </style>
 </head>
 <body>
@@ -56,6 +51,18 @@
                 <img src="<?= "../" .$data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
                 </button>
                 <div class="dropdown-menu">
+                    <?php
+                    if(check_truong_phong($data['name'], $data['maPB']) == true){
+                        ?>
+                            <a class="dropdown-item" href="api/truongphong.php">Trưởng phòng</a>
+                            <a class="dropdown-item" href="api/duyetNghi.php">Duyệt nghỉ</a>
+                        <?php
+                    }
+                    ?>
+                    <a class="dropdown-item" href="chiTietNV.php">Thông tin cá nhân</a>
+                    <a class="dropdown-item" href="../updatePassword.php">Đổi mật khẩu</a>
+                    <a class="dropdown-item" href="nghiphep.php">Xin nghỉ</a>
+                    <a class="dropdown-item" href="../updateImage.php">Đổi hình đại diện</a>
                     <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
                 </div>
             </div>
@@ -80,16 +87,14 @@
         $nameOfNv = $data['name'];
         $maPBOfNv = $data['maPB'];
         ?>
-        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
         <div class="container">
-            <br>
-        <h2 style="color: #C71585; text-align: center;"> TASK </h2>
-        <h3>Các Task hiện có: </h3>
+        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+        <h2>Các Task hiện có: </h2>
         <br>
         <div class="table-responsive">
             <table class="table table-lg table-striped text-center">
                 <thead>
-                <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                <tr>
                     <th>STT</th>
                     <th>Tên task </th>
                     <th>Tình trạng</th>
@@ -141,12 +146,12 @@
             </table>
         </div>
 
-        <h3>Các Task đã hoàn thành: </h3>
+        <h2>Các Task đã hoàn thành: </h2>
         <br>
         <div class="table-responsive">
             <table class="table table-lg table-striped text-center">
                 <thead>
-                <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                <tr>
                     <th>STT</th>
                     <th>Tên task </th>
                     <th>Tình trạng</th>

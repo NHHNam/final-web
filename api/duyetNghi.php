@@ -30,10 +30,6 @@
         a i{
             font-size: 30px;
         }
-	 .table{
-            border: 1px solid black;
-        }
-
 
     </style>
 </head>
@@ -115,7 +111,6 @@
             }
         }
     ?>
-
     <?php 
         if(check_truong_phong($data['name'], $data['maPB']) == true){
             ?>
@@ -185,7 +180,6 @@
         }
         ?>
     </p>
-
 
       <!-- confirm duyệt nghỉ phép -->
     <div class="modal fade" id="confirm-duyet">
