@@ -28,6 +28,10 @@
             font-size: 30px;
             color: red;
         }
+        .back{
+            font-size: 30px;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +74,7 @@
     </nav>
     <div style="margin: 10px;">
         <div style="margin: 10px;">
-            <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+            <a class="back" style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
         </div>
         <div style="margin: 10px;">
             <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>

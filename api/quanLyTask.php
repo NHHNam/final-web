@@ -11,7 +11,7 @@ if(!$_SESSION['username']){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang nhân viên</title>
+    <title>Quản lý nhiệm vụ</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -27,11 +27,16 @@ if(!$_SESSION['username']){
         }
         a i{
             font-size: 30px;
+            color: red;
         }
-	h5{
+	    h5{
             background:#CCFFFF;
             padding: 10px;
             border-radius: 5px;
+        }
+        .back{
+            font-size: 30px;
+            color: red;
         }
     </style>
 </head>
@@ -68,9 +73,10 @@ if($result['code'] == 0){
         </div>
     </div>
 </nav>
-<a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
+<a class="back" style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
 <div class="container">
     <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ TASK </h2>
+    <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
     <div class="table-responsive">
         <h3>Các Task hiện có: </h3>
         <br>
@@ -132,7 +138,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                    <h5>Không có dữ liệu nào hết</h5>
+                    <h5>Hiện không có task nào đang được thực hiện.</h5>
                 <?php
             }
             ?>
@@ -169,13 +175,13 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                <h5>Không có dữ liệu nào hết</h5>
+                <h5>Không có task nào đang được thực hiện.</h5>
                 <?php
             }
             ?>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
+        
     </div>
     
         <?php 
