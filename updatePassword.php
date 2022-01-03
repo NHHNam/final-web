@@ -96,8 +96,8 @@
         if(isset($_POST['update'])){
             $newpwd = $_POST['newpwd'];
             $cpwd = $_POST['cpwd'];
-            $oldpwd = $_POST['oldpwd'];
-            $resultChangePWD = change_password($oldpwd, $newpwd, $cpwd, $username);
+
+            $resultChangePWD = change_password($newpwd, $cpwd, $username);
             if($resultChangePWD['code'] == 0){
                 $success = $resultChangePWD['message'];
                 $newpwd = "";
@@ -122,13 +122,6 @@
                 <div class="card-body">
                     <form novalidate method="post">
                         <h3>THAY ĐỔI MẬT KHẨU</h3>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
-                            </div>
-                            <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>"  placeholder="Mật khẩu mới" required> 
-                        </div>
 
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
