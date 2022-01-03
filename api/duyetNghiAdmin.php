@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duyệt đơn nghỉ phép</title>
+    <title>Thông tin chi tiết nhân viên</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -29,12 +29,8 @@
         }
         a i{
             font-size: 30px;
-            color: red;
         }
-        .back{
-            font-size: 30px;
-            color: red;
-        }
+
     </style>
 </head>
 <body>
@@ -91,10 +87,10 @@
             }
         }
     ?>
-    <div style="margin: 10px;">
-        <a class="back" style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
-    </div>
-    <div class="container">  
+    <div class="container">
+        <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+
+        <p>Danh sách xin nghỉ của trưởng phòng: </p>
         <div class="table-responsive">
             <table class="table table-lg table-striped text-center">
                 <thead>

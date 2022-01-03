@@ -28,10 +28,6 @@
             font-size: 30px;
             color: red;
         }
-        .back{
-            font-size: 30px;
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -58,11 +54,10 @@
             </div>
         </div>
     </nav>
-    <div style="margin: 10px;">
-        <a class="back" style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
-    </div>
     <div class="container">
-        
+        <div style="margin: 10px;">
+            <a style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
         
         <?php 
             $success = "";

@@ -28,10 +28,6 @@
             font-size: 30px;
             color: red;
         }
-        .back{
-            font-size: 30px;
-            color: red;
-        }
     </style>
 </head>
 <body>
@@ -60,7 +56,7 @@
 
     <div style="margin: 10px;">
         <div style="margin: 10px;">
-            <a class="back" style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+            <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
         </div>
         <div>
             <?php
