@@ -28,10 +28,8 @@ if(!$_SESSION['username']){
         a i{
             font-size: 30px;
         }
-	h5{
-            background:#CCFFFF;
-            padding: 10px;
-            border-radius: 5px;
+	.table{
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -54,15 +52,6 @@ if($result['code'] == 0){
                 <?= $data['name'] ?>
             </button>
             <div class="dropdown-menu">
-                <?php
-                if(check_truong_phong($data['name'], $data['maPB']) == true){
-                    ?>
-                    <a class="dropdown-item" href="">Trưởng phòng</a>
-                    <?php
-                }
-                ?>
-                <a class="dropdown-item" href="../updatePassword.php">Đổi mật khẩu</a>
-                <a class="dropdown-item" href="../updateImage.php">Đổi hình đại diện</a>
                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
             </div>
         </div>
@@ -132,7 +121,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                    <h5>Không có dữ liệu nào hết</h5>
+                    <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
                 <?php
             }
             ?>
@@ -169,7 +158,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                <h5>Không có dữ liệu nào hết</h5>
+                <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
                 <?php
             }
             ?>
