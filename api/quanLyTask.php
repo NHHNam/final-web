@@ -28,6 +28,9 @@ if(!$_SESSION['username']){
         a i{
             font-size: 30px;
         }
+        .table{
+            border: 1px solid black;
+        }
     </style>
 </head>
 <body>
@@ -46,18 +49,9 @@ if($result['code'] == 0){
     <div class="nav-item">
         <div class="dropdown">
             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?= "../".$data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
+                <?= $data['name'] ?>
             </button>
             <div class="dropdown-menu">
-                <?php
-                if(check_truong_phong($data['name'], $data['maPB']) == true){
-                    ?>
-                    <a class="dropdown-item" href="">Trưởng phòng</a>
-                    <?php
-                }
-                ?>
-                <a class="dropdown-item" href="../updatePassword.php">Đổi mật khẩu</a>
-                <a class="dropdown-item" href="../updateImage.php">Đổi hình đại diện</a>
                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
             </div>
         </div>
@@ -65,12 +59,13 @@ if($result['code'] == 0){
 </nav>
 <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
 <div class="container">
+    <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ TASK </h2>
     <div class="table-responsive">
-        <h2>Các Task hiện có: </h2>
+        <h3>Các Task hiện có: </h3>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr>
+            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -126,18 +121,18 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                    <h4>Không có dữ liệu nào hết</h4>
+                    <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
                 <?php
             }
             ?>
             </tbody>
         </table>
         <br>
-        <h2>Các Task đã hoàn thành: </h2>
+        <h3>Các Task đã hoàn thành: </h3>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr>
+            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -163,7 +158,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                <h4>Không có dữ liệu nào hết</h4>
+                <p style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
                 <?php
             }
             ?>
