@@ -28,6 +28,11 @@ if(!$_SESSION['username']){
         a i{
             font-size: 30px;
         }
+	h5{
+            background:#CCFFFF;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -65,12 +70,13 @@ if($result['code'] == 0){
 </nav>
 <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
 <div class="container">
+    <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ TASK </h2>
     <div class="table-responsive">
-        <h2>Các Task hiện có: </h2>
+        <h3>Các Task hiện có: </h3>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr>
+            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -126,18 +132,18 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                    <h4>Không có dữ liệu nào hết</h4>
+                    <h5>Không có dữ liệu nào hết</h5>
                 <?php
             }
             ?>
             </tbody>
         </table>
         <br>
-        <h2>Các Task đã hoàn thành: </h2>
+        <h3>Các Task đã hoàn thành: </h3>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr>
+            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -163,7 +169,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                <h4>Không có dữ liệu nào hết</h4>
+                <h5>Không có dữ liệu nào hết</h5>
                 <?php
             }
             ?>
