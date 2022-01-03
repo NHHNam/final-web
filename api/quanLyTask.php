@@ -29,10 +29,15 @@ if(!$_SESSION['username']){
             font-size: 30px;
             color: red;
         }
+<<<<<<< HEAD
 	    h5{
             background:#CCFFFF;
             padding: 10px;
             border-radius: 5px;
+=======
+	.table{
+            border: 1px solid black;
+>>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
         }
         .back{
             font-size: 30px;
@@ -59,15 +64,6 @@ if($result['code'] == 0){
                 <?= $data['name'] ?>
             </button>
             <div class="dropdown-menu">
-                <?php
-                if(check_truong_phong($data['name'], $data['maPB']) == true){
-                    ?>
-                    <a class="dropdown-item" href="">Trưởng phòng</a>
-                    <?php
-                }
-                ?>
-                <a class="dropdown-item" href="../updatePassword.php">Đổi mật khẩu</a>
-                <a class="dropdown-item" href="../updateImage.php">Đổi hình đại diện</a>
                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
             </div>
         </div>
@@ -175,7 +171,11 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
+<<<<<<< HEAD
                 <h5>Không có task nào đang được thực hiện.</h5>
+=======
+                <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
+>>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
                 <?php
             }
             ?>

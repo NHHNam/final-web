@@ -72,17 +72,25 @@
             </div>
         </div>
     </nav>
+<<<<<<< HEAD
     <div style="margin: 10px;">
         <div style="margin: 10px;">
             <a class="back" style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+=======
+    <div>
+        <div style="margin: 5px;">
+            <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+>>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
         </div>
-        <div style="margin: 10px;">
-            <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
-        </div>   
+	<div class="container">
+            <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ PHÒNG BAN </h2>
+            <div style="margin: 15px;">
+      		<button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
+       	    </div>   
         <div class="table-responsive">
                 <table border="1" class="table table-lg table-striped text-center">
                     <thead>
-                        <tr>
+                        <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
                             <th>STT</th>
                             <th>Tên phòng ban </th>
                             <th>Tên trưởng phòng</th>
@@ -110,9 +118,9 @@
                                     }
                                 ?>
                             </td>
-                            <td><a href="dsNVPB.php?maPB=<?=$row1['maPB']?>">View employee list</a></td>
+                            <td><a href="dsNVPB.php?maPB=<?=$row1['maPB']?>" style="color: black">View employee list</a></td>
                             <td>
-                                <a href="chitietPB.php?maPB=<?=$row1['maPB']?>"><i class="fas fa-eye"></i></a>
+                                <a href="chitietPB.php?maPB=<?=$row1['maPB']?>"><i class="fa fa-eye" style="color: black;"></i></a>
                             </td>
                             <td>
                                 <i 
@@ -143,7 +151,8 @@
                         }
                     ?>
                 </p>
-        </div>
+	   </div>	
+       </div>
     </div>
     
     <div class="modal fade" id="confirm-edit-PB">
@@ -151,7 +160,7 @@
             <div class="modal-content">
                <form method="post">
                   <div class="modal-header">
-                     <h4 class="modal-title">Sửa phòng ban</h4>
+                     <h4 class="modal-title">CHỈNH SỬA THÔNG TIN PHÒNG BAN</h4>
                      <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
 

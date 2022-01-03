@@ -86,19 +86,19 @@
         <div class="col-12 col-md-4">
             <div class="functional-area" onclick="location.href='api/phongban.php'">
                 <img src="./images/dsphongban.jpg">
-                <div class="name">Danh sách phòng ban</div>
+                <div class="name">QUẢN LÝ PHÒNG BAN</div>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
                 <img src="./images/dsnhanvien.jpg">
-                <div class="name">Danh sách nhân viên</div>
+                <div class="name">QUẢN LÝ NHÂN VIÊN</div>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
                 <img src="./images/dsdonnghiphep.jpg">
-                <div class="name">Danh sách đơn nghỉ phép</div>
+                <div class="name">QUẢN LÝ ĐƠN NGHỈ PHÉP</div>
             </div>
         </div>
             
