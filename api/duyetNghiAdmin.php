@@ -49,7 +49,7 @@
                     <div class="nav-item">
                         <div class="dropdown">
                             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <?= $data['name'] ?>
+                            <img src="<?= "../".$data['image']?>" alt="" style="max-width: 50px; max-height: 50px;">
                             </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
@@ -68,7 +68,8 @@
             $nameNV = $_POST['nameNvToDuyet'];
             $status = "approved";
             $id = $_POST['id'];
-            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id);
+            $songay = $_POST['songay'];
+            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id, $songay);
             if($resultDuyet['code'] == 0){
                 $success = $resultDuyet['message'];
             }else{
@@ -120,7 +121,7 @@
                                             <td><?=$row1['reason']?></td>
                                             <td><?=$row1['status']?></td>
                                             <td>
-                                                <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
+                                                <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>, <?=$row1['songay']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
                                                 <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
                                             </td>
                                         </tr>
@@ -139,26 +140,6 @@
                 </tbody>
             </table>
         </div>
-                    
-        
-    
-
-        <?php 
-            
-            if(isset($_POST['nopNghiPhep'])){
-                $nameNV = $_POST['nameNV'];
-                $reason = $_POST['reason'];
-                $maPB = $_POST['maPB'];
-                $status = "waiting";
-
-                $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
-                if($resultXinNghi['code'] == 0){
-                    $success = $resultXinNghi['message'];
-                }else{
-                    $error = $resultXinNghi['message'];
-                }
-            }
-        ?>
 
         <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
             <?php
@@ -170,7 +151,6 @@
             ?>
         </p>
     </div>
-    
 
       <!-- confirm duyệt nghỉ phép -->
     <div class="modal fade" id="confirm-duyet">
@@ -191,6 +171,7 @@
                   <div class="modal-footer">
                       <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
                       <input type="hidden" name="id" id="id">
+                      <input type="hidden" name="songay" id="songay">
                      <button type="submit" name="duyet" class="btn btn-danger">Duyệt</button>
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>

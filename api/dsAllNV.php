@@ -45,7 +45,7 @@
         <div class="nav-item">
             <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <?= $data['name'] ?>
+                <img src="<?= "../". $data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
                 </button>
                 
                 <div class="dropdown-menu">
@@ -54,10 +54,10 @@
             </div>
         </div>
     </nav>
-    
-    <a style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>	
     <div class="container">
-  	 <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ NHÂN VIÊN </h2>
+        <div style="margin: 10px;">
+            <a style="text-decoreation: none; " href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
         
         <?php 
             $success = "";
@@ -69,7 +69,7 @@
         <div class="table-responsive" >
             <table border="1" class="table table-lg table-striped text-center">
                 <thead>
-                    <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                    <tr>
                         <th>STT</th>
                         <th>Tên nhân viên</th>
                         <th>Phòng ban</th>
@@ -99,7 +99,7 @@
                                         ?>
                                         <td><?=$chucvu?></td>
                                         <td>
-                                            <a href="chiTietNV.php?name=<?=$a['name']?>" style="color: black">View information</a>
+                                            <a href="chiTietNV.php?name=<?=$a['name']?>">View information</a>
                                         </td>                        
                                 <?php
                                 $stt+=1;

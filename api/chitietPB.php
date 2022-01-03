@@ -47,20 +47,20 @@
         }
     ?>
     <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-                    <div class="nav-item">
-                        <h1 class="nav-link">Trang giám đốc</h1>
-                    </div>
-                    <div class="nav-item">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <?= $data['name'] ?>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="logout.php">Đăng xuất</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+        <div class="nav-item">
+            <h1 class="nav-link">Trang giám đốc</h1>
+        </div>
+        <div class="nav-item">
+            <div class="dropdown">
+                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+                <img src="<?= "../". $data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="logout.php">Đăng xuất</a>
+                </div>
+            </div>
+        </div>
+    </nav>
     
     <?php 
         $maPB = $_GET['maPB'];
