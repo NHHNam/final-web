@@ -72,15 +72,9 @@
             </div>
         </div>
     </nav>
-<<<<<<< HEAD
     <div style="margin: 10px;">
-        <div style="margin: 10px;">
-            <a class="back" style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
-=======
-    <div>
         <div style="margin: 5px;">
-            <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
->>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
+            <a class="back" style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
         </div>
 	<div class="container">
             <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ PHÒNG BAN </h2>
