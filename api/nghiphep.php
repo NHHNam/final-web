@@ -28,12 +28,6 @@
         a i{
             font-size: 30px;
         }
-	th{
-            background-image: linear-gradient(#F4A460,#FFFFCC);
-        }
-        .table{
-            border: 1px solid black;
-        }
 
     </style>
 </head>
@@ -92,9 +86,7 @@
     <div class="container mt-2">
         <div class="row mb-5">
             <span>Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
-        </div>
-	<div class="row mb-5">
-            <span style="background: #FF7F50; padding: 10px; border-radius:20px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+            <span style="background: lightblue; padding: 10px; margin-left: 30px; cursor: pointer;"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
         </div>
         <div class="row">
             </br>
@@ -102,8 +94,6 @@
                 if(check_truong_phong($data['name'], $data['maPB']) == false){
                     ?>
                         <div class="table-responsive">
-			<h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
-                        <br>
                             <table class="table table-lg table-striped text-center">
                                 <thead>
                                 <tr>
@@ -143,8 +133,6 @@
                 }else if(check_truong_phong($data['name'], $data['maPB']) == true){
                     ?>
                         <div class="table-responsive">
-			    <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
-                            <br>
                             <table class="table table-lg table-striped text-center">
                                 <thead>
                                 <tr>
@@ -239,12 +227,6 @@
                         <span><i class="fa fa-book"></i></span>
                         <span><label>Lý do xin nghỉ: </label></span>
                         <textarea name="reason" style="width: 100%"></textarea>
-                    </div>
-			  
-		     <div>
-                        <span><i class="fa fa-book"></i></span>
-                        <span><label>Số ngày muốn nghỉ: </label></span>
-                        <input type="number" name="day" min="1" max="15" style="width: 100%">
                     </div>
 
                     <div>
