@@ -29,15 +29,10 @@ if(!$_SESSION['username']){
             font-size: 30px;
             color: red;
         }
-<<<<<<< HEAD
 	    h5{
             background:#CCFFFF;
             padding: 10px;
             border-radius: 5px;
-=======
-	.table{
-            border: 1px solid black;
->>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
         }
         .back{
             font-size: 30px;
@@ -171,11 +166,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-<<<<<<< HEAD
                 <h5>Không có task nào đang được thực hiện.</h5>
-=======
-                <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
->>>>>>> 34c05c4778a6e48bca88ca1bdba8f1dcecf077b2
                 <?php
             }
             ?>

@@ -127,7 +127,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>"  placeholder="Mật khẩu mới" required> 
+                            <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>"  placeholder="Mật khẩu cũ" required> 
                         </div>
 
                         <div class="input-group form-group">

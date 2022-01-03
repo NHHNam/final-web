@@ -83,7 +83,7 @@ if($result1['code'] == 0){
 <?php
 if(check_truong_phong($data['name'], $data['maPB']) == true){
     ?>
-        <a style="text-decoreation: none;" href="api/truongphong.php"><i class="fas fa-arrow-circle-left"></i></a>
+        <a style="text-decoreation: none;" href="api/quanlyTask.php"><i class="fas fa-arrow-circle-left"></i></a>
     <?php
 }else{
     ?>
