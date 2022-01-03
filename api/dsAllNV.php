@@ -99,7 +99,7 @@
                                         ?>
                                         <td><?=$chucvu?></td>
                                         <td>
-                                            <a href="chiTietNV.php?name=<?=$a['name']?>">View information</a>
+                                            <a href="chiTietNV.php?name=<?=$a['name']?>" style="color: black">View information</a>
                                         </td>                        
                                 <?php
                                 $stt+=1;
