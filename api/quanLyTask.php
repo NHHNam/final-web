@@ -51,7 +51,7 @@ if($result['code'] == 0){
     <div class="nav-item">
         <div class="dropdown">
             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?= "../".$data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
+                <?= $data['name'] ?>
             </button>
             <div class="dropdown-menu">
                 <?php
