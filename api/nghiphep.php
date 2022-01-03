@@ -90,8 +90,9 @@
     ?>
     <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
     <div class="container mt-2">
+	<h2 style="text-align: center; color: #C71585"> QUẢN LÝ NGÀY NGHỈ PHÉP </h2>
         <div class="row mb-5">
-            <span>Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
+            <span style="background: #CCFFFF; margin-top: 20px; padding: 10px; border-radius:5px;">Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
         </div>
 	<div class="row mb-5">
             <span style="background: #FF7F50; padding: 10px; border-radius:20px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
