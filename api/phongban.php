@@ -141,7 +141,8 @@
                         }
                     ?>
                 </p>
-        </div>
+	   </div>	
+       </div>
     </div>
     
     <div class="modal fade" id="confirm-edit-PB">
