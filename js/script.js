@@ -76,3 +76,14 @@ function update_field_edit_phongban(namePB, mota, maPB){
     maPBEdit.val(maPB);
     descPB.val(mota);
 }
+
+function update_confirm_reset_password(username, nameNV){
+    // console.log(username)   
+    let nameReset = $('#name-to-reset-password')
+    let pwdReset = $('#pwd')
+    let nameNVToReset = $('#nameNVToReset')
+
+    nameReset.html(nameNV)
+    pwdReset.val(username)
+    nameNVToReset.val(username)
+}

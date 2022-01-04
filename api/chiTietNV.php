@@ -156,11 +156,10 @@
                                         }
                                     }
                                 ?>
-                                <form method="post">
-                                    <input type="hidden" name="nameNVToReset" value="<?=$data1['username']?>">
-                                    <input type="hidden" name="pwd" value="<?=$data1['username']?>">
-                                    <button name="reset" type="submit" class="btn btn-primary">Reset Password</button>
-                                </form>
+                                <button name="reset" data-toggle="modal" data-target="#confirm-reset-password" type="submit" 
+                                onclick="update_confirm_reset_password('<?=$data1['username']?>', '<?=$data1['name']?>')" class="btn btn-primary">
+                                Reset Password
+                                </button>
                                 <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
                                     <?php
                                         if(!empty($error)){
@@ -239,6 +238,29 @@
             <?php
         }
     ?>
-    
+    <div class="modal fade" id="confirm-reset-password">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <form method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Reset nhân viên</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body">
+                    Bạn có chắc rằng muốn reset password nhân viên <strong id="name-to-reset-password">image.jpg</strong>
+                    </div>
+            
+                    <div class="modal-footer">
+                        <input type="hidden" name="nameNVToReset" id="nameNVToReset">
+                        <input type="hidden" name="pwd" id="pwd">
+                        <button type="submit" name="reset" class="btn btn-danger">Reset</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+                    </div>
+               </form>            
+            </div>
+         </div>
+      </div>
+      <script src="../js/script.js"></script>
 </body>
 </html>
