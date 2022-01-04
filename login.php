@@ -44,7 +44,8 @@
         .container{
             width: 500px;
             box-shadow: 10px 10px 30px rgba(0,0,0,0.2);
-            background: linear-gradient(blue, pink);
+            background: linear-gradient(pink, blue);
+            border-radius: 16px;
         }
         .container h2{
             text-align: center;
@@ -64,14 +65,17 @@
             justify-content: center;
         }
         img {
-            width: 150px;
+            width: 35%;
+        }
+        .login-button{
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container p-5 mt-5">
         <div class="logo-img">
-            <img src=images/logoTDT.jpg></img>
+            <img src=images/logoTDT.png></img>
         </div>
         
         <h2>Đăng nhập</h2>
@@ -92,7 +96,7 @@
                     ?>
             </div>
             <div class="login-button">
-                <button type="submit" name="enter" class="btn btn-primary">Đăng nhập</button>
+                <button class="login-button btn btn-success"  type="submit" name="enter">Đăng nhập</button>
             </div>
             
         </form>
