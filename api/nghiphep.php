@@ -28,6 +28,12 @@
         a i{
             font-size: 30px;
         }
+	    th{
+            background-image: linear-gradient(#F4A460,#FFFFCC);
+        }
+        .table{
+            border: 1px solid black;
+        }
 
     </style>
 </head>
@@ -84,9 +90,33 @@
     ?>
     <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
     <div class="container mt-2">
+        <h2 style="color: #C71585; text-align: center;">QUẢN LÝ NGÀY NGHỈ </h2>
         <div class="row mb-5">
-            <span>Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
-            <span style="background: lightblue; padding: 10px; margin-left: 30px; cursor: pointer;"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+            <span  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
+        </div>
+	    <div class="row mb-5">
+            <?php
+                $resultCheckDon = check_don_nghi_phep($data['name']);
+                if($resultCheckDon['code'] == 0){
+                    $dataDon = $resultCheckDon['data'];
+                }
+                
+                if($dataDon['status'] === "waiting"){
+                    ?>
+                        <span></span>
+                    <?php
+                }else if($data['tongngaynghi'] - $data['duocnghi'] === 0){
+                    ?>
+                        <span></span>
+                    <?php
+                }
+                else{
+                    ?>
+                        <span style="background: #FF7F50; padding: 10px; border-radius:20px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+                    <?php
+                }
+            ?>
+            
         </div>
         <div class="row">
             </br>
@@ -94,6 +124,8 @@
                 if(check_truong_phong($data['name'], $data['maPB']) == false){
                     ?>
                         <div class="table-responsive">
+			            <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
+                        <br>
                             <table class="table table-lg table-striped text-center">
                                 <thead>
                                 <tr>
@@ -133,6 +165,8 @@
                 }else if(check_truong_phong($data['name'], $data['maPB']) == true){
                     ?>
                         <div class="table-responsive">
+			    <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
+                            <br>
                             <table class="table table-lg table-striped text-center">
                                 <thead>
                                 <tr>
@@ -183,8 +217,8 @@
                     $reason = $_POST['reason'];
                     $maPB = $_POST['maPB'];
                     $status = "waiting";
-            
-                    $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
+                    $soNgay = $_POST['soNgay'];
+                    $resultXinNghi = xin_nghi($nameNV, $reason, $soNgay, $maPB, $status);
                     if($resultXinNghi['code'] == 0){
                         $success = $resultXinNghi['message'];
                     }else{
@@ -227,6 +261,22 @@
                         <span><i class="fa fa-book"></i></span>
                         <span><label>Lý do xin nghỉ: </label></span>
                         <textarea name="reason" style="width: 100%"></textarea>
+                    </div>
+			  
+		            <div>
+                        <span><i class="fa fa-book"></i></span>
+                        <span><label>Số ngày muốn nghỉ: </label></span>
+                            <select name="soNgay" id="soNgay">
+                                <option value="">--- Chọn số ngày nghỉ ---</option>
+                                <?php 
+                                    $conTheNghi = $data['duocnghi'] - $data['tongngaynghi'];
+                                    for($i = 1; $i <= $conTheNghi; $i++){
+                                        ?>
+                                            <option value="<?=$i?>"><?=$i?></option>
+                                        <?php 
+                                    }
+                                ?>
+                            </select>
                     </div>
 
                     <div>

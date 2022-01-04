@@ -30,6 +30,10 @@
         a i{
             font-size: 30px;
         }
+	 .table{
+            border: 1px solid black;
+        }
+
 
     </style>
 </head>
@@ -91,13 +95,14 @@
             $nameNV = $_POST['nameNvToDuyet'];
             $status = "approved";
             $id = $_POST['id'];
-            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id);
+            $songay = $_POST['songay'];
+            $resultDuyet = approve_xin_nghi_by_truong_phong($nameNV, $status, $id, $songay);
             if($resultDuyet['code'] == 0){
                 $success = $resultDuyet['message'];
             }else{
                 $error = $resultDuyet['message'];
             }
-            // print_r($_POST);
+            
         }else if(isset($_POST['reject'])){
             $nameNV = $_POST['nameNvToReject'];
             $status = "rejected";
@@ -121,6 +126,7 @@
                             <th>STT</th>
                             <th>Nhân viên</th>
                             <th>Reason</th>
+                            <th>Số ngày</th>
                             <th>Tình trạng</th>
                             <th>Action</th>
                         </tr>
@@ -141,9 +147,10 @@
                                                     <td><?=$stt?></td>
                                                     <td><?=$row1['name']?></td>
                                                     <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['songay']?></td>
                                                     <td><?=$row1['status']?></td>
                                                     <td>
-                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
+                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>, <?=$row1['songay']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
                                                         <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
                                                     </td>
                                                 </tr>
@@ -167,25 +174,6 @@
         }
     ?>
                 
-    
-   
-
-    <?php 
-        
-        if(isset($_POST['nopNghiPhep'])){
-            $nameNV = $_POST['nameNV'];
-            $reason = $_POST['reason'];
-            $maPB = $_POST['maPB'];
-            $status = "waiting";
-
-            $resultXinNghi = xin_nghi($nameNV, $reason, $maPB, $status);
-            if($resultXinNghi['code'] == 0){
-                $success = $resultXinNghi['message'];
-            }else{
-                $error = $resultXinNghi['message'];
-            }
-        }
-    ?>
 
     <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
         <?php
@@ -196,44 +184,6 @@
         }
         ?>
     </p>
-    <!-- confirm nghỉ phép -->
-    <div class="modal fade" id="confirm-xin-nghi">
-         <div class="modal-dialog">
-            <div class="modal-content">
-               <form method="post" enctype="multipart/form-data">
-                  <div class="modal-header">
-                     <h4 class="modal-title">Xin nghỉ phép</h4>
-                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  </div>
-
-                  <div class="modal-body">
-                    <div>
-                        <span><i class="fa fa-user"></i></span>
-                        <span><label>Tên nhân viên: </label></span>
-                        <input style="width: 100%" type="text" name="nameNV" value="<?=$data['name']?>">
-                    </div>
-
-                    <div>
-                        <span><i class="fa fa-book"></i></span>
-                        <span><label>Lý do xin nghỉ: </label></span>
-                        <textarea name="reason" style="width: 100%"></textarea>
-                    </div>
-
-                    <div>
-                        <span><i class="fa fa-users"></i></span>
-                        <span><label>Phòng ban: </label></span>
-                        <input style="width: 100%" type="text" name="maPB" value="<?=$data['maPB']?>">
-                    </div>
-                  </div>
-            
-                  <div class="modal-footer">
-                     <button type="submit" name="nopNghiPhep" class="btn btn-danger">Nộp</button>
-                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                  </div>
-               </form>            
-            </div>
-         </div>
-      </div>
 
       <!-- confirm duyệt nghỉ phép -->
     <div class="modal fade" id="confirm-duyet">
@@ -254,6 +204,7 @@
                   <div class="modal-footer">
                       <input type="hidden" name="nameNvToDuyet" id="nameNvToDuyet">
                       <input type="hidden" name="id" id="id">
+                      <input type="hidden" name="songay" id="songay">
                      <button type="submit" name="duyet" class="btn btn-danger">Duyệt</button>
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                   </div>
@@ -261,7 +212,7 @@
             </div>
          </div>
       </div>
-
+        <!-- confirm từ chối nghỉ phép -->
       <div class="modal fade" id="confirm-reject">
          <div class="modal-dialog">
             <div class="modal-content">

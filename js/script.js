@@ -45,14 +45,16 @@ function update_name_for_duyet_task(nameTask){
     nameToDuyet.val(nameTask);
 }
 
-function update_name_duyet_nghi(name, id){
+function update_name_duyet_nghi(name, id, songay){
     let nameNV = $('#nhanVienCanDuyet');
     let idDon = $('#id')
     let name1 = $('#nameNvToDuyet');
+    let songay1 = $('#songay')
 
     nameNV.html(name);
     idDon.val(id);
     name1.val(name);
+    songay1.val(songay)
 }
 
 function update_name_reject_nghi(name, id){

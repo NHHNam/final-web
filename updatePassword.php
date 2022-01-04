@@ -83,7 +83,7 @@
         <div class="nav-item">
             <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?=$data['image']?>" alt="Hinh dai dien" style="max-width: 40px;">
+                    <?= $data['name'] ?>
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="logout.php">Đăng xuất</a>
@@ -115,7 +115,7 @@
             }
         }
     ?>
-    <a class="back" style="text-decoreation: none; margin: 10px;" href="index.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+    <a class="back" style="text-decoreation: none; margin: 10px;" href="index.php"><i class="fas fa-arrow-circle-left"></i></a>
     <div class="container">    
         <div class="d-flex justify-content-center">
             <div class="card">
@@ -127,20 +127,20 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>"  placeholder="Mật khẩu cũ" required> 
+                            <input type="password" name="oldpwd" class="form-control" value="<?php if(!empty($oldpwd)) echo $oldpwd; ?>"  placeholder="Nhập mật khẩu cũ" required> 
                         </div>
 
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="newpwd" class="form-control" value="<?php if(!empty($newpwd)) echo $newpwd; ?>"  placeholder="Mật khẩu mới" required> 
+                            <input type="password" name="newpwd" class="form-control" value="<?php if(!empty($newpwd)) echo $newpwd; ?>"  placeholder="Nhập mật khẩu mới" required> 
                         </div>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="cpwd" class="form-control" value="<?php if(!empty($cpwd)) echo $cpwd; ?>" placeholder="Nhập lại nhật khẩu mới" required>
+                            <input type="password" name="cpwd" class="form-control" value="<?php if(!empty($cpwd)) echo $cpwd; ?>" placeholder="Nhập lại mật khẩu mới" required>
                         </div>
                         <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
                             <?php

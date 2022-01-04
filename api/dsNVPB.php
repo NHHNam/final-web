@@ -45,7 +45,7 @@
         <div class="nav-item">
             <div class="dropdown">
                 <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <?= $data['name'] ?>
+                <img src="<?= "../". $data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="../logout.php">Đăng xuất</a>

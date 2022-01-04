@@ -550,11 +550,11 @@
         return array('code' => 0, 'message'=>'Bắt đầu làm task '. $nameTask);
     }
 
-    function xin_nghi($nameNv, $reason, $maPB, $status){
+    function xin_nghi($nameNv, $reason, $songay, $maPB, $status){
         $conn = open_database();
-        $sql = "insert into nghiphep(name, reason, maPB, status) values(?, ?, ?, ?)";
+        $sql = "insert into nghiphep(name, reason, songay, maPB, status) values(?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssss', $nameNv, $reason, $maPB, $status);
+        $stmt->bind_param('ssiss', $nameNv, $reason, $songay, $maPB, $status);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'cannot execute command');
@@ -602,15 +602,15 @@
         return array('code'=>0, 'message'=>'', 'data'=>$data);
     }
 
-    function approve_xin_nghi_by_truong_phong($nameNV, $status, $id){
+    function approve_xin_nghi_by_truong_phong($nameNV, $status, $id, $songay){
         $conn = open_database();
 
         $sql = "update nghiphep set status = ? where name = ? and id = ?";
-        $sql1 = "update nhanvien set tongngaynghi = (tongngaynghi + 1) where name = ?";
+        $sql1 = "update nhanvien set tongngaynghi = (tongngaynghi + ?) where name = ?";
         $stmt = $conn->prepare($sql);
         $stmt1 = $conn->prepare($sql1);
         $stmt->bind_param('ssi', $status, $nameNV, $id);
-        $stmt1->bind_param('s', $nameNV);
+        $stmt1->bind_param('is', $songay, $nameNV);
 
         if(!$stmt->execute() || !$stmt1->execute()){
             return array('code' => 1, 'message' =>'cannot execute command');
@@ -729,5 +729,30 @@
             return false;
         }
         return true;
+    }
+
+    function get_day_can_release($name){
+        $conn = open_database();
+        $sql = "SELECT * FROM nhanvien WHERE name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = array();
+        while ($row = $result->fetch_assoc()){
+            $data[] = $row;
+        }
+        return array('code'=>0, 'message'=>'', 'data'=>$data);
+    }
+
+    function check_don_nghi_phep($name){
+        $conn = open_database();
+        $sql = "SELECT * FROM nghiphep WHERE name= ? ORDER BY id DESC LIMIT 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        return array('code' => 0, 'message' =>'', 'data' => $data);
     }
 ?>
