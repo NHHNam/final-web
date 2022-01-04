@@ -29,16 +29,12 @@
             font-size: 30px;
             color: red;
         }
-	    .card{
-            background-color: rgb(101,192,172);
+	.card{
+            background: #DDDDDD;
             width: 50%;
         }
         h3{
             text-align: center;
-        }
-        .back{
-            font-size: 30px;
-            color: red;
         }
     </style>
 </head>
@@ -104,86 +100,81 @@
             }else{
                 $error = $resultGetInfo['message'];
             }
-            ?>  
-            <div style="margin: 10px;">
-                <a class="back" style="text-decoreation: none;" href="./dsAllNV.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
-            </div>
-            
-            <div class="container">
-                <div class="d-flex justify-content-center">
-                    <div class="card">
-                        <div class="card-body">
-                            <?php 
-                                if(isset($_POST['reset'])){
-                                    $nameToReset = $_POST['nameNVToReset'];
-                                    $pwdReset = $_POST['pwd'];
-                                    $resultReset = reset_password($nameToReset, $pwdReset);
-                                    if($resultReset['code'] == 0){
-                                        $success = $resultReset['message'];
-                                    }else{
-                                        $error = $resultReset['message'];
-                                    }
-                                }
-                            ?>
-                            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                                <?php
-                                    if(!empty($error)){
-                                        echo "<div class='alert alert-danger'>$error</div>";
-                                    }else if(!empty($success)){
-                                        echo "<div class='alert alert-success'>$success</div>";
+            ?>
+                <a style="text-decoreation: none;" href="./dsAllNV.php"><i class="fas fa-arrow-circle-left"></i></a>
+                <div class="container">
+                    <div class="d-flex justify-content-center">
+                        <div class="card">
+                            <div class="card-body">
+                                <form novalidate method="post" enctype="multipart/form-data">
+                                    <h3>THÔNG TIN NHÂN VIÊN</h3>
+                                    <div class="form-group">
+                                        <label>Tên nhân viên:</label>
+                                        <div class="form-control"><?=$data1['name']?></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Tên account:</label>
+                                        <div class="form-control"><?=$data1['username']?></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Mã của phòng ban:</label>
+                                        <div class="form-control"><?=$data1['maPB']?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Chứng minh nhân dân:</label>
+                                        <div class="form-control"><?=$data1['cmnd']?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Email:</label>
+                                        <div class="form-control"><?=$data1['email']?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Số điện thoại:</label>
+                                        <div class="form-control"><?=$data1['sdt']?></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Địa chỉ:</label>
+                                        <div class="form-control"><?=$data1['diachi']?></div>
+                                    </div>
+                                    
+                                </form>
+                                <?php 
+                                    if(isset($_POST['reset'])){
+                                        $nameToReset = $_POST['nameNVToReset'];
+                                        $pwdReset = $_POST['pwd'];
+                                        $resultReset = reset_password($nameToReset, $pwdReset);
+                                        if($resultReset['code'] == 0){
+                                            $success = $resultReset['message'];
+                                        }else{
+                                            $error = $resultReset['message'];
+                                        }
                                     }
                                 ?>
-                            </p>
-                            <form novalidate method="post" enctype="multipart/form-data">
-                                <h3>THÔNG TIN NHÂN VIÊN</h3>
-                                <div class="form-group">
-                                    <label>Tên nhân viên:</label>
-                                    <div class="form-control"><?=$data1['name']?></div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Tên account:</label>
-                                    <div class="form-control"><?=$data1['username']?></div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Mã của phòng ban:</label>
-                                    <div class="form-control"><?=$data1['maPB']?></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Chứng minh nhân dân:</label>
-                                    <div class="form-control"><?=$data1['cmnd']?></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email:</label>
-                                    <div class="form-control"><?=$data1['email']?></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Số điện thoại:</label>
-                                    <div class="form-control"><?=$data1['sdt']?></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Địa chỉ:</label>
-                                    <div class="form-control"><?=$data1['diachi']?></div>
-                                </div>
-                                
-                            </form>
-                            
-                            <form method="post">
-                                <input type="hidden" name="nameNVToReset" value="<?=$data1['username']?>">
-                                <input type="hidden" name="pwd" value="<?=$data1['username']?>">
-                                <button name="reset" type="submit" class="btn btn-success">Reset Password</button>
-                            </form>
-                            
+                                <form method="post">
+                                    <input type="hidden" name="nameNVToReset" value="<?=$data1['username']?>">
+                                    <input type="hidden" name="pwd" value="<?=$data1['username']?>">
+                                    <button name="reset" type="submit" class="btn btn-primary">Reset Password</button>
+                                </form>
+                                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                                    <?php
+                                        if(!empty($error)){
+                                            echo "<div class='alert alert-danger'>$error</div>";
+                                        }else if(!empty($success)){
+                                            echo "<div class='alert alert-success'>$success</div>";
+                                        }
+                                    ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        <?php
+            <?php
         }else{
             $resultGetInfo = get_info_nhanvien($username);
             if($resultGetInfo['code'] == 0){
@@ -192,7 +183,7 @@
                 $error = $resultGetInfo['message'];
             }
             ?>
-                <a class="back" style="text-decoreation: none;" href="dsNVPB.php?maPB=<?=$data1['maPB']?>"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+                <a style="text-decoreation: none;" href="dsNVPB.php?maPB=<?=$data1['maPB']?>"><i class="fas fa-arrow-circle-left"></i></a>
                 <div class="container">
                     <div class="d-flex justify-content-center">
                         <div class="card">

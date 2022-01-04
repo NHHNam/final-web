@@ -11,7 +11,7 @@ if(!$_SESSION['username']){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý nhiệm vụ</title>
+    <title>Trang nhân viên</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -27,6 +27,7 @@ if(!$_SESSION['username']){
         }
         a i{
             font-size: 30px;
+<<<<<<< HEAD
             color: red;
         }
 	    h5{
@@ -37,6 +38,8 @@ if(!$_SESSION['username']){
         .back{
             font-size: 30px;
             color: red;
+=======
+>>>>>>> 2837a8121901fca0a043e048ab6240364a159109
         }
     </style>
 </head>
@@ -56,24 +59,31 @@ if($result['code'] == 0){
     <div class="nav-item">
         <div class="dropdown">
             <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <?= $data['name'] ?>
+                <img src="<?= "../".$data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
             </button>
             <div class="dropdown-menu">
+                <?php
+                if(check_truong_phong($data['name'], $data['maPB']) == true){
+                    ?>
+                    <a class="dropdown-item" href="">Trưởng phòng</a>
+                    <?php
+                }
+                ?>
+                <a class="dropdown-item" href="../updatePassword.php">Đổi mật khẩu</a>
+                <a class="dropdown-item" href="../updateImage.php">Đổi hình đại diện</a>
                 <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
             </div>
         </div>
     </div>
 </nav>
-<a class="back" style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i> Quay lại</a>
+<a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
 <div class="container">
-    <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ TASK </h2>
-    <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
     <div class="table-responsive">
-        <h3>Các Task hiện có: </h3>
+        <h2>Các Task hiện có: </h2>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+            <tr>
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -129,18 +139,18 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-                    <h5>Hiện không có task nào đang được thực hiện.</h5>
+                    <h4>Không có dữ liệu nào hết</h4>
                 <?php
             }
             ?>
             </tbody>
         </table>
         <br>
-        <h3>Các Task đã hoàn thành: </h3>
+        <h2>Các Task đã hoàn thành: </h2>
         <br>
         <table class="table table-lg table-striped text-center">
             <thead>
-            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+            <tr>
                 <th>STT</th>
                 <th>Tên task </th>
                 <th>Trạng thái</th>
@@ -166,13 +176,17 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
+<<<<<<< HEAD
                 <h5>Không có task nào đang được thực hiện.</h5>
+=======
+                <h4>Không có dữ liệu nào hết</h4>
+>>>>>>> 2837a8121901fca0a043e048ab6240364a159109
                 <?php
             }
             ?>
             </tbody>
         </table>
-        
+        <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
     </div>
     
         <?php 
