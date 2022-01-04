@@ -168,15 +168,7 @@ if($result['code'] == 0){
                 }
             }else{
                 ?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <h5>Không có task nào đang được thực hiện.</h5>
-=======
-                <h4>Không có dữ liệu nào hết</h4>
->>>>>>> 2837a8121901fca0a043e048ab6240364a159109
-=======
                 <p style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
->>>>>>> c264fde97ff4364a12182d212aefdc714ed07ead
                 <?php
             }
             ?>
