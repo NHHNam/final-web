@@ -131,6 +131,8 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Reason</th>
+                                    <th>Nghỉ từ</th>
+                                    <th>Nghỉ đến</th>
                                     <th>Tình trạng</th>
                                 </tr>
                                 </thead>
@@ -146,6 +148,8 @@
                                                 <tr>
                                                     <td><?=$stt?></td>
                                                     <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['fromDay']?></td>
+                                                    <td><?=$row1['toDay']?></td>
                                                     <td><?=$row1['status']?></td>
                                                 </tr>
                                                 <?php
@@ -173,6 +177,8 @@
                                     <th>STT</th>
                                     <th>Name</th>
                                     <th>Reason</th>
+                                    <th>Nghỉ từ</th>
+                                    <th>Nghỉ đến</th>
                                     <th>Tình trạng</th>
                                 </tr>
                                 </thead>
@@ -189,6 +195,8 @@
                                                     <td><?=$stt?></td>
                                                     <td><?=$row1['name']?></td>
                                                     <td><?=$row1['reason']?></td>
+                                                    <td><?=$row1['fromDay']?></td>
+                                                    <td><?=$row1['toDay']?></td>
                                                     <td><?=$row1['status']?></td>
                                                 </tr>
                                                 <?php
@@ -217,8 +225,9 @@
                     $reason = $_POST['reason'];
                     $maPB = $_POST['maPB'];
                     $status = "waiting";
-                    $soNgay = $_POST['soNgay'];
-                    $resultXinNghi = xin_nghi($nameNV, $reason, $soNgay, $maPB, $status);
+                    $fromDay = $_POST['fromDay'];
+                    $toDay = $_POST['toDay'];
+                    $resultXinNghi = xin_nghi($nameNV, $reason, $toDay, $fromDay, $maPB, $status);
                     if($resultXinNghi['code'] == 0){
                         $success = $resultXinNghi['message'];
                     }else{
@@ -265,18 +274,14 @@
 			  
 		            <div>
                         <span><i class="fa fa-book"></i></span>
-                        <span><label>Số ngày muốn nghỉ: </label></span>
-                            <select name="soNgay" id="soNgay">
-                                <option value="">--- Chọn số ngày nghỉ ---</option>
-                                <?php 
-                                    $conTheNghi = $data['duocnghi'] - $data['tongngaynghi'];
-                                    for($i = 1; $i <= $conTheNghi; $i++){
-                                        ?>
-                                            <option value="<?=$i?>"><?=$i?></option>
-                                        <?php 
-                                    }
-                                ?>
-                            </select>
+                        <span><label>Nghỉ từ: </label></span>
+                        <input type="date" name="fromDay">
+                    </div>
+
+                    <div>
+                        <span><i class="fa fa-book"></i></span>
+                        <span><label>Nghỉ đến: </label></span>
+                        <input type="date" name="toDay">
                     </div>
 
                     <div>

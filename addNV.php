@@ -30,6 +30,62 @@
         a i{
             font-size: 30px;
         }
+
+        .wrapper{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .wrapper .toast{ 
+            border-left: 5px solid #2ecc71;
+            background: #fff;
+            padding: 20px 15px 20px 20px;
+            border-radius: 10px;
+            width: 430px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0, 0.15);
+        }
+
+        .toast .content{ 
+            display: flex;
+            align-items: center;
+        }
+
+        .toast .content .icon{ 
+            font-size: 25px;
+            background: #2ecc71;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            color: #fff;
+        }
+
+        .toast .content .details{ 
+            margin-left: 10px;
+        }
+
+        .toast .content .details span{
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .toast .close-icon{
+            background: #f2f2f2;
+            height: 40px;
+            width: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            color: #878787;
+            font-size: 23px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -174,6 +230,6 @@
             </div>
         </div>
     </div>
-
+    <script src="js/script.js"></script>
 </body>
 </html>

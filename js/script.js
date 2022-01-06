@@ -6,13 +6,6 @@ function updateDeleteFileDialog(filename, id){
     idPlace.val(id);
 }
 
-// function updateDeleteFileDialogPB(namePB, maPB) {
-//     let name = $('#phong-ban-to-delete');
-//     let ma = $('#maPB');
-
-//     name.html(namePB);
-//     ma.val(maPB);
-// }
 
 function update_name_for_nop_task(tenTask){
     let nameTask = $('#nameToNop');
@@ -86,4 +79,9 @@ function update_confirm_reset_password(username, nameNV){
     nameReset.html(nameNV)
     pwdReset.val(username)
     nameNVToReset.val(username)
+}
+
+function success(message) {
+    let b = document.querySelector(".details");
+    b.insertAdjacentHTML('beforeend', `<span>${message}</span>`)
 }

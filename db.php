@@ -550,11 +550,41 @@
         return array('code' => 0, 'message'=>'Bắt đầu làm task '. $nameTask);
     }
 
-    function xin_nghi($nameNv, $reason, $songay, $maPB, $status){
+    function get_number_day($toDay, $fromDay){
         $conn = open_database();
-        $sql = "insert into nghiphep(name, reason, songay, maPB, status) values(?, ?, ?, ?, ?)";
+        $sql = "SELECT DATEDIFF(?, ?) as numDay";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('ssiss', $nameNv, $reason, $songay, $maPB, $status);
+        $stmt->bind_param('ss', $toDay, $fromDay);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $dataNumDay = $result->fetch_assoc();
+        return $dataNumDay['numDay'];
+    }
+
+    function get_release_day($name){
+        $conn = open_database();
+        $sql = "select * from nhanvien where name = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        $releaseDay = $data['duocnghi'] - $data['tongngaynghi'];
+        return $releaseDay;
+    }
+
+    function xin_nghi($nameNv, $reason, $toDay, $fromDay, $maPB, $status){
+        $conn = open_database();
+        $numDay = get_number_day($toDay, $fromDay);
+        $releaseDay = get_release_day($nameNv);
+
+        if($numDay > $releaseDay){
+            return array('code' => 2, 'message' =>'Số ngày bạn muốn nghỉ đã vượt qua số ngày cho phép');
+        }
+
+        $sql = "insert into nghiphep(name, reason, fromDay, toDay, songay, maPB, status) values(?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ssssiss', $nameNv, $reason, $fromDay, $toDay, $numDay, $maPB, $status);
 
         if(!$stmt->execute()){
             return array('code' => 1, 'message' =>'cannot execute command');
