@@ -21,12 +21,58 @@
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
         .nav-item .dropdown{
             margin-right: 80px;
         }
         a i{
             font-size: 30px;
             color: red;
+        }
+        body, html{
+        background: url('../images/background.jpg') no-repeat;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: 'Numans', sans-serif;
+        }
+        h2{
+            color: #C71585; 
+            text-align: center;
+            font-weight: bold;
+        }
+        @media screen and (max-width:479px ){
+            thead{
+                display:none;
+            }
+            td{
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+            
+            td:first-child{
+                background: lightblue;
+                color: red;
+                text-align: center;
+            }
+            td{
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+
+            }
+            td::before{
+                content: attr(data-label);
+                float: left;
+                margin-right:3rem;
+                font-weight: bold;
+                text-align: left;
+                padding-right: 40%;
+            }
         }
     </style>
 </head>
@@ -53,19 +99,24 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-        <div class="nav-item">
-            <h1 class="nav-link">Trang giám đốc</h1>
-        </div>
-        <div class="nav-item">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <?= $data['name'] ?>
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-                </div>
-            </div>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+        <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <button type="button" class="btn btn-light">
+                            <?= $data['name'] ?>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
     </nav>
     <div>
@@ -73,74 +124,78 @@
             <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
         </div>
         <div class="container">
-            <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ PHÒNG BAN </h2>
-            <div style="margin: 15px;">
-                <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
-            </div>   
-            <div class="table-responsive">
-                <table border="1" class="table table-lg table-striped text-center">
-                    <thead>
-                        <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
-                            <th>STT</th>
-                            <th>Tên phòng ban </th>
-                            <th>Tên trưởng phòng</th>
-                            <th colspan="3">Trạng thái</th>                    
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                            $stt = 1;
-                            $resultList = get_info_phongban();
-                            if ($resultList['data']->num_rows > 0) {
-                                while($row1 = $resultList['data']->fetch_assoc()) {
-                        ?>
-                        <tr>
-                            <td><?=$stt?></td>
-                            <td><a style="text-decoration: none; color: black; font-weight: bold;" ><?=$row1["namePB"]?></a></td>
-                            <td>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2> QUẢN LÝ PHÒNG BAN </h2>
+                    <div style="margin: 15px;">
+                        <button class="btn btn-primary"><a style="text-decoration: none; color: #fff;" href="../addPB.php">Thêm phòng ban</a></button>
+                    </div>   
+                    <div class="table-responsive">
+                        <table border="1" class="table table-lg table-striped text-center">
+                            <thead>
+                                <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                                    <th>STT</th>
+                                    <th>Tên phòng ban </th>
+                                    <th>Tên trưởng phòng</th>
+                                    <th colspan="3">Trạng thái</th>                    
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <?php 
-                                    $resultGet = get_truong_phong($row1['maPB']);
-                                    if($resultGet['code'] == 0){
-                                        $dataPB = $resultGet['data'];
-                                        echo "".$dataPB['name'];
+                                    $stt = 1;
+                                    $resultList = get_info_phongban();
+                                    if ($resultList['data']->num_rows > 0) {
+                                        while($row1 = $resultList['data']->fetch_assoc()) {
+                                ?>
+                                <tr>
+                                    <td data-label="STT"><?=$stt?></td>
+                                    <td data-label="Tên phòng ban"><a style="text-decoration: none; color: black; font-weight: bold;" ><?=$row1["namePB"]?></a></td>
+                                    <td data-label="Tên trưởng phòng">
+                                        <?php 
+                                            $resultGet = get_truong_phong($row1['maPB']);
+                                            if($resultGet['code'] == 0){
+                                                $dataPB = $resultGet['data'];
+                                                echo "".$dataPB['name'];
+                                            }else{
+                                                echo "".$resultGet['message'];
+                                            }
+                                        ?>
+                                    </td>
+                                    <td data-label="Trạng thái"><a href="dsNVPB.php?maPB=<?=$row1['maPB']?>" style="color: black">View employee list</a></td>
+                                    <td>
+                                        <a href="chitietPB.php?maPB=<?=$row1['maPB']?>"><i class="fa fa-eye"  style="color: black;"></i></a>
+                                    </td>
+                                    <td>
+                                        <i 
+                                            class="fas fa-edit"
+                                            style="cursor: pointer"
+                                            onclick="update_field_edit_phongban('<?=$row1['namePB']?>', '<?=$row1['mota']?>', '<?=$row1['maPB']?>')"
+                                            data-toggle="modal" data-target="#confirm-edit-PB"
+                                        >
+                                        </i>
+                                    </td>
+                                </tr>
+
+                                <?php 
+                                    $stt += 1;    
+                                    }
                                     }else{
-                                        echo "".$resultGet['message'];
+                                        echo "No result found";
                                     }
                                 ?>
-                            </td>
-                            <td><a href="dsNVPB.php?maPB=<?=$row1['maPB']?>" style="color: black">View employee list</a></td>
-                            <td>
-                                <a href="chitietPB.php?maPB=<?=$row1['maPB']?>"><i class="fa fa-eye"  style="color: black;"></i></a>
-                            </td>
-                            <td>
-                                <i 
-                                    class="fas fa-edit"
-                                    style="cursor: pointer"
-                                    onclick="update_field_edit_phongban('<?=$row1['namePB']?>', '<?=$row1['mota']?>', '<?=$row1['maPB']?>')"
-                                    data-toggle="modal" data-target="#confirm-edit-PB"
-                                >
-                                </i>
-                            </td>
-                        </tr>
-
-                        <?php 
-                            $stt += 1;    
-                            }
-                            }else{
-                                echo "No result found";
-                            }
-                        ?>
-                    </tbody>
-                </table>
-                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                    <?php
-                        if(!empty($error)){
-                            echo "<div class='alert alert-danger'>$error</div>";
-                        }else if(!empty($success)){
-                            echo "<div class='alert alert-success'>$success</div>";
-                        }
-                    ?>
-                </p>
+                            </tbody>
+                        </table>
+                        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                            <?php
+                                if(!empty($error)){
+                                    echo "<div class='alert alert-danger'>$error</div>";
+                                }else if(!empty($success)){
+                                    echo "<div class='alert alert-success'>$success</div>";
+                                }
+                            ?>
+                        </p>
+                    </div> 
+                </div>
             </div>
         </div>
     </div>

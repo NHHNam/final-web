@@ -21,6 +21,10 @@
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
         .nav-item .dropdown{
             margin-right: 80px;
         }
@@ -29,6 +33,61 @@
         }
         a i{
             font-size: 30px;
+            color: red;
+        }
+	    .table{
+            border: 1px solid black;
+        }
+        body, html{
+            background: url('../images/background.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+        h2{
+            color: #C71585; 
+            text-align: center;
+            font-weight: bold;
+        }
+        @media screen and (max-width:479px ){
+            .table{
+                width: 100%;
+                /* background: url('../images/anhtable.jpg') no-repeat;
+                background-size: cover; */
+            }
+            thead{
+                display:none;
+            }
+            td{
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+            
+            td:first-child{
+                background: lightblue;
+                color: red;
+                text-align: center;
+            }
+            td{
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+
+            }
+            td::before{
+                content: attr(data-label);
+                float: left;
+                margin-right:3rem;
+                font-weight: bold;
+                text-align: left;
+                /* padding-right: 40%; */
+            }
+            h3{
+                font-size: 20px;
+                margin-left: 20px;
+            }
         }
 
     </style>
@@ -42,19 +101,24 @@
                 $data = $result['data'];
             }
             ?>
-                <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-                    <div class="nav-item">
-                        <h1 class="nav-link">Trang giám đốc</h1>
-                    </div>
-                    <div class="nav-item">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?= "../".$data['image']?>" alt="" style="max-width: 50px; max-height: 50px;">
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-                            </div>
-                        </div>
+                <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+                    <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar-list-4">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <button type="button" class="btn btn-light">
+                                        <?= $data['name'] ?>
+                                    </button>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                                </div>
+                            </li>   
+                        </ul>
                     </div>
                 </nav>
             <?php
@@ -88,68 +152,76 @@
             }
         }
     ?>
-    <div class="container">
+    <div class="margin:10px">
         <a style="text-decoreation: none;" href="../admin.php"><i class="fas fa-arrow-circle-left"></i></a>
-
-        <p>Danh sách xin nghỉ của trưởng phòng: </p>
-        <div class="table-responsive">
-            <table class="table table-lg table-striped text-center">
-                <thead>
-                <tr>
-                    <th>STT</th>
-                    <th>Nhân viên</th>
-                    <th>Reason</th>
-                    <th>Tình trạng</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                    $stt = 1;
-                    $resultList = get_all_nghiphep_admin();
-                    if($resultList['code'] == 0){
-                        $data1 = $resultList['data'];
-                        if(count($data1) > 0 && is_array($data1)){
-                            
-                            foreach ($data1 as $row1) {
-                                if($row1['status'] == "waiting"){
-                                    if(check_truong_phong($row1['name'], $row1['maPB']) == true){
-                                        ?>
-                                        <tr>
-                                            <td><?=$stt?></td>
-                                            <td><?=$row1['name']?></td>
-                                            <td><?=$row1['reason']?></td>
-                                            <td><?=$row1['status']?></td>
-                                            <td>
-                                                <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>, <?=$row1['songay']?>)" class="btn btn-primary"data-toggle="modal" data-target="#confirm-duyet">approve</button>
-                                                <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-primary" data-toggle="modal" data-target="#confirm-reject">reject</button>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                        $stt += 1;
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 ">
+                <h2> DUYỆT ĐƠN XIN NGHỈ </h2>
+                <br>
+                <h5>Danh sách xin nghỉ của trưởng phòng: </h5>
+                <br>
+                <div class="table-responsive">
+                    <table  border="1" class="table table-lg table-striped text-center">
+                        <thead>
+                        <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                            <th>STT</th>
+                            <th>Nhân viên</th>
+                            <th>Reason</th>
+                            <th>Tình trạng</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $stt = 1;
+                            $resultList = get_all_nghiphep_admin();
+                            if($resultList['code'] == 0){
+                                $data1 = $resultList['data'];
+                                if(count($data1) > 0 && is_array($data1)){
+                                    
+                                    foreach ($data1 as $row1) {
+                                        if($row1['status'] == "waiting"){
+                                            if(check_truong_phong($row1['name'], $row1['maPB']) == true){
+                                                ?>
+                                                <tr>
+                                                    <td><?=$stt?></td>
+                                                    <td data-label="Nhân viên"><?=$row1['name']?></td>
+                                                    <td data-label="Reason"><?=$row1['reason']?></td>
+                                                    <td data-label="Tình trạng"><?=$row1['status']?></td>
+                                                    <td data-label="Action">
+                                                        <button onclick="update_name_duyet_nghi('<?=$row1['name']?>', <?=$row1['id']?>, <?=$row1['songay']?>)" class="btn btn-success"data-toggle="modal" data-target="#confirm-duyet">approve</button>
+                                                        <button onclick="update_name_reject_nghi('<?=$row1['name']?>',<?=$row1['id']?>)" class="btn btn-success" data-toggle="modal" data-target="#confirm-reject">reject</button>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                $stt += 1;
+                                            }
+                                        }
                                     }
                                 }
+                            }else{
+                                ?>
+                                    <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
+                                <?php
                             }
-                        }
-                    }else{
                         ?>
-                            <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
-                        <?php
-                    }
-                ?>
-                </tbody>
-            </table>
-        </div>
+                        </tbody>
+                    </table>
+                </div>
 
-        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-            <?php
-            if(!empty($error)){
-                echo "<div class='alert alert-danger'>$error</div>";
-            }else if(!empty($success)){
-                echo "<div class='alert alert-success'>$success</div>";
-            }
-            ?>
-        </p>
+                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                    <?php
+                    if(!empty($error)){
+                        echo "<div class='alert alert-danger'>$error</div>";
+                    }else if(!empty($success)){
+                        echo "<div class='alert alert-success'>$success</div>";
+                    }
+                    ?>
+                </p>
+            </div>
+        </div>
     </div>
 
       <!-- confirm duyệt nghỉ phép -->

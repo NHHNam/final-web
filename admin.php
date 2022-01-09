@@ -20,11 +20,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
         .nav-item .dropdown{
             margin-right: 80px;
         }
-        .content{
+        /* .content{
             display: flex;
             justify-content: center
         }
@@ -33,7 +38,7 @@
             margin: 0px;
             padding: 50px;
             font-size: 30px;
-        }
+        } */
         .functional-area{
             text-align: center;
             margin-top: 10px;
@@ -57,6 +62,22 @@
             width : 60%;
             height: 50%;
         }
+        .flex-direction{
+            display: flex;
+            justify-content: center;
+        }
+
+        .flex-direction > div {
+         
+            margin: 50px;
+            padding: 50px;
+            font-size: 30px;
+        }
+        body, html{
+            background: url('images/trangchu.jpg') no-repeat;
+            background-size: cover;
+            height: 100%;
+        } 
     </style>
 </head>
 <body>
@@ -67,41 +88,46 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-primary justify-content-between">
-        <div class="nav-item">
-            <h1 class="nav-link" >Trang giám đốc</h1>
-        </div>
-        <div class="nav-item">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?= $data['image'] ?>" alt="Hinh dai dien" style="max-width: 40px;">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="logout.php">Đăng xuất</a>
-                </div>
-            </div>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+        <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                            <img src="<?=$data['image'] ?>" alt="Hinh dai dien" width="40" height="40" class="rounded-circle" float="right"> 
+                            <span style="color:while;"> <?=$data['name']?></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
     </nav>
-    <div class="content">
-        <div class="col-12 col-md-4">
-            <div class="functional-area" onclick="location.href='api/phongban.php'">
-                <img src="./images/dsphongban.jpg">
-                <div class="name">QUẢN LÝ PHÒNG BAN</div>
+    <div class="flex-direction">
+        <div class ="row">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="functional-area" onclick="location.href='api/phongban.php'">
+                    <img src="./images/dsphongban.jpg">
+                    <div class="name">QUẢN LÝ PHÒNG BAN</div>
+                </div>
             </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
-                <img src="./images/dsnhanvien.jpg">
-                <div class="name">QUẢN LÝ NHÂN VIÊN</div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="functional-area" onclick="location.href='api/dsAllNV.php'">
+                    <img src="./images/dsnhanvien.jpg">
+                    <div class="name">QUẢN LÝ NHÂN VIÊN</div>
+                </div>
             </div>
-        </div>
-        <div class="col-12 col-md-4">
-            <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
-                <img src="./images/dsdonnghiphep.jpg">
-                <div class="name">QUẢN LÝ ĐƠN NGHỈ PHÉP</div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="functional-area" onclick="location.href='api/duyetNghiAdmin.php'">
+                    <img src="./images/dsdonnghiphep.jpg">
+                    <div class="name">QUẢN LÝ ĐƠN NGHỈ PHÉP</div>
+                </div>
             </div>
-        </div>
-            
+        <div> 
     </div>
         
 </body>
