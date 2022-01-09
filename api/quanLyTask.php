@@ -19,6 +19,10 @@ if(!$_SESSION['username']){
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
         .nav-item .dropdown{
             margin-right: 80px;
         }
@@ -41,6 +45,48 @@ if(!$_SESSION['username']){
         .table{
             border: 1px solid black;
         }
+        body, html{
+            background: url('../images/background.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+        h2{
+            color: #C71585; 
+            text-align: center;
+            font-weight: bold;
+        }
+        @media screen and (max-width:320px ){
+            thead{
+                display:none;
+            }
+            td{
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+            
+            td:first-child{
+                background: lightblue;
+                color: red;
+                text-align: center;
+            }
+            td{
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+
+            }
+            td::before{
+                content: attr(data-label);
+                float: left;
+                margin-right:9rem;
+                font-weight: bold;
+                text-align: left;
+                padding-right: 40%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -51,132 +97,140 @@ if($result['code'] == 0){
     $data = $result['data'];
 }
 ?>
-<nav class="navbar navbar-expand-sm bg-info justify-content-between">
-    <div class="nav-item">
-        <a href="../index.php" style="text-decoration: none; color: black;"><h1 class="nav-link">Trang nhân viên</h1></a>
-    </div>
-
-    <div class="nav-item">
-        <div class="dropdown">
-            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <?= $data['name'] ?>
-            </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-            </div>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+        <a href="../index.php" style="text-decoration: none; color: black;"><h1 class="navbar-brand">TRANG NHÂN VIÊN </h1></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <button type="button" class="btn btn-light">
+                            <?= $data['name'] ?>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
-    </div>
-</nav>
+    </nav>
 <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
 <div class="container">
-    <h2 style="color: #C71585; text-align: center;"> QUẢN LÝ TASK </h2>
-    <div class="table-responsive">
-        <h3>Các Task hiện có: </h3>
-        <br>
-        <table class="table table-lg table-striped text-center">
-            <thead>
-            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
-                <th>STT</th>
-                <th>Tên task </th>
-                <th>Trạng thái</th>
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $stt = 1;
-            $resultList = get_all_task_by_phong_ban($data['maPB']);
-            if($resultList['code'] == 0){
-                foreach ($resultList['data'] as $row1) {
-                ?>
-                <tr>
-                    <td><?=$stt?></td>
-                    <td><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
-                    <td><?=$row1['status']?></td>
-                    <td>
-                        <?php 
-                            if($row1['status'] == "New"){
-                                ?>
-                                    <span>
-                                        <i 
-                                            style="cursor: pointer" 
-                                            onclick="add_value_id_edit(<?=$row1['id']?>, '<?=$row1['tenTask']?>','<?=$row1['descTask']?>','<?=$row1['nhanvien']?>', '<?=$row1['deadline']?>')" 
-                                            class="fas fa-edit" 
-                                            data-toggle="modal" data-target="#confirm-edit"
-                                        ></i>
-                                    </span>
-                                    <span>
-                                        <i 
-                                            style="cursor: pointer" 
-                                            onclick="update_name_delete_task('<?=$row1['tenTask']?>')" 
-                                            class="fa fa-trash action" 
-                                            data-toggle="modal" data-target="#confirm-delete">
-                                        </i>
-                                    </span>
-                                <?php
-                            }else{
-                                ?>
-                                    <p>No Thing To Do</p>
-                                <?php
-                            }
-    
-                        ?>
-                        
-                        
-                    </td>
-                </tr>
-    
-                <?php
-                    $stt += 1;
-                }
-            }else{
-                ?>
-                    <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
-                <?php
-            }
-            ?>
-            </tbody>
-        </table>
-        <br>
-        <h3>Các Task đã hoàn thành: </h3>
-        <br>
-        <table class="table table-lg table-striped text-center">
-            <thead>
-            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
-                <th>STT</th>
-                <th>Tên task </th>
-                <th>Trạng thái</th>
-                <th>Quality</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $st = 1;
-            $resultList1 = get_task_success($data['maPB']);
-            if($resultList1['code'] == 0){
-                foreach ($resultList1['data'] as $row) {
-                    ?>
-                    <tr>
-                        <td><?=$st?></td>
-                        <td><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
-                        <td><?=$row['status']?></td>
-                        <td><?=$row['quality']?></td>
+    <div class="row">
+        <div class="col-lg-12 col-ms-6">
+            <h2> QUẢN LÝ TASK </h2>
+            <div class="table-responsive">
+                <h3>Các Task hiện có: </h3>
+                <br>
+                <table class="table table-lg table-striped text-center">
+                    <thead>
+                    <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                        <th>STT</th>
+                        <th>Tên task </th>
+                        <th>Trạng thái</th>
+                        <th>Action</th>
                     </tr>
-    
+                    </thead>
+                    <tbody>
                     <?php
-                    $st += 1;
-                }
-            }else{
-                ?>
-                <p style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
-                <?php
-            }
-            ?>
-            </tbody>
-        </table>
-        <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
-    </div>
-    
+                    $stt = 1;
+                    $resultList = get_all_task_by_phong_ban($data['maPB']);
+                    if($resultList['code'] == 0){
+                        foreach ($resultList['data'] as $row1) {
+                        ?>
+                        <tr>
+                            <td ><?=$stt?></td>
+                            <td data-label="Tên task"><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
+                            <td data-label="Trạng thái"><?=$row1['status']?></td>
+                            <td data-label="Action">
+                                <?php 
+                                    if($row1['status'] == "New"){
+                                        ?>
+                                            <span>
+                                                <i 
+                                                    style="cursor: pointer" 
+                                                    onclick="add_value_id_edit(<?=$row1['id']?>, '<?=$row1['tenTask']?>','<?=$row1['descTask']?>','<?=$row1['nhanvien']?>', '<?=$row1['deadline']?>')" 
+                                                    class="fas fa-edit" 
+                                                    data-toggle="modal" data-target="#confirm-edit"
+                                                ></i>
+                                            </span>
+                                            <span>
+                                                <i 
+                                                    style="cursor: pointer" 
+                                                    onclick="update_name_delete_task('<?=$row1['tenTask']?>')" 
+                                                    class="fa fa-trash action" 
+                                                    data-toggle="modal" data-target="#confirm-delete">
+                                                </i>
+                                            </span>
+                                        <?php
+                                    }else{
+                                        ?>
+                                            <p>No Thing To Do</p>
+                                        <?php
+                                    }
+            
+                                ?>
+                                
+                                
+                            </td>
+                        </tr>
+            
+                        <?php
+                            $stt += 1;
+                        }
+                    }else{
+                        ?>
+                            <p  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <br>
+                <h3>Các Task đã hoàn thành: </h3>
+                <br>
+                <table class="table table-lg table-striped text-center">
+                    <thead>
+                    <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                        <th>STT</th>
+                        <th>Tên task </th>
+                        <th>Trạng thái</th>
+                        <th>Quality</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $st = 1;
+                    $resultList1 = get_task_success($data['maPB']);
+                    if($resultList1['code'] == 0){
+                        foreach ($resultList1['data'] as $row) {
+                            ?>
+                            <tr>
+                                <td><?=$st?></td>
+                                <td data-label="Tên task"><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
+                                <td data-label="Trạng thái"><?=$row['status']?></td>
+                                <td data-label="Quality"><?=$row['quality']?></td>
+                            </tr>
+            
+                            <?php
+                            $st += 1;
+                        }
+                    }else{
+                        ?>
+                        <p style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Không có dữ liệu nào hết</p>
+                        <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary"><a href="../addTask.php" style="text-decoration: none; color: white;">Giao task mới</a></button>
+            </div>
+        </div> 
+    </div> 
+ 
         <?php 
             if(isset($_POST['del'])){
                 $tenTask = $_POST['tenToDel'];
