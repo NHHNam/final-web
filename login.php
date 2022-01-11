@@ -44,7 +44,6 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="css/style.css">
     <style>
     .container.p-5{
     }
@@ -81,10 +80,19 @@
     } 
     @media all and (min-width:768px ) and (max-width:1000px){
         .container.p-5{
-            width:500px;
+            width:700px;
+        }
+        .container.p-5.form-group{
+            height: 60px;
+            font-size: 100px;
         }
     }
-
+    @media screen and (min-width: 1000px){
+        .container.p-5{
+            width:500px;
+            
+        }
+    }
 
     </style>
 </head>

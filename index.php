@@ -25,8 +25,44 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/index.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
+
+        .nav-item .dropdown{
+            margin-right: 80px;
+        }
+        .nav-item .dropdown-toggle .dropdown-menu{
+            max-width: 50px;
+        }
+        .flex-direction{
+            display: flex;
+            justify-content: center;
+        }
+
+        .flex-direction > div {
+            margin: 50px;
+            padding: 50px;
+            font-size: 30px;
+        }
+        .card{
+            text-align: center;
+            margin-top: 10px;
+            padding-bottom: auto;
+            border-radius: 10px;
+            box-shadow:4px 4px 10px 2px rgba(0,0,0,0.2) ;
+        }
+        .card img{
+            width : 60%;
+            height: 50%;
+        }
+
+        .card:hover{
+            box-shadow: 4px 12px 14px 4px rgba(0,0,0,0.3);
+        }
+     
         body, html{
             background: url('../images/trangchu.jpg') no-repeat;
             background-size: cover;
@@ -34,12 +70,7 @@
             height: 100%;
             font-family: 'Numans', sans-serif;
         }
-        .flex-direction > div {
-            /* background-color: #f1f1f1; */
-            margin: 50px;
-            padding: 50px;
-            font-size: 30px;
-        }
+     
     </style>
 </head>
 <body>

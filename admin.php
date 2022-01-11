@@ -20,7 +20,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
     <style>
         * {
             box-sizing: border-box;
@@ -29,16 +28,6 @@
         .nav-item .dropdown{
             margin-right: 80px;
         }
-        /* .content{
-            display: flex;
-            justify-content: center
-        }
-        .content > div {
-            background-color: #f1f1f1;
-            margin: 0px;
-            padding: 50px;
-            font-size: 30px;
-        } */
         .functional-area{
             text-align: center;
             margin-top: 10px;
