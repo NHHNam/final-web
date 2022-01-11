@@ -29,7 +29,31 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
+        .card{
+            background: #DDDDDD;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+        h3{
+            text-align: center;
+        }
+        body, html{
+            background: url('../images/background1.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+        .input-group-prepend{
+            width: 40px;
+        }
+        .input-group-text{
+            width: 90%;
+            margin-left: 10px;
+        }
+        
     </style>
 </head>
 <body>
@@ -40,21 +64,28 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-        <div class="nav-item">
-            <h1 class="nav-link">Trang giám đốc</h1>
-        </div>
-        <div class="nav-item">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?=$data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="logout.php">Đăng xuất</a>
-                </div>
-            </div>
+    
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+        <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <button type="button" class="btn btn-light">
+                            <?= $data['name'] ?>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
     </nav>
+
     <a style="text-decoreation: none;" href="api/phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
     <?php 
         $success = "";
@@ -73,57 +104,60 @@
         }
     ?>
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="card">
-                <div class="card-body">
-                    <form novalidate method="post" enctype="multipart/form-data">
-                        <h3>Thêm phòng ban mới</h3>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                            </div>
-                            <input class="input-group-text" type="text" name="namePB" placeholder="Nhập tên phòng ban">
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
-                            </div>
-                            <input class="input-group-text" type="text" name="maPB" placeholder="Nhập mã PB">
-                        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <form novalidate method="post" enctype="multipart/form-data">
+                                <h3>THÊM PHÒNG BAN MỚI</h3>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="text" name="namePB" placeholder="Nhập tên phòng ban">
+                                </div>
+                                
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="text" name="maPB" placeholder="Nhập mã PB">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
-                            </div>
-                            <input class="input-group-text" type="text" name="soPB" placeholder="Nhập số phòng PB">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-edit"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="text" name="soPB" placeholder="Nhập số phòng PB">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                            </div>
-                            <input class="input-group-text" type="text" name="moTa" placeholder="Nhập mô tả phòng ban">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="text" name="moTa" placeholder="Nhập mô tả phòng ban">
+                                </div>
 
-                        
-                        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                            <?php
-                                if(!empty($error)){
-                                    echo "<div class='alert alert-danger'>$error</div>";
-                                }else if(!empty($success)){
-                                    echo "<div class='alert alert-success'>$success</div>";
-                                }
-                            ?>
-                        </p>
-                        <div class="form-group">
-                            <input type="submit" name="add" value="Thêm phòng ban">
+                                
+                                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                                    <?php
+                                        if(!empty($error)){
+                                            echo "<div class='alert alert-danger'>$error</div>";
+                                        }else if(!empty($success)){
+                                            echo "<div class='alert alert-success'>$success</div>";
+                                        }
+                                    ?>
+                                </p>
+                                <div class="form-group">
+                                    <input type="submit"name="add" value="Thêm phòng ban">
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
 </body>
 </html>

@@ -35,7 +35,7 @@
         }
 	    .card{
             background: #DDDDDD;
-            width: 80%;
+            width: 100%;
             margin-bottom: 50px;
         }
         h3{

@@ -33,6 +33,7 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
 	    .table{
             border: 1px solid black;
@@ -49,12 +50,7 @@
             text-align: center;
             font-weight: bold;
         }
-        @media screen and (max-width:479px ){
-            .table{
-                width: 100%;
-                /* background: url('../images/anhtable.jpg') no-repeat;
-                background-size: cover; */
-            }
+        @media all and (max-width:479px ){
             thead{
                 display:none;
             }
@@ -216,7 +212,7 @@
                                                         if(check_truong_phong($row1['name'], $row1['maPB']) == false){
                                                             ?>
                                                             <tr>
-                                                                <td data-label="STT"><?=$stt?></td>
+                                                                <td><?=$stt?></td>
                                                                 <td data-label="Nhân viên"><?=$row1['name']?></td>
                                                                 <td data-label="Reason"><?=$row1['reason']?></td>
                                                                 <td data-label="Tình trạng"><?=$row1['songay']?></td>

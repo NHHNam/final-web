@@ -29,63 +29,31 @@
         }
         a i{
             font-size: 30px;
+            color: red;
         }
-
-        .wrapper{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .card{
+            background: #DDDDDD;
+            width: 100%;
+            margin-bottom: 50px;
         }
-
-        .wrapper .toast{ 
-            border-left: 5px solid #2ecc71;
-            background: #fff;
-            padding: 20px 15px 20px 20px;
-            border-radius: 10px;
-            width: 430px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 1px 7px 14px -5px rgba(0, 0, 0, 0, 0.15);
-        }
-
-        .toast .content{ 
-            display: flex;
-            align-items: center;
-        }
-
-        .toast .content .icon{ 
-            font-size: 25px;
-            background: #2ecc71;
-            height: 50px;
-            width: 50px;
+        h3{
             text-align: center;
-            line-height: 50px;
-            border-radius: 50%;
-            color: #fff;
         }
-
-        .toast .content .details{ 
+        body, html{
+            background: url('../images/background1.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+        .input-group-prepend{
+            width: 40px;
+        }
+        .input-group-text{
+            width: 90%;
             margin-left: 10px;
         }
-
-        .toast .content .details span{
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .toast .close-icon{
-            background: #f2f2f2;
-            height: 40px;
-            width: 40px;
-            line-height: 40px;
-            text-align: center;
-            border-radius: 50%;
-            color: #878787;
-            font-size: 23px;
-            cursor: pointer;
-        }
+     
     </style>
 </head>
 <body>
@@ -96,19 +64,24 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-        <div class="nav-item">
-            <h1 class="nav-link">Trang giám đốc</h1>
-        </div>
-        <div class="nav-item">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?=$data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="logout.php">Đăng xuất</a>
-                </div>
-            </div>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+        <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <button type="button" class="btn btn-light">
+                            <?= $data['name'] ?>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
     </nav>
     <a style="text-decoreation: none;" href="api/dsAllNV.php"><i class="fas fa-arrow-circle-left"></i></a>
@@ -140,92 +113,96 @@
         }
     ?>
     <div class="container">
-        <div class="d-flex justify-content-center">
-            <div class="card">
-                <div class="card-body">
-                    <form novalidate method="post" enctype="multipart/form-data">
-                        <h3>Thêm nhân viên mới</h3>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="nameNV" placeholder="Nhập tên của nhân viên">
-                        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <form novalidate method="post" enctype="multipart/form-data">
+                                <h3>THÊM NHÂN VIÊN MỚI</h3>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                    <input class="input-group-text"  type="text" name="nameNV" placeholder="Nhập tên của nhân viên">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="cmnd" placeholder="Nhập chứng minh nhân dân của nhân viên">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-secret"></i></span>
+                                    </div>
+                                    <input class="input-group-text"  type="text" name="cmnd" placeholder="Nhập chứng minh nhân dân của nhân viên">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="email" placeholder="Nhập email của nhân viên">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                    <input class="input-group-text"type="text" name="email" placeholder="Nhập email của nhân viên">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="phone" placeholder="Nhập số điện thoại của nhân viên">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input class="input-group-text"  type="text" name="phone" placeholder="Nhập số điện thoại của nhân viên">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-home"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="address" placeholder="Nhập địa chỉ của nhân viên">
-                        </div>
-                        
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                            </div>
-                            <input class="input-group-text" style="width: 85%" type="text" name="accountname" placeholder="Nhập tên tài khoản của nhân viên">
-                        </div>
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-home"></i></span>
+                                    </div>
+                                    <input class="input-group-text"  type="text" name="address" placeholder="Nhập địa chỉ của nhân viên">
+                                </div>
+                                
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="text" name="accountname" placeholder="Nhập tên tài khoản của nhân viên">
+                                </div>
 
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-users"></i></span>
-                            </div>
-                            <select name="phongBan">
-                                <?php 
-                                    $data = get_info_phongban();
-                                    if($data['data']->num_rows > 0){
-                                        while($row3 = $data['data']->fetch_assoc()){
-                                ?>
-                                <option class="input-group-text" value="<?=$row3['maPB']?>"><?=$row3['namePB']?></option>
-                                <?php 
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-users"></i></span>
+                                    </div>
+                                    <select name="phongBan">
+                                        <?php 
+                                            $data = get_info_phongban();
+                                            if($data['data']->num_rows > 0){
+                                                while($row3 = $data['data']->fetch_assoc()){
+                                        ?>
+                                        <option class="input-group-text" value="<?=$row3['maPB']?>"><?=$row3['namePB']?></option>
+                                        <?php 
+                                                }
+                                            }else{
+                                                $error = "No found data of phongban";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="input-group form-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-image"></i></span>
+                                    </div>
+                                    <input class="input-group-text" type="file" name="hinhDaiDien">
+                                </div>
+                                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                                    <?php
+                                        if(!empty($error)){
+                                            echo "<div class='alert alert-danger'>$error</div>";
+                                        }else if(!empty($success)){
+                                            echo "<div class='alert alert-success'>$success</div>";
                                         }
-                                    }else{
-                                        $error = "No found data of phongban";
-                                    }
-                                ?>
-                            </select>
+                                    ?>
+                                </p>
+                                <div class="form-group">
+                                    <input type="submit"  name="addUser" value="Thêm nhân viên">
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-image"></i></span>
-                            </div>
-                            <input class="input-group-text" type="file" name="hinhDaiDien">
-                        </div>
-                        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                            <?php
-                                if(!empty($error)){
-                                    echo "<div class='alert alert-danger'>$error</div>";
-                                }else if(!empty($success)){
-                                    echo "<div class='alert alert-success'>$success</div>";
-                                }
-                            ?>
-                        </p>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-primary w-100" name="addUser" value="Thêm nhân viên">
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>

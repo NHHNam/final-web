@@ -57,6 +57,16 @@ if(!$_SESSION['username']){
             text-align: center;
             font-weight: bold;
         }
+        .status1{
+            background: red;
+        }
+        .status2{
+            background: blue;
+
+        }
+        .status3{
+            background: green;
+        }
         @media screen and (max-width:320px ){
             thead{
                 display:none;
@@ -144,7 +154,7 @@ if($result['code'] == 0){
                         <tr>
                             <td ><?=$stt?></td>
                             <td data-label="Tên task"><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row1['tenTask']?>"><?=$row1['tenTask']?></a></td>
-                            <td data-label="Trạng thái"><?=$row1['status']?></td>
+                            <td data-label="Trạng thái" ><?=$row1['status']?></td>
                             <td data-label="Action">
                                 <?php 
                                     if($row1['status'] == "New"){
@@ -212,7 +222,7 @@ if($result['code'] == 0){
                                 <td><?=$st?></td>
                                 <td data-label="Tên task"><a style="text-decoration: none; color: black;" href="../chiTietTask.php?tenTask=<?=$row['tenTask']?>"><?=$row['tenTask']?></a></td>
                                 <td data-label="Trạng thái"><?=$row['status']?></td>
-                                <td data-label="Quality"><?=$row['quality']?></td>
+                                <td data-label="Quality" class="status"><?=$row['quality']?></td>
                             </tr>
             
                             <?php

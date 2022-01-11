@@ -19,6 +19,10 @@
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
+          * {
+            box-sizing: border-box;
+        }
+        body {font-family: "Lato", sans-serif;}
         .nav-item .dropdown{
             margin-right: 80px;
         }
@@ -31,8 +35,54 @@
 	    th{
             background-image: linear-gradient(#F4A460,#FFFFCC);
         }
-        .table{
+        h3{
+            margin-left: 10px;
+        }
+        /* .table{
             border: 1px solid black;
+        } */
+        body, html{
+            background: url('../images/background.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        } 
+        h2{
+            color: #C71585; 
+            text-align: center;
+            font-weight: bold;
+        }
+        /* res đối với table lơn */
+        @media screen and (max-width:479px ){
+            thead{
+                display:none;
+            }
+            td{
+                display: block;
+                width: 100%;
+                text-align: right;
+            }
+            
+            td:first-child{
+                background: lightblue;
+                color: red;
+                text-align: center;
+            }
+            td{
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+
+            }
+            td::before{
+                content: attr(data-label);
+                float: left;
+                margin-right:3rem;
+                font-weight: bold;
+                text-align: left;
+                padding-right: 40%;
+            }
         }
 
     </style>
@@ -47,19 +97,24 @@
                 $data = $result['data'];
             }
             ?>
-                <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-                    <div class="nav-item">
-                        <h1 class="nav-link">Trang giám đốc</h1>
-                    </div>
-                    <div class="nav-item">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <?= $data['name'] ?>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-                            </div>
-                        </div>
+                <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+                    <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar-list-4">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <button type="button" class="btn btn-light">
+                                        <?= $data['name'] ?>
+                                    </button>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                                </div>
+                            </li>   
+                        </ul>
                     </div>
                 </nav>
             <?php
@@ -70,19 +125,24 @@
                 $data = $result['data'];
             }
             ?>
-                <nav class="navbar navbar-expand-sm bg-info justify-content-between">
-                    <div class="nav-item">
-                        <h1 class="nav-link"><a href="../index.php" style="text-decoration: none; color: black;">Trang nhân viên</a></h1>
-                    </div>
-                    <div class="nav-item">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                            <?= $data['name'] ?>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-                            </div>
-                        </div>
+                  <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
+                    <a href="../index.php" style="text-decoration:none; color:black;" ><h1 class="navbar-brand">TRANG NHÂN VIÊN </h1></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar-list-4">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    <button type="button" class="btn btn-light">
+                                        <?= $data['name'] ?>
+                                    </button>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                                </div>
+                            </li>   
+                        </ul>
                     </div>
                 </nav>
             <?php
@@ -90,161 +150,162 @@
     ?>
     <a style="text-decoreation: none;" href="../index.php"><i class="fas fa-arrow-circle-left"></i></a>
     <div class="container mt-2">
-        <h2 style="color: #C71585; text-align: center;">QUẢN LÝ NGÀY NGHỈ </h2>
-        <div class="row mb-5">
-            <span  style="background:#CCFFFF; padding: 10px; border-radius: 5px;">Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
-        </div>
-	    <div class="row mb-5">
-            <?php
-                $resultCheckDon = check_don_nghi_phep($data['name']);
-                if($resultCheckDon['code'] == 0){
-                    $dataDon = $resultCheckDon['data'];
-                }
-                
-                if($dataDon['status'] === "waiting"){
-                    ?>
-                        <span></span>
-                    <?php
-                }else if($data['tongngaynghi'] - $data['duocnghi'] === 0){
-                    ?>
-                        <span></span>
-                    <?php
-                }
-                else{
-                    ?>
-                        <span style="background: #FF7F50; padding: 10px; border-radius:20px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
-                    <?php
-                }
-            ?>
-            
-        </div>
         <div class="row">
-            </br>
-            <?php 
-                if(check_truong_phong($data['name'], $data['maPB']) == false){
-                    ?>
-                        <div class="table-responsive">
-			            <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
-                        <br>
-                            <table class="table table-lg table-striped text-center">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Reason</th>
-                                    <th>Nghỉ từ</th>
-                                    <th>Nghỉ đến</th>
-                                    <th>Tình trạng</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                    $stt = 1;
-                                    $resultList = get_don_nghiphep($data['name']);
-                                    if($resultList['code'] == 0){
-                                        $data1 = $resultList['data'];
-                                        if(count($data1) > 0 && is_array($data1)){
-                                            foreach ($data1 as $row1) {
-                                                ?>
-                                                <tr>
-                                                    <td><?=$stt?></td>
-                                                    <td><?=$row1['reason']?></td>
-                                                    <td><?=$row1['fromDay']?></td>
-                                                    <td><?=$row1['toDay']?></td>
-                                                    <td><?=$row1['status']?></td>
-                                                </tr>
-                                                <?php
-                                                $stt += 1;
-                                            }
-                                        }
-                                    }else{
-                                        ?>
-                                            <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
-                                        <?php
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php
-                }else if(check_truong_phong($data['name'], $data['maPB']) == true){
-                    ?>
-                        <div class="table-responsive">
-			    <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
-                            <br>
-                            <table class="table table-lg table-striped text-center">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Name</th>
-                                    <th>Reason</th>
-                                    <th>Nghỉ từ</th>
-                                    <th>Nghỉ đến</th>
-                                    <th>Tình trạng</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                    $stt = 1;
-                                    $resultList = get_don_nghiphep($data['name']);
-                                    if($resultList['code'] == 0){
-                                        $data1 = $resultList['data'];
-                                        if(count($data1) > 0 && is_array($data1)){
-                                            foreach ($data1 as $row1) {
-                                                ?>
-                                                <tr>
-                                                    <td><?=$stt?></td>
-                                                    <td><?=$row1['name']?></td>
-                                                    <td><?=$row1['reason']?></td>
-                                                    <td><?=$row1['fromDay']?></td>
-                                                    <td><?=$row1['toDay']?></td>
-                                                    <td><?=$row1['status']?></td>
-                                                </tr>
-                                                <?php
-                                                $stt += 1;
-                                            }
-                                        }
-                                    }else{
-                                        ?>
-                                            <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
-                                        <?php
-                                    }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    <?php 
-                }
-            ?>
-            
-            
-            <?php 
-                $error = "";
-                $success = "";
-                if(isset($_POST['nopNghiPhep'])){
-                    $nameNV = $_POST['nameNV'];
-                    $reason = $_POST['reason'];
-                    $maPB = $_POST['maPB'];
-                    $status = "waiting";
-                    $fromDay = $_POST['fromDay'];
-                    $toDay = $_POST['toDay'];
-                    $resultXinNghi = xin_nghi($nameNV, $reason, $toDay, $fromDay, $maPB, $status);
-                    if($resultXinNghi['code'] == 0){
-                        $success = $resultXinNghi['message'];
-                    }else{
-                        $error = $resultXinNghi['message'];
+            <div class="col-lg-12 col-ms-6">
+                <h2>QUẢN LÝ NGÀY NGHỈ </h2>
+                    <div class="row mb-5">
+                        <span  style="background:#CCFFFF; padding: 10px; border-radius: 5px; margin-left: 10px; margin-right: 10px;">Số lượt đã xin nghỉ trong tổng số lượt đã nghỉ <?=$data['tongngaynghi']?> / <?=$data['duocnghi']?></span>
+                    </div>
+	                <div class="row mb-5">
+                        <?php
+                    $resultCheckDon = check_don_nghi_phep($data['name']);
+                    if($resultCheckDon['code'] == 0){
+                        $dataDon = $resultCheckDon['data'];
                     }
-                }
-            ?>
-            
-            <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-                <?php
-                if(!empty($error)){
-                    echo "<div class='alert alert-danger'>$error</div>";
-                }else if(!empty($success)){
-                    echo "<div class='alert alert-success'>$success</div>";
-                }
+                    
+                    if($dataDon['status'] === "waiting"){
+                        ?>
+                            <span></span>
+                        <?php
+                    }else if($data['tongngaynghi'] - $data['duocnghi'] === 0){
+                        ?>
+                            <span></span>
+                        <?php
+                    }
+                    else{
+                        ?>
+                            <span style="background: #FF7F50; padding: 10px; border-radius:20px; margin-left:10px"><i class="fas fa-plus" data-toggle="modal" data-target="#confirm-xin-nghi"></i> Xin nghỉ</span>
+                        <?php
+                    }
+                        ?>
+                    </div>
+                </br>
+                <?php 
+                    if(check_truong_phong($data['name'], $data['maPB']) == false){
+                        ?>
+                            <div class="table-responsive">
+                            <h5>Danh sách lịch sử các yêu cầu nghỉ phép:</h5>
+                            <br>
+                                <table border="1" class="table table-lg table-striped text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Reason</th>
+                                        <th>Nghỉ từ</th>
+                                        <th>Nghỉ đến</th>
+                                        <th>Tình trạng</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        $stt = 1;
+                                        $resultList = get_don_nghiphep($data['name']);
+                                        if($resultList['code'] == 0){
+                                            $data1 = $resultList['data'];
+                                            if(count($data1) > 0 && is_array($data1)){
+                                                foreach ($data1 as $row1) {
+                                                    ?>
+                                                    <tr>
+                                                        <td data-label="STT"><?=$stt?></td>
+                                                        <td data-label="Reason"><?=$row1['reason']?></td>
+                                                        <td data-label="Nghỉ từ"><?=$row1['fromDay']?></td>
+                                                        <td data-label="Nghỉ đến"><?=$row1['toDay']?></td>
+                                                        <td data-label="Tình trạng"><?=$row1['status']?></td>
+                                                    </tr>
+                                                    <?php
+                                                    $stt += 1;
+                                                }
+                                            }
+                                        }else{
+                                            ?>
+                                                <div class="alert alert-danger" type="margin-top:10px;">Không có đơn xin nghỉ phép</div>
+                                            <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php
+                    }else if(check_truong_phong($data['name'], $data['maPB']) == true){
+                        ?>
+                            <div class="table-responsive">
+                    <h3>Danh sách lịch sử các yêu cầu nghỉ phép:</h3>
+                                <br>
+                                <table  border="1" class="table table-lg table-striped text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Name</th>
+                                        <th>Reason</th>
+                                        <th>Nghỉ từ</th>
+                                        <th>Nghỉ đến</th>
+                                        <th>Tình trạng</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        $stt = 1;
+                                        $resultList = get_don_nghiphep($data['name']);
+                                        if($resultList['code'] == 0){
+                                            $data1 = $resultList['data'];
+                                            if(count($data1) > 0 && is_array($data1)){
+                                                foreach ($data1 as $row1) {
+                                                    ?>
+                                                    <tr>
+                                                        <td data-label="STT"><?=$stt?></td>
+                                                        <td data-label="Name"><?=$row1['name']?></td>
+                                                        <td data-label="Reason"><?=$row1['reason']?></td>
+                                                        <td data-label="Nghỉ từ"><?=$row1['fromDay']?></td>
+                                                        <td data-label="Nghỉ đến"><?=$row1['toDay']?></td>
+                                                        <td data-label="Tình trạng"><?=$row1['status']?></td>
+                                                    </tr>
+                                                    <?php
+                                                    $stt += 1;
+                                                }
+                                            }
+                                        }else{
+                                            ?>
+                                                <div class="alert alert-danger">Không có đơn xin nghỉ phép</div>
+                                            <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php 
+                    }
                 ?>
-            </p>
+                
+            
+                <?php 
+                    $error = "";
+                    $success = "";
+                    if(isset($_POST['nopNghiPhep'])){
+                        $nameNV = $_POST['nameNV'];
+                        $reason = $_POST['reason'];
+                        $maPB = $_POST['maPB'];
+                        $status = "waiting";
+                        $fromDay = $_POST['fromDay'];
+                        $toDay = $_POST['toDay'];
+                        $resultXinNghi = xin_nghi($nameNV, $reason, $toDay, $fromDay, $maPB, $status);
+                        if($resultXinNghi['code'] == 0){
+                            $success = $resultXinNghi['message'];
+                        }else{
+                            $error = $resultXinNghi['message'];
+                        }
+                    }
+                ?>
+                
+                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                    <?php
+                    if(!empty($error)){
+                        echo "<div class='alert alert-danger'>$error</div>";
+                    }else if(!empty($success)){
+                        echo "<div class='alert alert-success'>$success</div>";
+                    }
+                    ?>
+                </p>
+            </div>
         </div>
     </div>
     
@@ -255,7 +316,7 @@
             <div class="modal-content">
                <form method="post" enctype="multipart/form-data">
                   <div class="modal-header">
-                     <h4 class="modal-title">Xin nghỉ phép</h4>
+                     <h4 class="modal-title">ĐƠN XIN NGHỈ PHÉP</h4>
                      <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
 

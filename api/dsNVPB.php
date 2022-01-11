@@ -28,6 +28,21 @@
             font-size: 30px;
             color: red;
         }
+        .h2{
+            text-align: center;
+        }
+        body, html{
+            background: url('../images/background.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
+        @media screen and (max-width: 540px){
+            .h2{
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -38,140 +53,152 @@
             $data = $result['data'];
         }
     ?>
-    <nav class="navbar navbar-expand-sm bg-info justify-content-between">
+    <nav class="navbar navbar-dark bg-dark navbar-expand-sm">
         <div class="nav-item" onclick="location.href='../admin.php'">
-            <h1 class="nav-link">Trang giám đốc</h1>
+            <h1 class="navbar-brand">TRANG GIÁM ĐỐC </h1>
         </div>
-        <div class="nav-item">
-            <div class="dropdown">
-                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown">
-                <img src="<?= "../". $data['image'] ?>" alt="" style="max-width: 50px; max-height: 50px;">
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
-                </div>
-            </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-list-4">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                        <button type="button" class="btn btn-light">
+                            <?= $data['name'] ?>
+                        </button>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../logout.php">Đăng xuất</a>
+                    </div>
+                </li>   
+            </ul>
         </div>
     </nav>
-
-    <div style="margin: 10px;">
-        <div style="margin: 10px;">
-            <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
-        </div>
-        <div>
-            <?php
-                $maPB = $_GET['maPB'];
-                $result = get_info_1phongban($maPB);
-                if($result['code'] == 0){
-                    $data = $result['data'];
-                }
-            ?>
-            <h2>Danh sách nhân viên <?=$data['namePB']?></h2>
-        </div>
-        <?php 
-            $success = "";
-            $error = "";
-            $maPB = $_GET['maPB'];
-
-            if(isset($_POST['boNhiem'])){
-                $nameBoNhiem = $_POST['nameNVToBoNhiem'];
-                $duocnghiTP = 15;
-                $resultBoNhiem = choose_truong_phong($nameBoNhiem, $duocnghiTP);
-
-                if($resultBoNhiem['code'] == 0){
-                    $success = $resultBoNhiem['message'];
-                }else{
-                    $error = $resultBoNhiem['message'];
-                }
-            }else if(isset($_POST['huyBoNhiem'])){
-                $duocnghiNV = 12;
-                $nameOldBoNhiem = $_POST['nameNVToHuyBoNhiem'];
-                $resultHuyBoNhiem = reject_truong_phong($duocnghiNV, $nameOldBoNhiem);
-
-                if($resultHuyBoNhiem['code'] == 0){
-                    $success = $resultHuyBoNhiem['message'];
-                }else{
-                    $error = $resultHuyBoNhiem['message'];
-                }
-            }else if(isset($_POST['del'])){
-                $id = $_POST['idToDel'];
-                $result4 = delete_nhan_vien($id);
-
-                if($result4['code'] == 0){
-                    $success = $result4['message'];
-                }else{
-                    $error = $result4['message'];
-                }
-            }
-
-            $result3 = get_button_truongphong($maPB);
-            if($result3['code'] == 0){
-                $data3 = $result3['data'];
-            }else{
-                $error = $result3['message'];
-            }
-        ?>
-        <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
-            <?php
-                if(!empty($error)){
-                    echo "<div class='alert alert-danger'>$error</div>";
-                }else if(!empty($success)){
-                    echo "<div class='alert alert-success'>$success</div>";
-                }
-            ?>
-        </p>
-        <div class="table-responsive">
-            <table border="1" class="table table-lg table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên nhân viên</th>
-                        <th>Bổ nhiệm</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        $stt = 1;
-                        $resultList = get_nhanvien_pb($maPB);
-                        if ($resultList['data']->num_rows > 0) {
-                            while($row1 = $resultList['data']->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?=$stt?></td>
-                        <td><?=$row1["name"]?></td>
-                        <?php
-                            if($row1['chucvu'] == 'trưởng phòng'){
-                                ?>
-                                <form method="post">
-                                    <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
-                                    <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Hủy bổ nhiệm</button></td>
-                                </form>
-                                <?php
-                            }else if(check_has_truong_phong($row1['maPB']) == true){
-                                ?>
-                                    <td></td>
-                                <?php
-                            }else{
-                                ?>
-                                <form method="post">
-                                    <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
-                                    <td><button type="submit" name="boNhiem" class="btn btn-success">Bổ nhiệm</button></td>
-                                </form>
-                                <?php
-                            }
-                        ?>
-                    </tr>
-                    <?php 
-                        $stt += 1;    
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="margin: 10px;">
+                    <a style="text-decoreation: none;" href="phongban.php"><i class="fas fa-arrow-circle-left"></i></a>
+                </div>
+                <div>
+                    <?php
+                        $maPB = $_GET['maPB'];
+                        $result = get_info_1phongban($maPB);
+                        if($result['code'] == 0){
+                            $data = $result['data'];
                         }
+                    ?>
+                    <h2 style="text-align:center;">Danh sách nhân viên <?=$data['namePB']?></h2>
+                </div>
+                <?php 
+                    $success = "";
+                    $error = "";
+                    $maPB = $_GET['maPB'];
+
+                    if(isset($_POST['boNhiem'])){
+                        $nameBoNhiem = $_POST['nameNVToBoNhiem'];
+                        $duocnghiTP = 15;
+                        $resultBoNhiem = choose_truong_phong($nameBoNhiem, $duocnghiTP);
+
+                        if($resultBoNhiem['code'] == 0){
+                            $success = $resultBoNhiem['message'];
                         }else{
-                            echo "No result found";
+                            $error = $resultBoNhiem['message'];
+                        }
+                    }else if(isset($_POST['huyBoNhiem'])){
+                        $duocnghiNV = 12;
+                        $nameOldBoNhiem = $_POST['nameNVToHuyBoNhiem'];
+                        $resultHuyBoNhiem = reject_truong_phong($duocnghiNV, $nameOldBoNhiem);
+
+                        if($resultHuyBoNhiem['code'] == 0){
+                            $success = $resultHuyBoNhiem['message'];
+                        }else{
+                            $error = $resultHuyBoNhiem['message'];
+                        }
+                    }else if(isset($_POST['del'])){
+                        $id = $_POST['idToDel'];
+                        $result4 = delete_nhan_vien($id);
+
+                        if($result4['code'] == 0){
+                            $success = $result4['message'];
+                        }else{
+                            $error = $result4['message'];
+                        }
+                    }
+
+                    $result3 = get_button_truongphong($maPB);
+                    if($result3['code'] == 0){
+                        $data3 = $result3['data'];
+                    }else{
+                        $error = $result3['message'];
+                    }
+                ?>
+                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                    <?php
+                        if(!empty($error)){
+                            echo "<div class='alert alert-danger'>$error</div>";
+                        }else if(!empty($success)){
+                            echo "<div class='alert alert-success'>$success</div>";
                         }
                     ?>
-                </tbody>
-            </table>
+                </p>
+                <div class="table-responsive">
+                    <table border="1" class="table table-lg table-striped text-center">
+                        <thead>
+                            <tr style="background-image: linear-gradient(#F4A460,#FFFFCC);">
+                                <th>STT</th>
+                                <th>Tên nhân viên</th>
+                                <th>Bổ nhiệm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php 
+                                $stt = 1;
+                                $resultList = get_nhanvien_pb($maPB);
+                                if ($resultList['data']->num_rows > 0) {
+                                    while($row1 = $resultList['data']->fetch_assoc()) {
+                            ?>
+                            <tr>
+                                <td><?=$stt?></td>
+                                <td><?=$row1["name"]?></td>
+                                <?php
+                                    if($row1['chucvu'] == 'trưởng phòng'){
+                                        ?>
+                                        <form method="post">
+                                            <input type="hidden" name="nameNVToHuyBoNhiem" value="<?=$row1['name']?>">
+                                            <td><button type="submit" name="huyBoNhiem" class="btn btn-danger">Hủy bổ nhiệm</button></td>
+                                        </form>
+                                        <?php
+                                    }else if(check_has_truong_phong($row1['maPB']) == true){
+                                        ?>
+                                            <td></td>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <form method="post">
+                                            <input type="hidden" name="nameNVToBoNhiem" value="<?=$row1['name']?>">
+                                            <td><button type="submit" name="boNhiem" class="btn btn-success">Bổ nhiệm</button></td>
+                                        </form>
+                                        <?php
+                                    }
+                                ?>
+                            </tr>
+                            <?php 
+                                $stt += 1;    
+                                }
+                                }else{
+                                    echo "No result found";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <div>
     </div>
-        
+                
     </div>
     <div class="modal fade" id="confirm-delete">
          <div class="modal-dialog">

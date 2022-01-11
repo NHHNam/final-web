@@ -207,47 +207,51 @@ if(isset($_POST['nopTask'])){
                                 }
                                 ?>
                             </p>
-                    </div>
-                </div>
-            <div>
+               
 
-            <?php
-                if(check_truong_phong($data['name'], $data['maPB']) == true){
-                    $check_status_truong_phong = array("New", "Completed", "In Progress");
-                    if(!in_array($data1['status'], $check_status_truong_phong)){
-                        ?>
-                        <div class="wrap">
-                            <div class="tinhchinh">
-                            <button type="submit" name="duyet" onclick="update_name_for_duyet_task('<?=$data1['tenTask']?>')" data-toggle="modal" data-target="#confirm-quality" class="btn btn-success">Duyệt</button>
-                            </div>
-                            <div class="tinhchinh">
-                                <form method="post">
-                                    <input type="hidden" name="tenTask" value="<?=$data1['tenTask']?>">
-                                    <button type="submit" name="reject" class="btn btn-danger">Từ chối</button>
-                                </form>
-                            </div>
+                            <?php
+                                if(check_truong_phong($data['name'], $data['maPB']) == true){
+                                    $check_status_truong_phong = array("New", "Completed", "In Progress");
+                                    if(!in_array($data1['status'], $check_status_truong_phong)){
+                                        ?>
+                                        <div class="wrap">
+                                            <div class="tinhchinh">
+                                            <button type="submit" name="duyet" onclick="update_name_for_duyet_task('<?=$data1['tenTask']?>')" data-toggle="modal" data-target="#confirm-quality" class="btn btn-success">Duyệt</button>
+                                            </div>
+                                            <div class="tinhchinh">
+                                                <form method="post">
+                                                    <input type="hidden" name="tenTask" value="<?=$data1['tenTask']?>">
+                                                    <button type="submit" name="reject" class="btn btn-danger">Từ chối</button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                    }
+                                }else{
+                                    $check_status = array("New", "Wait", "Completed");
+                                    if(!in_array($data1['status'], $check_status)){
+                                        ?>
+                                            <div class="tinhchinh">
+                                                <span>
+                                                    <i 
+                                                        onclick="update_name_for_nop_task('<?=$data1['tenTask']?>')" 
+                                                        class="fas fa-file-upload" style="cursor: pointer; font-size: 50px;" 
+                                                        class="fa fa-trash action" data-toggle="modal" data-target="#confirm-nop">
+                                                    </i>
+                                                </span>
+                                                <span>Nộp task</span>
+                                            </div>
+                                        <?php
+                                    }
+                                }
+                            ?>
                         </div>
-
-                        <?php
-                    }
-                }else{
-                    $check_status = array("New", "Wait", "Completed");
-                    if(!in_array($data1['status'], $check_status)){
-                        ?>
-                            <div class="tinhchinh">
-                                <span>
-                                    <i 
-                                        onclick="update_name_for_nop_task('<?=$data1['tenTask']?>')" 
-                                        class="fas fa-file-upload" style="cursor: pointer; font-size: 50px;" 
-                                        class="fa fa-trash action" data-toggle="modal" data-target="#confirm-nop">
-                                    </i>
-                                </span>
-                                <span>Nộp task</span>
-                            </div>
-                        <?php
-                    }
-                }
-            ?>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
 
         <!-- confirm nop task -->
             <div class="modal fade" id="confirm-nop">

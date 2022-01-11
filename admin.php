@@ -68,7 +68,7 @@
         }
 
         .flex-direction > div {
-         
+            background-color: #f1f1f1; 
             margin: 50px;
             padding: 50px;
             font-size: 30px;
