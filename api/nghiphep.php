@@ -16,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../js/script.js"></script>
     <!--Fontawesome CDN-->
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <style>
@@ -83,6 +84,20 @@
                 text-align: left;
                 padding-right: 40%;
             }
+        }
+        .error, .success {
+            -webkit-animation: fadeinout 5s linear forwards;
+            animation: fadeinout 5s linear forwards;
+        }
+
+        @-webkit-keyframes fadeinout {
+          0%,100% { opacity: 0; }
+          50% { opacity: 1; }
+        }
+
+        @keyframes fadeinout {
+          0%,100% { opacity: 0; }
+          50% { opacity: 1; }
         }
 
     </style>
@@ -296,15 +311,16 @@
                     }
                 ?>
                 
-                <p id="errors" style="text-align: center; font-weight: bold; font-size:20px; color: red;">
+                <div id="errors">
                     <?php
                     if(!empty($error)){
-                        echo "<div class='alert alert-danger'>$error</div>";
+                        // echo "<div class='alert alert-danger'>$error</div>";
+                        echo "<script type='text/javascript'>showToast('$error','error')</script>";
                     }else if(!empty($success)){
-                        echo "<div class='alert alert-success'>$success</div>";
+                        echo "<script type='text/javascript'>showToast('$success','success')</script>";
                     }
                     ?>
-                </p>
+                </div>
             </div>
         </div>
     </div>
@@ -360,7 +376,6 @@
             </div>
          </div>
       </div>
-    <script src="../js/script.js"></script>
     
 </body>
 </html>

@@ -85,3 +85,20 @@ function success(message) {
     let b = document.querySelector(".details");
     b.insertAdjacentHTML('beforeend', `<span>${message}</span>`)
 }
+function showToast(message, type){
+    const messages = document.getElementById('errors');
+    const toasts = document.createElement('div');
+    if(type == "error"){
+        toasts.classList.add('error');
+        toasts.innerHTML = `<div class="alert alert-danger">${message}</div>`;
+        messages.appendChild(toasts);
+
+    }else{
+        toasts.classList.add('success');
+        toasts.innerHTML = `<div class="alert alert-success">${message}</div>`;
+        messages.appendChild(toasts);
+    }
+    setTimeout(function(){
+        messages.removeChild(toasts)
+    }, 11000)
+}
