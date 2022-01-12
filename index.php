@@ -64,7 +64,7 @@
         }
      
         body, html{
-            background: url('../images/trangchu.jpg') no-repeat;
+            background: url('/images/trangchu.jpg') no-repeat;
             background-size: cover;
             background-repeat: no-repeat;
             height: 100%;
