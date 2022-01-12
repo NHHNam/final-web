@@ -53,7 +53,13 @@
             width: 90%;
             margin-left: 10px;
         }
-     
+        body, html{
+            background: url('images/bgaddNV.jpg') no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+            font-family: 'Numans', sans-serif;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +122,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-center">
-                    <div class="card">
+                    <div class="card col-md-12 col-lg-8">
                         <div class="card-body">
                             <form novalidate method="post" enctype="multipart/form-data">
                                 <h3>THÊM NHÂN VIÊN MỚI</h3>
@@ -166,7 +172,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-users"></i></span>
                                     </div>
-                                    <select name="phongBan">
+                                    <select style="margin-left: 2%;" name="phongBan">
                                         <?php 
                                             $data = get_info_phongban();
                                             if($data['data']->num_rows > 0){
