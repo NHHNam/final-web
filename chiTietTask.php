@@ -76,9 +76,6 @@ if($result['code'] == 0){
         </button>
         <div class="collapse navbar-collapse" id="navbar-list-4">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
                         <button type="button" class="btn btn-light">
